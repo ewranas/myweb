@@ -99,7 +99,7 @@ export const Hero: React.FC<HeroProps> = ({
   return (
     <section
       id="hero"
-      className="relative w-full h-[100svh] min-h-[640px] sm:min-h-[700px] overflow-hidden select-none bg-transparent"
+      className="relative w-full h-[100dvh] min-h-[640px] sm:min-h-[680px] overflow-hidden select-none bg-[#050505] bg-grain"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
@@ -113,6 +113,10 @@ export const Hero: React.FC<HeroProps> = ({
       {/* Background Slides with smooth fade */}
       {heroSlides.map((slide, index) => {
         const isActive = index === currentSlideIndex;
+        const imgSrc = slide.backgroundImage?.startsWith('/src/')
+          ? slide.backgroundImage.replace('/src/', '/')
+          : (slide.backgroundImage || '/assets/images/hero_moon_skyscraper_1793472035293.jpg');
+
         return (
           <div
             key={slide.id}
@@ -120,19 +124,26 @@ export const Hero: React.FC<HeroProps> = ({
               isActive ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            {/* Cinematic Artwork with responsive focal alignment and high-fidelity contrast */}
+            {/* Cinematic Grayscale Artwork */}
             <img
-              src={slide.backgroundImage}
+              src={imgSrc}
               alt={slide.title}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover object-[center_28%] sm:object-center filter grayscale contrast-[1.04] brightness-[0.94] sm:contrast-[1.08] sm:brightness-[0.82] transition-transform duration-700"
-              loading="eager"
+              className="w-full h-full object-cover object-center filter grayscale contrast-[1.08] brightness-[0.82]"
+              onError={(e) => {
+                const target = e.currentTarget as HTMLImageElement;
+                if (!target.src.includes('hero_moon_skyscraper_1793472035293.jpg')) {
+                  target.src = '/assets/images/hero_moon_skyscraper_1793472035293.jpg';
+                }
+              }}
             />
 
-            {/* Seamless Gradient Overlays: gently blends into the dark burgundy global atmosphere without an abrupt solid black cut-off */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/85 via-transparent to-transparent sm:from-[#050505]/90 sm:via-[#050505]/20" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/45 via-transparent to-transparent sm:from-[#050505]/75 sm:via-[#050505]/20 sm:to-transparent" />
-            <div className="absolute top-0 left-0 right-0 h-32 sm:h-44 bg-gradient-to-b from-[#050505]/50 sm:from-[#050505]/70 to-transparent" />
+            {/* Cinematic Gradient Overlays to preserve legibility and atmospheric fog */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/85 via-[#050505]/30 to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-44 bg-gradient-to-b from-[#050505]/80 to-transparent" />
           </div>
         );
       })}
@@ -315,36 +326,11 @@ export const Hero: React.FC<HeroProps> = ({
             background: 'linear-gradient(180deg, rgba(136, 19, 55, 0.22) 0%, rgba(88, 28, 28, 0.1) 50%, transparent 100%)'
           }}
         />
-
-        {/* Mid-Background Glowing Red Circular Aura (Preserves Red Atmosphere on Mobile) */}
-        <div 
-          className="absolute top-[38%] left-[-10%] sm:left-[2%] w-[290px] sm:w-[480px] h-[290px] sm:h-[480px] rounded-full blur-3xl pointer-events-none opacity-45 sm:opacity-20 animate-red-aura"
-          style={{
-            background: 'radial-gradient(circle, rgba(225, 29, 72, 0.24) 0%, rgba(185, 28, 28, 0.12) 45%, transparent 70%)'
-          }}
-        />
-
-        {/* Lower-Background Glowing Red Circular Atmosphere behind typography & content */}
-        <div 
-          className="absolute bottom-[6%] right-[-8%] sm:right-[10%] w-[280px] sm:w-[420px] h-[280px] sm:h-[420px] rounded-full blur-3xl pointer-events-none opacity-40 sm:opacity-20"
-          style={{
-            background: 'radial-gradient(circle, rgba(225, 29, 72, 0.22) 0%, rgba(153, 27, 27, 0.08) 50%, transparent 75%)'
-          }}
-        />
-
-        {/* Subtle Ambient Red Atmospheric Wash across full hero height */}
-        <div 
-          className="absolute inset-0 pointer-events-none mix-blend-screen opacity-30 sm:opacity-20"
-          style={{
-            background: 'radial-gradient(ellipse at 50% 50%, rgba(225, 29, 72, 0.12) 0%, transparent 75%)'
-          }}
-        />
-
       </div>
 
 
       {/* Hero Content Container */}
-      <div className="relative z-20 h-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-end pb-12 sm:pb-20 pt-20">
+      <div className="relative z-20 h-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-end pb-16 sm:pb-20">
         
         {/* Main Content (Positioned Lower-Left) */}
         <div className="max-w-2xl text-left space-y-4">

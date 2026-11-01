@@ -111,7 +111,7 @@ export const CustomizerModal: React.FC<CustomizerModalProps> = ({
                   <button
                     type="button"
                     onClick={() => {
-                      const def = '/src/assets/images/anas_profile_real.jpg';
+                      const def = '/assets/images/anas_profile_real.jpg';
                       setPhotoPreview(def);
                       setFormData((prev) => ({ ...prev, photoUrl: def }));
                     }}

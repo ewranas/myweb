@@ -44,7 +44,7 @@ export const initialPersonalInfo: PersonalInfo = {
     instagram: 'https://www.instagram.com/_mr_solstice?rpxt=MTJqMnNqcnd1cXF2dQ==',
     linkedin: 'https://linkedin.com/in/anas-ahammed',
   },
-  photoUrl: '/src/assets/images/anas_profile_real.jpg',
+  photoUrl: '/assets/images/anas_profile_real.jpg',
 };
 
 export interface HeroSlide {
@@ -66,7 +66,7 @@ export const heroSlides: HeroSlide[] = [
     subtitle: 'Developer & Digital Creator.',
     description:
       "I'm a young developer from Bangladesh, exploring technology and building meaningful digital experiences.",
-    backgroundImage: '/src/assets/images/hero_moon_skyscraper_1793472035293.jpg',
+    backgroundImage: '/assets/images/hero_moon_skyscraper_1793472035293.jpg',
     actionText: 'Explore My Work',
     actionTarget: '#projects',
   },
@@ -77,7 +77,7 @@ export const heroSlides: HeroSlide[] = [
     subtitle: 'Driven by Code & Exploration.',
     description:
       "I'm a 17-year-old student passionate about programming, technology, and building meaningful digital experiences.",
-    backgroundImage: '/src/assets/images/about_abstract_tech_1793472036686.jpg',
+    backgroundImage: '/assets/images/about_abstract_tech_1793472036686.jpg',
     actionText: 'Read My Story',
     actionTarget: '#about',
   },
@@ -88,7 +88,7 @@ export const heroSlides: HeroSlide[] = [
     subtitle: 'FOLAFOL Educational Platform.',
     description:
       'Exploring ideas. Building digital experiences for students across Bangladesh.',
-    backgroundImage: '/src/assets/images/projects_arch_scene_1793472037437.jpg',
+    backgroundImage: '/assets/images/projects_arch_scene_1793472037437.jpg',
     actionText: 'View Projects',
     actionTarget: '#projects',
   },
@@ -99,7 +99,7 @@ export const heroSlides: HeroSlide[] = [
     subtitle: 'Collaborate & Build.',
     description:
       "Have an idea? Let's create something meaningful together.",
-    backgroundImage: '/src/assets/images/contact_nocturne_scene_1793472038223.jpg',
+    backgroundImage: '/assets/images/contact_nocturne_scene_1793472038223.jpg',
     actionText: 'Get in Touch',
     actionTarget: '#contact-modal',
   },
@@ -295,7 +295,7 @@ export const initialProjects: ProjectItem[] = [
     technologies: ['Python 3', 'File I/O', 'OS Module', 'Command Line'],
     githubUrl: 'https://github.com/zerolap657-design',
     liveDemoUrl: '#',
-    image: '/src/assets/images/dev_workspace_code_1793470982568.jpg',
+    image: '/assets/images/dev_workspace_code_1793470982568.jpg',
     highlights: [
       'Automated folder sorting for Class 11 science textbooks and test papers',
       'Zero-dependency command-line interface with instantaneous performance',
@@ -312,7 +312,7 @@ export const initialProjects: ProjectItem[] = [
     technologies: ['HTML5', 'CSS3', 'JavaScript', 'Minimalist UI'],
     githubUrl: 'https://github.com/zerolap657-design',
     liveDemoUrl: '#',
-    image: '/src/assets/images/bangladesh_natore_tech_1793470982439.jpg',
+    image: '/assets/images/bangladesh_natore_tech_1793470982439.jpg',
     highlights: [
       'Concise mathematical and physical science formula cheatsheets',
       'Ultra-fast load time on Android smartphones and low bandwidth',

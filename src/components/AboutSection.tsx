@@ -12,7 +12,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   onOpenCustomizer,
 }) => {
   return (
-    <section id="about" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-transparent">
+    <section id="about" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[#050505]">
       <div className="max-w-6xl mx-auto">
         
         {/* Section Heading */}
@@ -35,7 +35,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               {/* Clean frame showcasing authentic color photo with hover glow */}
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#111111] border border-white/[0.14] group-hover:border-rose-500/40 shadow-2xl transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(225,29,72,0.18)]">
                 <img
-                  src={personalInfo.photoUrl || '/src/assets/images/anas_profile_real.jpg'}
+                  src={personalInfo.photoUrl?.replace('/src/', '/') || '/assets/images/anas_profile_real.jpg'}
                   alt={personalInfo.name}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700 ease-out shadow-inner"

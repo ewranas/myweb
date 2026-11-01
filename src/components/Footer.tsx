@@ -14,7 +14,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
   };
 
   return (
-    <footer className="relative border-t border-white/[0.08] bg-[#050505]/85 backdrop-blur-md pt-16 pb-12 px-6 sm:px-12 lg:px-16 text-left">
+    <footer className="relative border-t border-white/[0.08] bg-[#050505] pt-16 pb-12 px-6 sm:px-12 lg:px-16 text-left">
       <div className="max-w-6xl mx-auto space-y-10">
         
         {/* Top Info & Quotes */}

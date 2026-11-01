@@ -23,8 +23,8 @@ export default function App() {
       const saved = localStorage.getItem('anas_portfolio_info');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (!parsed.photoUrl || parsed.photoUrl.includes('anas_profile_portrait_1793470981773')) {
-          parsed.photoUrl = '/src/assets/images/anas_profile_real.jpg';
+        if (!parsed.photoUrl || parsed.photoUrl.includes('anas_profile_portrait_1793470981773') || parsed.photoUrl.startsWith('/src/')) {
+          parsed.photoUrl = '/assets/images/anas_profile_real.jpg';
         }
         return parsed;
       }
@@ -40,6 +40,9 @@ export default function App() {
       if (saved) {
         const parsed: ProjectItem[] = JSON.parse(saved);
         return parsed.map((p) => {
+          if (p.image && p.image.startsWith('/src/')) {
+            p.image = p.image.replace('/src/', '/');
+          }
           if (p.id === 'folafol' && !p.videoUrl) {
             return {
               ...p,
@@ -172,43 +175,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-[#050505] text-[#f5f5f5] flex flex-col selection:bg-white/20 selection:text-white">
       
-      {/* Global Unified Cinematic Dark Burgundy and Black Atmosphere */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Base dark canvas */}
-        <div className="absolute inset-0 bg-[#050505]" />
-
-        {/* Top-Right Burgundy/Crimson Ambient Glow (Behind Orb in Hero) */}
-        <div
-          className="absolute top-[-5%] right-[-10%] sm:right-[5%] w-[420px] sm:w-[750px] h-[420px] sm:h-[750px] rounded-full blur-[110px] opacity-50 sm:opacity-35"
-          style={{
-            background:
-              'radial-gradient(circle, rgba(225, 29, 72, 0.32) 0%, rgba(159, 18, 57, 0.18) 40%, rgba(76, 5, 25, 0.08) 70%, transparent 85%)',
-          }}
-        />
-
-        {/* Mid-Page Burgundy Glow (Extends across About and Selected Work) */}
-        <div
-          className="absolute top-[32%] left-[-15%] sm:left-[-5%] w-[380px] sm:w-[680px] h-[380px] sm:h-[680px] rounded-full blur-[120px] opacity-45 sm:opacity-25"
-          style={{
-            background:
-              'radial-gradient(circle, rgba(190, 18, 60, 0.25) 0%, rgba(136, 19, 55, 0.14) 45%, rgba(76, 5, 25, 0.06) 70%, transparent 80%)',
-          }}
-        />
-
-        {/* Lower-Page Crimson/Burgundy Atmosphere (Extends across Projects & Journey) */}
-        <div
-          className="absolute top-[62%] right-[-12%] sm:right-[-2%] w-[360px] sm:w-[620px] h-[360px] sm:h-[620px] rounded-full blur-[130px] opacity-40 sm:opacity-20"
-          style={{
-            background:
-              'radial-gradient(circle, rgba(225, 29, 72, 0.22) 0%, rgba(159, 18, 57, 0.12) 50%, transparent 80%)',
-          }}
-        />
-
-        {/* Subtle Nocturne Film Grain Texture across entire page */}
-        <div className="absolute inset-0 bg-grain opacity-70 mix-blend-overlay" />
-      </div>
-
-      {/* Ambient Interactive Cursor Spotlight with touch support */}
+      {/* Ambient Interactive Cursor Spotlight */}
       <div
         className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300 opacity-70"
         style={{

@@ -26,7 +26,7 @@ export const ProjectEditModal: React.FC<ProjectEditModalProps> = ({
   const [techString, setTechString] = useState(project?.technologies.join(', ') || '');
   const [githubUrl, setGithubUrl] = useState(project?.githubUrl || '');
   const [liveDemoUrl, setLiveDemoUrl] = useState(project?.liveDemoUrl || '');
-  const [image, setImage] = useState(project?.image || '/src/assets/images/dev_workspace_code_1793470982568.jpg');
+  const [image, setImage] = useState(project?.image || '/assets/images/dev_workspace_code_1793470982568.jpg');
 
   useEffect(() => {
     if (project) {
@@ -46,7 +46,7 @@ export const ProjectEditModal: React.FC<ProjectEditModalProps> = ({
       setTechString('Python, Web');
       setGithubUrl('https://github.com/zerolap657-design');
       setLiveDemoUrl('#');
-      setImage('/src/assets/images/dev_workspace_code_1793470982568.jpg');
+      setImage('/assets/images/dev_workspace_code_1793470982568.jpg');
     }
   }, [project]);
 
