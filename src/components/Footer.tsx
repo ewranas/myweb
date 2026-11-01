@@ -18,63 +18,44 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
       <div className="max-w-6xl mx-auto space-y-10">
         
         {/* Top Info & Quotes */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-10 border-b border-white/[0.06]">
+        <div className="reveal-item flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-10 border-b border-white/[0.06]">
           <div className="space-y-1.5">
             <h4 className="font-editorial text-lg font-bold text-[#f5f5f5]">
               Designed & Built by Anas Ahammed.
             </h4>
-            <p className="text-xs text-[#888888] font-normal tracking-wide">
-              Always Learning. Always Building.
+            <p className="text-xs text-[#888888] font-normal tracking-wide flex items-center gap-2">
+              <span>Always Learning. Always Building.</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
             </p>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-6 text-[#888888]">
-            <a
-              href="https://github.com/zerolap657-design"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#f5f5f5] transition-colors p-1"
-              title="GitHub"
-              aria-label="GitHub"
-            >
-              <Github className="w-4 h-4" />
-            </a>
-
-            <a
-              href="https://www.instagram.com/_mr_solstice?rpxt=MTJqMnNqcnd1cXF2dQ=="
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#f5f5f5] transition-colors p-1"
-              title="Instagram"
-              aria-label="Instagram"
-            >
-              <Instagram className="w-4 h-4" />
-            </a>
-
-            <a
-              href="https://www.facebook.com/share/1KPsNUo1Rz/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#f5f5f5] transition-colors p-1"
-              title="Facebook"
-              aria-label="Facebook"
-            >
-              <Facebook className="w-4 h-4" />
-            </a>
-
-            <a
-              href="mailto:anasexp10@gmail.com"
-              className="hover:text-[#f5f5f5] transition-colors p-1"
-              title="Email"
-              aria-label="Email"
-            >
-              <Mail className="w-4 h-4" />
-            </a>
+          {/* Social Links with Hover Elevation and Subtle Halo */}
+          <div className="flex items-center gap-3 sm:gap-4 text-[#888888]">
+            {[
+              { href: 'https://github.com/zerolap657-design', icon: Github, title: 'GitHub' },
+              { href: 'https://www.instagram.com/_mr_solstice?rpxt=MTJqMnNqcnd1cXF2dQ==', icon: Instagram, title: 'Instagram' },
+              { href: 'https://www.facebook.com/share/1KPsNUo1Rz/', icon: Facebook, title: 'Facebook' },
+              { href: 'mailto:anasexp10@gmail.com', icon: Mail, title: 'Email' },
+            ].map((soc, idx) => {
+              const Icon = soc.icon;
+              return (
+                <a
+                  key={idx}
+                  href={soc.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-full bg-white/[0.03] hover:bg-white/[0.1] hover:text-[#f5f5f5] hover:scale-110 hover:-translate-y-1 transition-all duration-300 border border-white/[0.05] hover:border-white/[0.2] shadow-sm hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                  title={soc.title}
+                  aria-label={soc.title}
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              );
+            })}
 
             <button
               onClick={scrollToTop}
-              className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-[#f5f5f5] transition-colors cursor-pointer ml-2"
+              className="p-2.5 rounded-full bg-white/[0.05] hover:bg-white/[0.12] text-[#888888] hover:text-[#f5f5f5] hover:scale-110 hover:-translate-y-1 transition-all duration-300 border border-white/[0.08] hover:border-white/[0.2] cursor-pointer ml-1 shadow-sm"
               title="Back to top"
               aria-label="Back to top"
             >

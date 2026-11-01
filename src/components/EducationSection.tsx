@@ -11,7 +11,7 @@ export const EducationSection: React.FC = () => {
       <div className="max-w-4xl mx-auto text-left">
         
         {/* Section Heading */}
-        <div className="mb-14 space-y-2">
+        <div className="reveal-item mb-14 space-y-2">
           <span className="text-[11px] font-mono tracking-[0.25em] text-[#888888] uppercase">
             05 / ACADEMICS & CREDENTIALS
           </span>
@@ -22,7 +22,7 @@ export const EducationSection: React.FC = () => {
 
         <div className="space-y-8">
           {/* Current College Card */}
-          <div className="p-8 sm:p-12 rounded-3xl bg-[#111111] border border-white/[0.08] space-y-6">
+          <div className="reveal-item p-8 sm:p-12 rounded-3xl bg-[#111111] border border-white/[0.08] hover:border-white/[0.18] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl space-y-6">
             <div className="space-y-1">
               <span className="text-xs font-mono text-[#888888] tracking-widest uppercase">
                 Current College
@@ -33,27 +33,26 @@ export const EducationSection: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-4 border-t border-white/[0.06] text-left">
-              <div>
-                <span className="text-[10px] font-mono text-[#666666] uppercase block">Grade</span>
-                <span className="text-sm font-medium text-[#f5f5f5] mt-1 block">Class 11</span>
-              </div>
-              <div>
-                <span className="text-[10px] font-mono text-[#666666] uppercase block">Batch</span>
-                <span className="text-sm font-medium text-[#f5f5f5] mt-1 block">HSC 2028</span>
-              </div>
-              <div>
-                <span className="text-[10px] font-mono text-[#666666] uppercase block">Stream</span>
-                <span className="text-sm font-medium text-[#f5f5f5] mt-1 block">Science Group</span>
-              </div>
-              <div>
-                <span className="text-[10px] font-mono text-[#666666] uppercase block">Location</span>
-                <span className="text-sm font-medium text-[#f5f5f5] mt-1 block">Natore, Bangladesh</span>
-              </div>
+              {[
+                { label: 'Grade', val: 'Class 11' },
+                { label: 'Batch', val: 'HSC 2028' },
+                { label: 'Stream', val: 'Science Group' },
+                { label: 'Location', val: 'Natore, Bangladesh' },
+              ].map((item, i) => (
+                <div key={i} className="group/stat">
+                  <span className="text-[10px] font-mono text-[#666666] uppercase block group-hover/stat:text-rose-400 transition-colors">
+                    {item.label}
+                  </span>
+                  <span className="text-sm font-medium text-[#f5f5f5] mt-1 block">
+                    {item.val}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Professional Certificate Section Under College */}
-          <div className="p-8 sm:p-12 rounded-3xl bg-[#111111] border border-white/[0.08] space-y-8">
+          <div className="reveal-item p-8 sm:p-12 rounded-3xl bg-[#111111] border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_50px_rgba(255,255,255,0.03)] space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">

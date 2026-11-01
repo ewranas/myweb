@@ -30,7 +30,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
       <div className="max-w-6xl mx-auto">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 sm:mb-20 text-left">
+        <div className="reveal-item flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 sm:mb-20 text-left">
           <div className="space-y-2">
             <span className="text-[11px] font-mono tracking-[0.25em] text-[#888888] uppercase">
               03 / SELECTED WORK
@@ -42,7 +42,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
           <button
             onClick={onAddNewProject}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-xs text-[#888888] hover:text-[#f5f5f5] transition-colors cursor-pointer self-start sm:self-auto"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-xs text-[#888888] hover:text-[#f5f5f5] transition-all hover:scale-105 cursor-pointer self-start sm:self-auto shadow-sm"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Manage Projects</span>
@@ -51,8 +51,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
         {/* Large Studio-Style Featured Showcase: FOLAFOL */}
         {folafol && (
-          <div className="mb-24">
-            <div className="group rounded-3xl bg-[#111111] border border-white/[0.08] overflow-hidden shadow-2xl transition-all duration-500 hover:border-white/[0.18]">
+          <div className="reveal-item mb-24">
+            <div className="group rounded-3xl bg-[#111111] border border-white/[0.08] overflow-hidden shadow-2xl transition-all duration-500 hover:border-white/[0.22] hover:shadow-[0_0_50px_rgba(255,255,255,0.04)]">
               
               {/* Massive Video-Based Mockup Showcase */}
               <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#000000] flex items-center justify-center">
@@ -147,10 +147,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
           {projects
             .filter((p) => p.id !== 'folafol')
-            .map((project) => (
+            .map((project, pIdx) => (
               <div
                 key={project.id}
-                className="group rounded-3xl bg-[#111111] border border-white/[0.08] overflow-hidden flex flex-col justify-between hover:border-white/[0.18] transition-all duration-300"
+                className="reveal-item group rounded-3xl bg-[#111111] border border-white/[0.08] overflow-hidden flex flex-col justify-between hover:border-white/[0.22] hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)] transition-all duration-400"
+                style={{ transitionDelay: `${pIdx * 100}ms` }}
               >
                 <div>
                   <div className="relative aspect-[16/10] overflow-hidden bg-[#000000]">

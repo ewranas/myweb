@@ -274,7 +274,7 @@ export const initialProjects: ProjectItem[] = [
     technologies: ['Python', 'Modern Web UI', 'REST APIs', 'Education Data Hub'],
     githubUrl: 'https://github.com/zerolap657-design',
     liveDemoUrl: '#',
-    image: '/src/assets/images/folafol_project_mockup_1793470981810.jpg',
+    image: 'https://res.cloudinary.com/fcsclifx/image/upload/v1793473773/WhatsApp_Image_2026-10-31_at_12.04.26_PM.jpg',
     videoUrl: 'https://res.cloudinary.com/fcsclifx/video/upload/v1793473651/WhatsApp_Video_2026-10-31_at_12.06.45_PM.mp4',
     featured: true,
     highlights: [

@@ -61,11 +61,11 @@ export default function App() {
   const [currentEditProject, setCurrentEditProject] = useState<ProjectItem | null>(null);
   const [activeSection, setActiveSection] = useState('hero');
 
-  // Track active section for navigation highlighting
+  // Track active section for navigation highlighting & observe scroll reveals
   useEffect(() => {
     const sectionIds = ['hero', 'about', 'projects', 'journey', 'education'];
 
-    const observer = new IntersectionObserver(
+    const navObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -78,10 +78,38 @@ export default function App() {
 
     sectionIds.forEach((id) => {
       const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      if (el) navObserver.observe(el);
     });
 
-    return () => observer.disconnect();
+    // Scroll reveal observer for .reveal-item
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    const revealElements = document.querySelectorAll('.reveal-item');
+    revealElements.forEach((el) => revealObserver.observe(el));
+
+    return () => {
+      navObserver.disconnect();
+      revealObserver.disconnect();
+    };
+  }, []);
+
+  // Subtle interactive ambient cursor spotlight
+  const [cursorPos, setCursorPos] = useState({ x: -1000, y: -1000 });
+  useEffect(() => {
+    const onMouseMove = (e: MouseEvent) => {
+      setCursorPos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', onMouseMove);
   }, []);
 
   const handleUpdatePersonalInfo = (updated: PersonalInfo) => {
@@ -135,6 +163,14 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-[#050505] text-[#f5f5f5] flex flex-col selection:bg-white/20 selection:text-white">
       
+      {/* Ambient Interactive Cursor Spotlight */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300 opacity-70"
+        style={{
+          background: `radial-gradient(650px circle at ${cursorPos.x}px ${cursorPos.y}px, rgba(225, 29, 72, 0.045), rgba(255, 255, 255, 0.018) 45%, transparent 75%)`,
+        }}
+      />
+
       {/* Floating Center Navigation Pill */}
       <Navbar
         onOpenContactModal={() => setContactModalOpen(true)}

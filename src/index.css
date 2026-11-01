@@ -114,3 +114,194 @@
 .animate-slide-progress {
   animation: slideProgress 6s linear forwards;
 }
+
+/* Red Moon & Subtly Red-Tinted Clouds Dynamic Animations */
+@keyframes redMoonFloat {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    filter: drop-shadow(0 0 35px rgba(239, 68, 68, 0.5)) drop-shadow(0 0 85px rgba(185, 28, 28, 0.35));
+  }
+  50% {
+    transform: translateY(-14px) rotate(1deg);
+    filter: drop-shadow(0 0 65px rgba(239, 68, 68, 0.85)) drop-shadow(0 0 145px rgba(220, 38, 38, 0.55));
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    filter: drop-shadow(0 0 35px rgba(239, 68, 68, 0.5)) drop-shadow(0 0 85px rgba(185, 28, 28, 0.35));
+  }
+}
+
+@keyframes cloudDriftFlow1 {
+  0% {
+    transform: translateX(-16%) translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateX(14%) translateY(-10px) scale(1.04);
+  }
+  100% {
+    transform: translateX(-16%) translateY(0px) scale(1);
+  }
+}
+
+@keyframes cloudDriftFlow2 {
+  0% {
+    transform: translateX(15%) translateY(-6px) scale(1.02);
+  }
+  50% {
+    transform: translateX(-15%) translateY(8px) scale(0.98);
+  }
+  100% {
+    transform: translateX(15%) translateY(-6px) scale(1.02);
+  }
+}
+
+@keyframes cloudMoonWisp {
+  0% {
+    transform: translateX(-28%) translateY(0px) scaleX(0.9);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(22%) translateY(-4px) scaleX(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(-28%) translateY(0px) scaleX(0.9);
+    opacity: 0.35;
+  }
+}
+
+@keyframes emberRising {
+  0% {
+    transform: translateY(0px) translateX(0px) scale(0.6);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  75% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-130px) translateX(30px) scale(1.3);
+    opacity: 0;
+  }
+}
+
+@keyframes redAuraBreath {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.05);
+  }
+}
+
+.animate-red-moon-float {
+  animation: redMoonFloat 6s ease-in-out infinite;
+}
+
+.animate-cloud-flow-1 {
+  animation: cloudDriftFlow1 16s ease-in-out infinite;
+}
+
+.animate-cloud-flow-2 {
+  animation: cloudDriftFlow2 22s ease-in-out infinite;
+}
+
+.animate-cloud-wisp {
+  animation: cloudMoonWisp 12s ease-in-out infinite;
+}
+
+.animate-red-aura {
+  animation: redAuraBreath 7s ease-in-out infinite;
+}
+
+.animate-ember-1 {
+  animation: emberRising 5.2s ease-out infinite;
+}
+.animate-ember-2 {
+  animation: emberRising 6.8s ease-out 1.2s infinite;
+}
+.animate-ember-3 {
+  animation: emberRising 4.6s ease-out 2.5s infinite;
+}
+.animate-ember-4 {
+  animation: emberRising 7.4s ease-out 0.6s infinite;
+}
+.animate-ember-5 {
+  animation: emberRising 5.8s ease-out 3.1s infinite;
+}
+.animate-ember-6 {
+  animation: emberRising 6.2s ease-out 1.8s infinite;
+}
+
+/* Site-wide Premium Animations */
+@keyframes timelineGlow {
+  0% {
+    top: -30%;
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes cardShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes badgePingSlow {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+.animate-timeline-glow {
+  animation: timelineGlow 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-badge-ping {
+  animation: badgePingSlow 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Scroll reveal smooth effect */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+
+
