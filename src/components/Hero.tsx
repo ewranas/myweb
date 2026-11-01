@@ -51,13 +51,20 @@ export const Hero: React.FC<HeroProps> = ({
     setCurrentSlideIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
-  // Touch swipe support for mobile
+  // Touch swipe and parallax support for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.targetTouches[0].clientX;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     touchEndX.current = e.targetTouches[0].clientX;
+    if (e.targetTouches[0]) {
+      const touch = e.targetTouches[0];
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = ((touch.clientX - rect.left) / rect.width - 0.5) * 1.5;
+      const y = ((touch.clientY - rect.top) / rect.height - 0.5) * 1.5;
+      setMouseOffset({ x, y });
+    }
   };
 
   const handleTouchEnd = () => {
@@ -70,6 +77,7 @@ export const Hero: React.FC<HeroProps> = ({
     }
     touchStartX.current = null;
     touchEndX.current = null;
+    setMouseOffset({ x: 0, y: 0 });
   };
 
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
@@ -91,7 +99,7 @@ export const Hero: React.FC<HeroProps> = ({
   return (
     <section
       id="hero"
-      className="relative w-full h-screen min-h-[680px] overflow-hidden select-none bg-[#050505] bg-grain"
+      className="relative w-full h-[100svh] min-h-[640px] sm:min-h-[700px] overflow-hidden select-none bg-[#050505] bg-grain"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
@@ -112,18 +120,19 @@ export const Hero: React.FC<HeroProps> = ({
               isActive ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            {/* Cinematic Grayscale Artwork */}
+            {/* Cinematic Artwork with responsive focal alignment and high-fidelity contrast */}
             <img
               src={slide.backgroundImage}
               alt={slide.title}
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover object-center filter grayscale contrast-[1.08] brightness-[0.82]"
+              className="w-full h-full object-cover object-[center_28%] sm:object-center filter grayscale contrast-[1.04] brightness-[0.94] sm:contrast-[1.08] sm:brightness-[0.82] transition-transform duration-700"
+              loading="eager"
             />
 
-            {/* Cinematic Gradient Overlays to preserve legibility and atmospheric fog */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/85 via-[#050505]/30 to-transparent" />
-            <div className="absolute top-0 left-0 right-0 h-44 bg-gradient-to-b from-[#050505]/80 to-transparent" />
+            {/* Responsive Cinematic Gradient Overlays: keeps background texture and lights fully visible on mobile */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/95 via-[#050505]/20 to-transparent sm:from-[#050505] sm:via-[#050505]/40" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/50 via-transparent to-transparent sm:from-[#050505]/85 sm:via-[#050505]/30 sm:to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-32 sm:h-44 bg-gradient-to-b from-[#050505]/60 sm:from-[#050505]/80 to-transparent" />
           </div>
         );
       })}
@@ -307,11 +316,35 @@ export const Hero: React.FC<HeroProps> = ({
           }}
         />
 
+        {/* Mid-Background Glowing Red Circular Aura (Preserves Red Atmosphere on Mobile) */}
+        <div 
+          className="absolute top-[38%] left-[-10%] sm:left-[2%] w-[290px] sm:w-[480px] h-[290px] sm:h-[480px] rounded-full blur-3xl pointer-events-none opacity-45 sm:opacity-20 animate-red-aura"
+          style={{
+            background: 'radial-gradient(circle, rgba(225, 29, 72, 0.24) 0%, rgba(185, 28, 28, 0.12) 45%, transparent 70%)'
+          }}
+        />
+
+        {/* Lower-Background Glowing Red Circular Atmosphere behind typography & content */}
+        <div 
+          className="absolute bottom-[6%] right-[-8%] sm:right-[10%] w-[280px] sm:w-[420px] h-[280px] sm:h-[420px] rounded-full blur-3xl pointer-events-none opacity-40 sm:opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(225, 29, 72, 0.22) 0%, rgba(153, 27, 27, 0.08) 50%, transparent 75%)'
+          }}
+        />
+
+        {/* Subtle Ambient Red Atmospheric Wash across full hero height */}
+        <div 
+          className="absolute inset-0 pointer-events-none mix-blend-screen opacity-30 sm:opacity-20"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 50%, rgba(225, 29, 72, 0.12) 0%, transparent 75%)'
+          }}
+        />
+
       </div>
 
 
       {/* Hero Content Container */}
-      <div className="relative z-20 h-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-end pb-16 sm:pb-20">
+      <div className="relative z-20 h-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-end pb-12 sm:pb-20 pt-20">
         
         {/* Main Content (Positioned Lower-Left) */}
         <div className="max-w-2xl text-left space-y-4">
@@ -420,22 +453,22 @@ export const Hero: React.FC<HeroProps> = ({
       </div>
 
       {/* Carousel Navigation Arrow Button (Right Side) */}
-      <div className="absolute right-6 sm:right-12 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-3">
+      <div className="absolute right-4 sm:right-12 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-2.5 sm:gap-3">
         <button
           onClick={handleNext}
-          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#111111]/80 hover:bg-[#222222] border border-white/[0.12] backdrop-blur-xl flex items-center justify-center text-[#f5f5f5] hover:scale-105 transition-all cursor-pointer shadow-2xl"
+          className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#111111]/80 hover:bg-[#222222] border border-white/[0.12] backdrop-blur-xl flex items-center justify-center text-[#f5f5f5] hover:scale-105 transition-all cursor-pointer shadow-2xl"
           aria-label="Next slide"
         >
-          <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6" />
         </button>
 
         {currentSlideIndex > 0 && (
           <button
             onClick={handlePrev}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#111111]/60 hover:bg-[#222222] border border-white/[0.08] backdrop-blur-xl flex items-center justify-center text-[#888888] hover:text-[#f5f5f5] transition-all cursor-pointer"
+            className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#111111]/60 hover:bg-[#222222] border border-white/[0.08] backdrop-blur-xl flex items-center justify-center text-[#888888] hover:text-[#f5f5f5] transition-all cursor-pointer"
             aria-label="Previous slide"
           >
-            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
           </button>
         )}
       </div>

@@ -102,14 +102,23 @@ export default function App() {
     };
   }, []);
 
-  // Subtle interactive ambient cursor spotlight
+  // Subtle interactive ambient cursor spotlight with touch support
   const [cursorPos, setCursorPos] = useState({ x: -1000, y: -1000 });
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
     };
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches && e.touches[0]) {
+        setCursorPos({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+      }
+    };
     window.addEventListener('mousemove', onMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', onMouseMove);
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('touchmove', onTouchMove);
+    };
   }, []);
 
   const handleUpdatePersonalInfo = (updated: PersonalInfo) => {
@@ -167,7 +176,10 @@ export default function App() {
       <div
         className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300 opacity-70"
         style={{
-          background: `radial-gradient(650px circle at ${cursorPos.x}px ${cursorPos.y}px, rgba(225, 29, 72, 0.045), rgba(255, 255, 255, 0.018) 45%, transparent 75%)`,
+          background:
+            cursorPos.x === -1000
+              ? 'radial-gradient(650px circle at 50% 35%, rgba(225, 29, 72, 0.05), rgba(255, 255, 255, 0.015) 45%, transparent 75%)'
+              : `radial-gradient(650px circle at ${cursorPos.x}px ${cursorPos.y}px, rgba(225, 29, 72, 0.045), rgba(255, 255, 255, 0.018) 45%, transparent 75%)`,
         }}
       />
 
