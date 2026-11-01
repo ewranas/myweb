@@ -3,7 +3,7 @@ import { timelineMilestones } from '../data/portfolioData';
 
 export const JourneyTimeline: React.FC = () => {
   return (
-    <section id="journey" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[#050505]">
+    <section id="journey" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-transparent">
       <div className="max-w-4xl mx-auto text-left">
         
         {/* Section Heading */}

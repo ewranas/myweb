@@ -99,7 +99,7 @@ export const Hero: React.FC<HeroProps> = ({
   return (
     <section
       id="hero"
-      className="relative w-full h-[100svh] min-h-[640px] sm:min-h-[700px] overflow-hidden select-none bg-[#050505] bg-grain"
+      className="relative w-full h-[100svh] min-h-[640px] sm:min-h-[700px] overflow-hidden select-none bg-transparent"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
@@ -129,10 +129,10 @@ export const Hero: React.FC<HeroProps> = ({
               loading="eager"
             />
 
-            {/* Responsive Cinematic Gradient Overlays: keeps background texture and lights fully visible on mobile */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/95 via-[#050505]/20 to-transparent sm:from-[#050505] sm:via-[#050505]/40" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/50 via-transparent to-transparent sm:from-[#050505]/85 sm:via-[#050505]/30 sm:to-transparent" />
-            <div className="absolute top-0 left-0 right-0 h-32 sm:h-44 bg-gradient-to-b from-[#050505]/60 sm:from-[#050505]/80 to-transparent" />
+            {/* Seamless Gradient Overlays: gently blends into the dark burgundy global atmosphere without an abrupt solid black cut-off */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/85 via-transparent to-transparent sm:from-[#050505]/90 sm:via-[#050505]/20" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/45 via-transparent to-transparent sm:from-[#050505]/75 sm:via-[#050505]/20 sm:to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-32 sm:h-44 bg-gradient-to-b from-[#050505]/50 sm:from-[#050505]/70 to-transparent" />
           </div>
         );
       })}

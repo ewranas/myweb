@@ -26,8 +26,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const folafol = projects.find((p) => p.id === 'folafol');
 
   return (
-    <section id="projects" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[#050505]">
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-transparent">
+      {/* Ambient Burgundy/Crimson Aura behind Selected Work Section */}
+      <div 
+        className="absolute top-10 right-[-10%] sm:right-[5%] w-[340px] sm:w-[560px] h-[340px] sm:h-[560px] rounded-full blur-[100px] opacity-40 sm:opacity-20 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(225, 29, 72, 0.25) 0%, rgba(159, 18, 57, 0.12) 45%, transparent 75%)'
+        }}
+      />
+
+      <div className="max-w-6xl mx-auto relative z-10">
         
         {/* Section Header */}
         <div className="reveal-item flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 sm:mb-20 text-left">

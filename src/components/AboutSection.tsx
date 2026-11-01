@@ -12,7 +12,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   onOpenCustomizer,
 }) => {
   return (
-    <section id="about" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[#050505]">
+    <section id="about" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-transparent">
       <div className="max-w-6xl mx-auto">
         
         {/* Section Heading */}
