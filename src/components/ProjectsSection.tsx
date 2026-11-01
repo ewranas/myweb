@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Github,
   ArrowUpRight,
+  ExternalLink,
   Eye,
   Edit3,
   Plus,
@@ -68,12 +69,19 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/80 via-transparent to-transparent opacity-60 pointer-events-none" />
 
-                {/* Subtle Floating Video Badge */}
-                <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-[10px] font-mono tracking-widest uppercase text-white/90">
+                {/* Floating Video Badge & Live Link */}
+                <div className="absolute top-4 left-4 z-10">
+                  <a
+                    href={folafol.liveDemoUrl || 'https://folafol-web.vercel.app/'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/80 hover:bg-black backdrop-blur-md border border-white/15 hover:border-[#e5173f]/60 text-[10px] font-mono tracking-widest uppercase text-white/90 hover:text-white transition-all shadow-lg group cursor-pointer"
+                    title="Open Live Website: https://folafol-web.vercel.app/"
+                  >
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    APP PREVIEW
-                  </span>
+                    <span>APP PREVIEW &bull; VISIT LIVE</span>
+                    <ExternalLink className="w-3 h-3 text-[#e5173f] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
                 </div>
               </div>
 
@@ -82,32 +90,57 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#888888]">
-                      {folafol.badge}
-                    </span>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#888888]">
+                        {folafol.badge}
+                      </span>
+                      <span className="text-white/20 text-[10px]">&bull;</span>
+                      <a
+                        href={folafol.liveDemoUrl || 'https://folafol-web.vercel.app/'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-mono text-[#e5173f] hover:text-[#ff4d6d] hover:underline flex items-center gap-1 transition-colors"
+                        title="Visit https://folafol-web.vercel.app/"
+                      >
+                        folafol-web.vercel.app
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                    </div>
                     <h3 className="font-editorial text-3xl sm:text-5xl font-bold text-[#f5f5f5] mt-1">
                       {folafol.title}
                     </h3>
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                    <a
+                      href={folafol.liveDemoUrl || 'https://folafol-web.vercel.app/'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-minimal-white px-5 py-2.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-md hover:scale-105 transition-all group"
+                      title="Open Live Website: https://folafol-web.vercel.app/"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      <span>Live Website</span>
+                    </a>
+
                     <button
                       onClick={() => setActiveModalProject(folafol)}
-                      className="btn-minimal-white px-5 py-2.5 rounded-full text-xs font-semibold flex items-center gap-1.5 cursor-pointer shadow-md"
+                      className="btn-minimal-outline px-4 py-2.5 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer hover:bg-white/[0.06] transition-colors"
+                      title="View Details"
                     >
                       <Eye className="w-3.5 h-3.5" />
-                      <span>View Project</span>
+                      <span>Details</span>
                     </button>
 
                     <a
-                      href="https://github.com/zerolap657-design"
+                      href={folafol.githubUrl || 'https://github.com/zerolap657-design'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn-minimal-outline px-4 py-2.5 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer"
+                      className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-[#f5f5f5] border border-white/[0.08] transition-colors cursor-pointer"
+                      title="GitHub"
                     >
-                      <Github className="w-3.5 h-3.5" />
-                      <span>GitHub</span>
+                      <Github className="w-4 h-4" />
                     </a>
 
                     <button
@@ -155,16 +188,44 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               >
                 <div>
                   <div className="relative aspect-[16/10] overflow-hidden bg-[#000000]">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover filter grayscale contrast-[1.05] brightness-[0.88] group-hover:scale-[1.02] transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 right-3">
+                    {project.embedUrl ? (
+                      <div className="relative w-full h-full bg-[#150205]">
+                        <iframe
+                          src={project.embedUrl}
+                          title={project.title}
+                          className="w-full h-full border-0 select-none"
+                          allow="autoplay; fullscreen"
+                        />
+                        <div className="absolute top-3 left-3 z-10 pointer-events-none">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-[#e5173f]/40 text-[9px] font-mono tracking-widest uppercase text-[#f3b4ae] shadow-lg">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#e5173f] animate-ping" />
+                            INTERACTIVE SHOWREEL
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover filter grayscale contrast-[1.05] brightness-[0.88] group-hover:scale-[1.02] transition-transform duration-500"
+                      />
+                    )}
+                    <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5">
+                      {project.embedUrl && (
+                        <a
+                          href={project.embedUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-xl bg-[#050505]/80 hover:bg-[#050505] text-[#888888] hover:text-white border border-white/[0.08] backdrop-blur-md transition-colors"
+                          title="Open Fullscreen Showreel"
+                        >
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </a>
+                      )}
                       <button
                         onClick={() => onEditProject(project)}
-                        className="p-2 rounded-xl bg-[#050505]/80 text-[#888888] hover:text-white border border-white/[0.08] backdrop-blur-md"
+                        className="p-2 rounded-xl bg-[#050505]/80 hover:bg-[#050505] text-[#888888] hover:text-white border border-white/[0.08] backdrop-blur-md transition-colors"
                         title="Edit project"
                       >
                         <Edit3 className="w-3.5 h-3.5" />
@@ -198,6 +259,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                   </div>
 
                   <div className="flex items-center gap-2">
+                    {project.liveDemoUrl && project.liveDemoUrl !== '#' && (
+                      <a
+                        href={project.liveDemoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-white transition-colors"
+                        title="Live Demo"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
                     <a
                       href={project.githubUrl}
                       target="_blank"
@@ -242,7 +314,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 </h3>
 
                 <div className="rounded-2xl overflow-hidden border border-white/[0.08] bg-black">
-                  {activeModalProject.videoUrl ? (
+                  {activeModalProject.embedUrl ? (
+                    <div className="relative aspect-[16/9] w-full bg-[#150205]">
+                      <iframe
+                        src={activeModalProject.embedUrl}
+                        title={activeModalProject.title}
+                        className="w-full h-full border-0"
+                        allow="autoplay; fullscreen"
+                      />
+                    </div>
+                  ) : activeModalProject.videoUrl ? (
                     <video
                       src={activeModalProject.videoUrl}
                       controls
@@ -282,18 +363,32 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/[0.08]">
                   <button
                     onClick={() => setActiveModalProject(null)}
-                    className="px-4 py-2 rounded-full text-xs text-[#888888] hover:text-white"
+                    className="px-4 py-2 rounded-full text-xs text-[#888888] hover:text-white cursor-pointer"
                   >
                     Close
                   </button>
-                  <a
-                    href={activeModalProject.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-minimal-white px-5 py-2 rounded-full text-xs font-semibold"
-                  >
-                    Open GitHub
-                  </a>
+                  {activeModalProject.githubUrl && (
+                    <a
+                      href={activeModalProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-minimal-outline px-4 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <Github className="w-3.5 h-3.5" />
+                      <span>GitHub</span>
+                    </a>
+                  )}
+                  {activeModalProject.liveDemoUrl && activeModalProject.liveDemoUrl !== '#' && (
+                    <a
+                      href={activeModalProject.liveDemoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-minimal-white px-5 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5 cursor-pointer hover:scale-105 transition-transform"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>Visit Live Site</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

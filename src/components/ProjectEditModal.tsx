@@ -62,6 +62,8 @@ export const ProjectEditModal: React.FC<ProjectEditModalProps> = ({
       githubUrl,
       liveDemoUrl,
       image,
+      videoUrl: project?.videoUrl,
+      embedUrl: project?.embedUrl,
       highlights: project?.highlights || [
         'Built with clean modular architecture',
         'Focused on accessibility and smooth user experience',

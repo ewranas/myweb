@@ -59,6 +59,7 @@ export interface ProjectItem {
   liveDemoUrl: string;
   image: string;
   videoUrl?: string;
+  embedUrl?: string;
   featured?: boolean;
   highlights: string[];
   isEditablePlaceholder?: boolean;

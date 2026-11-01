@@ -39,18 +39,43 @@ export default function App() {
       const saved = localStorage.getItem('anas_portfolio_projects');
       if (saved) {
         const parsed: ProjectItem[] = JSON.parse(saved);
-        return parsed.map((p) => {
+        const updatedList = parsed.map((p) => {
           if (p.image && p.image.startsWith('/src/')) {
             p.image = p.image.replace('/src/', '/');
           }
-          if (p.id === 'folafol' && !p.videoUrl) {
+          if (p.id === 'folafol') {
+            if (!p.videoUrl) {
+              p.videoUrl = 'https://res.cloudinary.com/fcsclifx/video/upload/v1793473651/WhatsApp_Video_2026-10-31_at_12.06.45_PM.mp4';
+            }
+            if (!p.liveDemoUrl || p.liveDemoUrl === '#' || p.liveDemoUrl.trim() === '') {
+              p.liveDemoUrl = 'https://folafol-web.vercel.app/';
+            }
+          }
+          if (p.id === 'dev-workspace-suite' || p.id === 'my-introduction') {
             return {
               ...p,
-              videoUrl: 'https://res.cloudinary.com/fcsclifx/video/upload/v1793473651/WhatsApp_Video_2026-10-31_at_12.06.45_PM.mp4',
+              id: 'my-introduction',
+              title: 'My Introduction',
+              badge: 'Portfolio Showreel',
+              category: 'Interactive Audio-Visual Showreel',
+              description:
+                'An interactive portfolio showreel introducing Anas Ahamed — exploring software craft, digital experiences, system tools, and development vision.',
+              technologies: ['Interactive Canvas', 'Audio Synthesis', 'CSS Keyframes', 'Showreel'],
+              githubUrl: p.githubUrl || 'https://github.com/zerolap657-design',
+              liveDemoUrl: '/assets/aistudio/ANAS_AHAMED___Portfolio_Showreel_1a936da6.html',
+              embedUrl: '/assets/aistudio/ANAS_AHAMED___Portfolio_Showreel_1a936da6.html',
             };
           }
           return p;
         });
+
+        if (!updatedList.some((p) => p.id === 'my-introduction' || p.embedUrl?.includes('ANAS_AHAMED___Portfolio_Showreel'))) {
+          const introItem = initialProjects.find((p) => p.id === 'my-introduction');
+          if (introItem) {
+            updatedList.splice(1, 0, introItem);
+          }
+        }
+        return updatedList;
       }
     } catch {
       // fallback

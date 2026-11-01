@@ -124,7 +124,7 @@ export const Hero: React.FC<HeroProps> = ({
               isActive ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            {/* Cinematic Grayscale Artwork */}
+            {/* Architectural Cityscape Artwork */}
             <img
               src={imgSrc}
               alt={slide.title}

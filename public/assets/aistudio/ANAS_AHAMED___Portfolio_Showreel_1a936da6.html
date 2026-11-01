@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ANAS AHAMED — Portfolio Showreel</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Kaushan+Script&family=Inter:wght@300;400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--red:#e5173f;--rose:#f3b4ae;--ink:#fff;--an:Anton,Impact,"Arial Narrow",sans-serif;--sc:"Kaushan Script",cursive;--sans:Inter,system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+html,body{height:100%;margin:0;background:#000}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--ink);font-family:var(--sans)}
+.stage{position:relative;width:min(100vw,177.78vh);aspect-ratio:16/9;container-type:size;overflow:hidden;background:#150205;cursor:pointer}
+.bg{position:absolute;inset:0;transition:opacity 1s}
+.bd{background:radial-gradient(ellipse at 50% -10%,#6a0710,#2b0306 55%,#080001)}
+.br{opacity:0;background:radial-gradient(circle at 20% 30%,#f7cfc9,transparent 40%),radial-gradient(circle at 80% 70%,#c9625b,transparent 45%),radial-gradient(circle at 60% 20%,#e9a29b,transparent 40%),#d98a82;animation:cl 14s ease-in-out infinite alternate}
+@keyframes cl{to{filter:hue-rotate(-8deg) brightness(1.08);background-position:4% 6%;transform:scale(1.08)}}
+.stage.rose .bd{opacity:0}.stage.rose .br{opacity:1}
+.sc{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s,filter .6s}
+.sc.on{opacity:1;visibility:visible}
+.r{opacity:0;transform:translateY(1.6cqw);filter:blur(.6cqw)}
+.on .r{animation:rv .9s var(--d,0s) cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes rv{to{opacity:1;transform:none;filter:none}}
+.pp{opacity:0;transform:scale(.55) rotate(var(--rot,0deg))}
+.on .pp{animation:pp .7s var(--d,0s) cubic-bezier(.3,1.5,.5,1) forwards}
+@keyframes pp{to{opacity:1;transform:scale(1) rotate(var(--rot,0deg))}}
+.ty span{opacity:0}.on .ty span{animation:ty .01s var(--d) forwards}
+@keyframes ty{to{opacity:1}}
+/* intro */
+.big{position:absolute;left:0;right:0;top:3cqw;text-align:center;font-family:var(--an);font-size:21cqw;line-height:1;letter-spacing:.01em;background:linear-gradient(#e8a59d,rgba(120,20,30,.15) 85%);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+.big span{display:inline-block;opacity:0;transform:translateY(3cqw);filter:blur(.8cqw)}
+.on .big span{animation:rv .7s var(--d) cubic-bezier(.2,.8,.2,1) forwards}
+.who{position:absolute;left:9cqw;top:21cqw}
+.hello{font-family:var(--sc);font-size:3.4cqw;color:var(--rose);transform:rotate(-4deg);margin-bottom:-.6cqw}
+.nm{font-family:var(--an);font-size:8.4cqw;line-height:.95;text-transform:uppercase;margin:0;letter-spacing:.01em}
+.role{font-family:var(--an);font-size:2.9cqw;color:var(--rose);letter-spacing:.04em;margin:1.4cqw 0 1cqw}
+.bl{font-size:1.5cqw;line-height:1.75;color:#f2e4e2;font-weight:400}
+.bl b{color:var(--red);margin-right:.7cqw}
+.tg{position:absolute;right:9cqw;top:19cqw;width:19cqw;font-size:1.5cqw;line-height:1.45;font-weight:300;display:flex;gap:1cqw;color:#f2e4e2}
+.tg i{font-style:normal;color:var(--rose);font-size:2.4cqw;line-height:1}
+.ring{position:absolute;right:10cqw;bottom:6cqw;width:26cqw;height:26cqw;border-radius:50%;background:radial-gradient(circle at 40% 36%,#ff5a72,var(--red) 28%,#5d0818 62%,transparent 71%);box-shadow:0 0 8cqw rgba(229,23,63,.45);animation:fl 5s ease-in-out infinite alternate}
+@keyframes fl{to{transform:translateY(-1.5cqw) scale(1.03)}}
+/* showcase */
+.tt{position:absolute;top:4.2cqw;left:0;right:0;text-align:center;font-family:var(--an);font-size:3.4cqw;letter-spacing:.06em}
+.sub{position:absolute;top:9.6cqw;left:0;right:0;text-align:center;font-size:1.25cqw;letter-spacing:.35em;color:#fff;opacity:.85}
+.row{position:absolute;left:0;right:0;top:13.5cqw;display:flex;justify-content:center;gap:3.4cqw}
+.cd{width:15.5cqw;height:28cqw;border-radius:.9cqw;padding:1.1cqw;box-shadow:0 1.6cqw 4cqw rgba(60,0,10,.45);background:#f6f0ef;color:#2a0a10;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:.7cqw}
+.cd.k{background:#12060a;color:#f6dede}
+.cd i{display:block;border-radius:.4cqw;background:rgba(229,23,63,.14);height:1.5cqw}
+.cd.k i{background:rgba(255,255,255,.09)}
+.cd .a{background:linear-gradient(110deg,#8d0f2c,var(--red))}
+.cd .bx{flex:1;border-radius:.6cqw;background:linear-gradient(160deg,#2a0610,#c4163b 140%);position:relative}
+.cd .bx.l{background:linear-gradient(160deg,#fff,#e7c3c0)}
+.cd .pl{position:absolute;inset:0;margin:auto;width:3.4cqw;height:3.4cqw;border-radius:50%;background:#fff;opacity:.92}
+.cd .pl:after{content:"";position:absolute;left:1.3cqw;top:.9cqw;border:.8cqw solid transparent;border-left:1.3cqw solid var(--red)}
+.cd .gr{flex:1;border-radius:50%;aspect-ratio:1;flex:none;width:100%;background:conic-gradient(#e5173f,#ffb36b,#f3e,#5a7cff,#2fe0c0,#e5173f);opacity:.85;-webkit-mask:radial-gradient(circle,transparent 30%,#000 32%);mask:radial-gradient(circle,transparent 30%,#000 32%)}
+.cd .tm{font-family:var(--mono);font-size:.9cqw;line-height:1.8;color:#e9c4c9}.cd .tm em{color:var(--red);font-style:normal}
+.cd .kf{display:flex;gap:.4cqw;align-items:flex-end;height:6cqw}.cd .kf s{flex:1;background:var(--red);border-radius:2px;height:var(--h);opacity:.8;text-decoration:none}
+.cd .cl{font-family:var(--mono);font-size:.85cqw;line-height:1.7;color:#7a1a2c}.cd.k .cl{color:#e9c4c9}
+.cd .g2{display:grid;grid-template-columns:1fr 1fr;gap:.6cqw;flex:1}.cd .g2 i{height:auto;min-height:5cqw}
+.cd .ok{font-family:var(--an);font-size:1.6cqw;letter-spacing:.1em;color:#5ee08a;text-align:center;margin-top:auto}
+.cd svg{width:100%;flex:1}
+.cd svg line{stroke:rgba(229,23,63,.5);stroke-width:1.2}.cd svg circle{fill:var(--red);animation:pl 2.2s infinite}
+@keyframes pl{50%{opacity:.3}}
+/* text scene */
+.q{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center}
+.q1{font-size:3.2cqw;font-weight:300;letter-spacing:.02em;margin-bottom:1.6cqw;text-shadow:0 .3cqw 1cqw rgba(90,10,20,.5)}
+.q2{font-size:3.6cqw;font-weight:600;color:#ffd9d4;letter-spacing:.01em;text-shadow:0 .3cqw 1cqw rgba(90,10,20,.5)}
+.cta{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center}
+.bxr{display:inline-block;font-family:var(--an);font-size:4.2cqw;letter-spacing:.05em;padding:1.2cqw 2.8cqw;background:rgba(90,5,15,.85);border:.25cqw solid #ff4d6a;border-radius:.4cqw;box-shadow:0 0 3cqw rgba(255,60,90,.55)}
+.who2{font-family:var(--an);font-size:1.7cqw;letter-spacing:.4em;margin-top:2.2cqw;color:#fff}
+.who3{font-size:1.2cqw;letter-spacing:.3em;margin-top:.9cqw;color:#fff;opacity:.85}
+.fade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .9s;z-index:4}
+.bar{position:absolute;left:0;bottom:0;height:2px;background:var(--red);width:0;z-index:6}
+.controls{position:absolute;bottom:max(8px,2cqw);right:max(10px,2.5cqw);z-index:20;display:flex;align-items:center;gap:max(6px,.8cqw);pointer-events:auto}
+.ctrl-btn{background:rgba(15,2,5,0.85);border:1px solid rgba(229,23,63,0.45);color:#fff;border-radius:999px;padding:max(4px,.5cqw) max(10px,1.2cqw);font-family:var(--mono);font-size:clamp(11px,1.15cqw,14px);letter-spacing:.06em;display:inline-flex;align-items:center;gap:max(4px,.5cqw);cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:all .2s ease;box-shadow:0 .4cqw 1.5cqw rgba(0,0,0,0.6);user-select:none;-webkit-tap-highlight-color:transparent}
+.ctrl-btn:hover{background:rgba(229,23,63,0.3);border-color:var(--red);transform:translateY(-1px);color:#fff}
+.ctrl-btn:active{transform:scale(0.96)}
+.ctrl-btn.active{border-color:var(--red);background:rgba(229,23,63,0.4);box-shadow:0 0 14px rgba(229,23,63,0.7)}
+.ctrl-text{font-weight:600}
+.ctrl-icon{font-size:clamp(12px,1.25cqw,16px);display:inline-flex;align-items:center}
+</style></head><body>
+<div class="stage" id="st">
+<div class="bg bd"></div><div class="bg br"></div>
+
+<section class="sc" data-t="0">
+ <div class="big" id="big" aria-label="PORTFOLIO"></div>
+ <div class="who">
+  <div class="hello pp" style="--d:2.2s;--rot:-4deg">Hello, I’m</div>
+  <h1 class="nm pp" style="--d:2.7s;transform-origin:left">ANAS<br>AHAMED</h1>
+  <div class="role r" style="--d:3.7s">DEVELOPER &amp; DIGITAL CREATOR</div>
+  <div class="bl">
+   <div class="r" style="--d:4.5s"><b>+</b>Video Editing &amp; Motion</div>
+   <div class="r" style="--d:4.9s"><b>+</b>Cybersecurity Research</div>
+   <div class="r" style="--d:5.3s"><b>+</b>Linux &amp; Kali Exploration</div>
+   <div class="r" style="--d:5.7s"><b>+</b>Web Development</div>
+  </div>
+ </div>
+ <div class="ring pp" style="--d:1.6s"></div>
+ <div class="tg r" style="--d:6.4s"><i>✦</i><div>Turning ideas into powerful digital experiences</div></div>
+</section>
+
+<section class="sc" data-t="8">
+ <div class="tt r" style="--d:.2s">VIDEO EDITING</div><div class="sub r" style="--d:.5s">CRAFTING STORIES THROUGH VISUALS, RHYTHM &amp; MOTION</div>
+ <div class="row">
+  <div class="cd pp" style="--d:.9s;--rot:-2deg"><i class="a" style="width:60%"></i><i style="width:90%"></i><i style="width:70%"></i><i class="a" style="width:80%;margin-left:15%"></i><i style="width:55%"></i><i class="a" style="width:95%"></i><i style="width:65%;margin-left:30%"></i><i class="a" style="width:45%"></i><div class="kf" style="margin-top:auto"><s style="--h:40%"></s><s style="--h:85%"></s><s style="--h:55%"></s><s style="--h:100%"></s><s style="--h:35%"></s><s style="--h:70%"></s></div></div>
+  <div class="cd k pp" style="--d:1.3s"><div class="gr"></div><i style="width:100%"></i><i class="a" style="width:70%"></i><i style="width:85%"></i><i class="a" style="width:40%"></i><i style="width:60%"></i></div>
+  <div class="cd pp" style="--d:1.7s;--rot:2deg"><div class="bx"><div class="pl"></div></div><i class="a" style="width:100%"></i><div class="kf"><s style="--h:60%"></s><s style="--h:30%"></s><s style="--h:90%"></s><s style="--h:50%"></s><s style="--h:75%"></s><s style="--h:45%"></s></div></div>
+ </div>
+</section>
+
+<section class="sc" data-t="14">
+ <div class="tt r" style="--d:.2s">CYBERSECURITY</div><div class="sub r" style="--d:.5s">CURIOSITY • ANALYSIS • DIGITAL DEFENSE</div>
+ <div class="row">
+  <div class="cd k pp" style="--d:.9s;--rot:-2deg"><div class="tm"><em>lab@linux</em>:~$ monitor<br>[ok] baseline set<br>[ok] checks passed<br>[info] anomaly: <em>low</em><br>[ok] logs archived<br><em>lab@linux</em>:~$ ▌</div></div>
+  <div class="cd pp" style="--d:1.3s"><svg viewBox="0 0 100 160"><line x1="20" y1="25" x2="50" y2="70"/><line x1="50" y1="70" x2="82" y2="40"/><line x1="50" y1="70" x2="30" y2="125"/><line x1="50" y1="70" x2="78" y2="115"/><circle cx="20" cy="25" r="5"/><circle cx="50" cy="70" r="8" style="animation-delay:.4s"/><circle cx="82" cy="40" r="5" style="animation-delay:.8s"/><circle cx="30" cy="125" r="5" style="animation-delay:1.2s"/><circle cx="78" cy="115" r="5" style="animation-delay:1.6s"/></svg><i class="a" style="width:60%"></i></div>
+  <div class="cd k pp" style="--d:1.7s;--rot:2deg"><div class="g2"><i></i><i class="a"></i><i class="a"></i><i></i></div><div class="kf"><s style="--h:30%"></s><s style="--h:55%"></s><s style="--h:40%"></s><s style="--h:70%"></s><s style="--h:35%"></s><s style="--h:50%"></s></div><div class="ok">ALL CLEAR</div></div>
+ </div>
+</section>
+
+<section class="sc" data-t="20">
+ <div class="tt r" style="--d:.2s">DEVELOPMENT</div><div class="sub r" style="--d:.5s">CLEAN CODE • RESPONSIVE LAYOUTS • DIGITAL PRODUCTS</div>
+ <div class="row">
+  <div class="cd k pp" style="--d:.9s;--rot:-2deg"><div class="cl">&lt;section&gt;<br>&nbsp;&nbsp;&lt;Hero /&gt;<br>&nbsp;&nbsp;&lt;Cards /&gt;<br>&lt;/section&gt;<br>const build = () =&gt;<br>&nbsp;&nbsp;ship(ideas);</div></div>
+  <div class="cd pp" style="--d:1.3s"><i class="a" style="width:100%"></i><div class="bx l"></div><div class="g2"><i></i><i></i><i></i><i></i></div></div>
+  <div class="cd k pp" style="--d:1.7s;--rot:2deg"><i class="a" style="height:5cqw"></i><i style="height:2.6cqw"></i><i style="height:2.6cqw"></i><i style="height:2.6cqw"></i><i class="a" style="width:60%;margin-top:auto"></i></div>
+ </div>
+</section>
+
+<section class="sc" data-t="26">
+ <div class="q">
+  <div class="q1 ty" id="q1"></div>
+  <div class="q2 ty" id="q2"></div>
+ </div>
+</section>
+
+<section class="sc" data-t="31">
+ <div class="cta">
+  <div class="bxr pp" style="--d:.8s">GET IN TOUCH ↗</div>
+  <div class="who2 r" style="--d:1.6s">ANAS AHAMED</div>
+  <div class="who3 r" style="--d:2s">DEVELOPER &amp; DIGITAL CREATOR</div>
+ </div>
+</section>
+
+<div class="fade" id="fd"></div><div class="bar" id="bar"></div>
+<div class="controls" id="controls">
+  <button type="button" class="ctrl-btn mute-btn" id="muteToggle" aria-label="Toggle Sound" title="Sound Mute / Unmute">
+    <span class="ctrl-icon" id="soundIcon">🔇</span>
+    <span class="ctrl-text" id="soundLabel">SOUND OFF</span>
+  </button>
+  <button type="button" class="ctrl-btn" id="playToggle" aria-label="Pause or Play" title="Pause / Play">
+    <span class="ctrl-icon" id="playIcon">⏸</span>
+  </button>
+  <button type="button" class="ctrl-btn" id="restartBtn" aria-label="Restart" title="Restart">
+    <span class="ctrl-icon">↺</span>
+  </button>
+</div>
+</div>
+<script>
+(function(){
+var D=36,st=document.getElementById('st'),scs=[].slice.call(document.querySelectorAll('.sc')),fd=document.getElementById('fd'),bar=document.getElementById('bar');
+var muteToggle=document.getElementById('muteToggle'),soundIcon=document.getElementById('soundIcon'),soundLabel=document.getElementById('soundLabel');
+var playToggle=document.getElementById('playToggle'),playIcon=document.getElementById('playIcon'),restartBtn=document.getElementById('restartBtn');
+var isMuted=true;
+
+function typ(id,s,b,step){var e=document.getElementById(id);s.split('').forEach(function(c,i){var p=document.createElement('span');p.textContent=c;p.style.setProperty('--d',(b+i*step)+'s');e.appendChild(p)})}
+var big=document.getElementById('big');'PORTFOLIO'.split('').forEach(function(c,i){var p=document.createElement('span');p.textContent=c;p.style.setProperty('--d',(.3+i*.13)+'s');big.appendChild(p)});
+typ('q1','IF YOU’RE LOOKING FOR',.5,.045);typ('q2','A CREATIVE TECHNOLOGIST',1.9,.05);
+/* sound events [time, type] */
+var E=[];function ev(t,k){E.push([t,k])}
+for(var i=0;i<9;i++)ev(.3+i*.13,'tick');
+ev(1.6,'whoosh');ev(2.2,'pop');ev(2.7,'pop');ev(3.7,'pop');ev(4.5,'pop');ev(4.9,'pop');ev(5.3,'pop');ev(5.7,'pop');ev(6.4,'pop');
+[8,14,20,26,31].forEach(function(s){ev(s,'whoosh')});
+[8,14,20].forEach(function(s){ev(s+.2,'pop');ev(s+.9,'pop');ev(s+1.3,'pop');ev(s+1.7,'pop')});
+for(var i=0;i<21;i++)ev(26.5+i*.045,'tick');for(var i=0;i<23;i++)ev(27.9+i*.05,'tick');
+ev(31.8,'pop');ev(31.8,'thud');ev(32.6,'tick');ev(33,'tick');
+E.sort(function(a,b){return a[0]-b[0]});
+var ac=null,mg,rv,rvg;
+function mk(){
+  var A=window.AudioContext||window.webkitAudioContext;if(!A)return;
+  try{
+    ac=new A();
+    mg=ac.createGain();
+    mg.gain.value=isMuted?0:.9;
+    var cp=ac.createDynamicsCompressor();
+    cp.threshold.value=-14;
+    cp.ratio.value=4;
+    mg.connect(cp);
+    cp.connect(ac.destination);
+    var L=ac.sampleRate*1.8,ib=ac.createBuffer(2,L,ac.sampleRate);
+    for(var c=0;c<2;c++){
+      var d=ib.getChannelData(c);
+      for(var i=0;i<L;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/L,2.6);
+    }
+    rv=ac.createConvolver();
+    rv.buffer=ib;
+    rvg=ac.createGain();
+    rvg.gain.value=.5;
+    rv.connect(rvg);
+    rvg.connect(cp);
+  }catch(err){}
+}
+function env(g,v,d){if(!ac)return;var n=ac.currentTime;g.gain.setValueAtTime(0,n);g.gain.linearRampToValueAtTime(v,n+.005);g.gain.exponentialRampToValueAtTime(.0001,n+d)}
+function noise(d){if(!ac)return null;var b=ac.createBuffer(1,ac.sampleRate*d,ac.sampleRate),a=b.getChannelData(0);for(var i=0;i<a.length;i++)a[i]=Math.random()*2-1;var s=ac.createBufferSource();s.buffer=b;return s}
+function snd(k){
+  if(isMuted||!ac)return;
+  if(ac.state==='suspended'){ac.resume().then(function(){snd2(k)}).catch(function(){});return}
+  snd2(k);
+}
+function snd2(k){
+  if(!ac)return;
+  var n=ac.currentTime,j=1+(Math.random()-.5)*.14;
+  function bus(wet,pan){var g=ac.createGain(),o=g;if(ac.createStereoPanner){var p=ac.createStereoPanner();p.pan.value=pan||0;g.connect(p);o=p}o.connect(mg);if(wet){var w=ac.createGain();w.gain.value=wet;o.connect(w);w.connect(rv)}return g}
+  function ex(g,v,a,d){g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(v,n+a);g.gain.exponentialRampToValueAtTime(.0001,n+a+d)}
+  function osc(ty,f1,f2,dur,out){var o=ac.createOscillator();o.type=ty;o.frequency.setValueAtTime(f1,n);o.frequency.exponentialRampToValueAtTime(f2,n+dur);o.connect(out);o.start(n);o.stop(n+dur+.4)}
+  function nz(dur,ty,f,q,out){var s=noise(dur);if(!s)return null;var b=ac.createBiquadFilter();b.type=ty;b.frequency.value=f;b.Q.value=q;s.connect(b);b.connect(out);s.start(n);return b}
+  if(k==='pop'){var g=bus(.18,(Math.random()-.5)*.5);ex(g,.55,.004,.16);osc('sine',950*j,210*j,.075,g);var c=bus(0,0);ex(c,.12,.002,.02);nz(.03,'highpass',3500,.7,c);var h=bus(.3,0);ex(h,.1,.004,.12);osc('sine',1900*j,1500*j,.1,h)}
+  else if(k==='tick'){var g=bus(.08,(Math.random()-.5)*.4);ex(g,.07,.002,.035);osc('triangle',2800*j,1900*j,.03,g);var c=bus(0,0);ex(c,.04,.001,.012);nz(.02,'bandpass',5200,3,c)}
+  else if(k==='thud'){var g=bus(.3,0);ex(g,.9,.006,.8);osc('sine',78,30,.7,g);var c=bus(.2,0);ex(c,.35,.004,.18);nz(.2,'lowpass',500,.7,c);var h=bus(.6,0);ex(h,.06,.02,1.3);osc('sine',1320,1300,1,h);osc('sine',1980,1960,1,h)}
+  else{var g=bus(.45,0),s=noise(.9);if(!s)return;var b=ac.createBiquadFilter();b.type='bandpass';b.Q.value=.9;b.frequency.setValueAtTime(260,n);b.frequency.exponentialRampToValueAtTime(4800,n+.55);var p=ac.createStereoPanner?ac.createStereoPanner():null;if(p){p.pan.setValueAtTime(-.7,n);p.pan.linearRampToValueAtTime(.7,n+.6);s.connect(b);b.connect(p);p.connect(g)}else{s.connect(b);b.connect(g)}g.gain.setValueAtTime(.0001,n);g.gain.exponentialRampToValueAtTime(.38,n+.3);g.gain.exponentialRampToValueAtTime(.0001,n+.75);s.start(n)}
+}
+
+function updateSoundUI(){
+  if(isMuted){
+    soundIcon.textContent='🔇';
+    soundLabel.textContent='SOUND OFF';
+    muteToggle.classList.remove('active');
+    muteToggle.title='Click to Turn Sound ON';
+  } else {
+    soundIcon.textContent='🔊';
+    soundLabel.textContent='SOUND ON';
+    muteToggle.classList.add('active');
+    muteToggle.title='Click to Mute Sound';
+  }
+}
+
+function toggleSound(e){
+  if(e)e.stopPropagation();
+  if(!ac)mk();
+  if(ac&&ac.state==='suspended')ac.resume();
+  isMuted=!isMuted;
+  if(mg)mg.gain.value=isMuted?0:.9;
+  updateSoundUI();
+  if(!isMuted){
+    snd('pop');
+  }
+}
+muteToggle.addEventListener('click',toggleSound);
+
+var cur=-1,t=0,last=performance.now(),paused=false,ei=0;
+function go(i){if(i===cur)return;scs.forEach(function(s,j){var on=j===i;if(on&&s.classList.contains('on')){s.classList.remove('on');void s.offsetWidth}s.classList.toggle('on',on)});st.classList.toggle('rose',i>=1&&i<=4);cur=i}
+function reset(){t=0;cur=-1;ei=0;scs.forEach(function(s){s.classList.remove('on')})}
+function tick(n){var dt=Math.min((n-last)/1000,.1);last=n;if(!paused){t+=dt;if(t>=D+.8)reset();
+var i=0;scs.forEach(function(s,j){if(t>=+s.dataset.t)i=j});if(t<D)go(i);
+while(ei<E.length&&E[ei][0]<=t){if(t-E[ei][0]<.25)snd(E[ei][1]);ei++}
+fd.style.opacity=(t>D-.9&&t<D+.7)?1:0;bar.style.width=(t/D*100)+'%'}
+requestAnimationFrame(tick)}
+
+function setP(p){
+  paused=p;
+  [].forEach.call(st.querySelectorAll('*'),function(e){
+    if(e.closest && e.closest('.controls')) return;
+    e.style.animationPlayState=p?'paused':'';
+  });
+  if(ac){p?ac.suspend():(!isMuted&&ac.resume&&ac.resume())}
+  playIcon.textContent=paused?'▶':'⏸';
+}
+
+function togglePlay(e){
+  if(e)e.stopPropagation();
+  setP(!paused);
+}
+playToggle.addEventListener('click',togglePlay);
+
+restartBtn.addEventListener('click',function(e){
+  e.stopPropagation();
+  reset();
+  last=performance.now();
+  if(paused)setP(false);
+});
+
+st.addEventListener('click',function(e){
+  if(e.target&&e.target.closest&&e.target.closest('.controls'))return;
+  // If user taps stage and audio is not initialized yet, prepare audio context
+  if(!ac)mk();
+});
+
+// Auto-start immediately on load without needing to tap
+paused=false;
+setP(false);
+requestAnimationFrame(tick);
+})();
+</script></body></html>
