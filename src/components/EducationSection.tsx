@@ -21,11 +21,12 @@ export const EducationSection: React.FC = () => {
         </div>
 
         <div className="space-y-8">
-          {/* Current College Card */}
-          <div className="reveal-item p-8 sm:p-12 rounded-3xl bg-[#111111] border border-white/[0.08] hover:border-white/[0.18] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl space-y-6">
+          {/* Current College Card with Glow */}
+          <div className="reveal-left glow-card p-8 sm:p-12 rounded-3xl bg-[#111111] border border-white/[0.08] hover:border-rose-500/30 transition-all duration-300 space-y-6">
             <div className="space-y-1">
-              <span className="text-xs font-mono text-[#888888] tracking-widest uppercase">
-                Current College
+              <span className="text-xs font-mono text-[#888888] tracking-widest uppercase flex items-center gap-2">
+                <span>Current College</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               </span>
               <h3 className="font-editorial text-2xl sm:text-4xl font-bold text-[#f5f5f5]">
                 Shahid AHM Kamaruzzaman College
@@ -39,7 +40,7 @@ export const EducationSection: React.FC = () => {
                 { label: 'Stream', val: 'Science Group' },
                 { label: 'Location', val: 'Natore, Bangladesh' },
               ].map((item, i) => (
-                <div key={i} className="group/stat">
+                <div key={i} className="group/stat transition-transform duration-300 hover:-translate-y-0.5">
                   <span className="text-[10px] font-mono text-[#666666] uppercase block group-hover/stat:text-rose-400 transition-colors">
                     {item.label}
                   </span>
@@ -52,11 +53,11 @@ export const EducationSection: React.FC = () => {
           </div>
 
           {/* Professional Certificate Section Under College */}
-          <div className="reveal-item p-8 sm:p-12 rounded-3xl bg-[#111111] border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_50px_rgba(255,255,255,0.03)] space-y-8">
+          <div className="reveal-right glow-card p-8 sm:p-12 rounded-3xl bg-[#111111] border border-white/[0.08] hover:border-rose-500/30 transition-all duration-300 hover:shadow-[0_0_50px_rgba(225,29,72,0.12)] space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-[#f5f5f5]" />
+                  <ShieldCheck className="w-4 h-4 text-rose-400" />
                   <span className="text-xs font-mono text-[#888888] tracking-widest uppercase">
                     Professional Certification
                   </span>
@@ -74,11 +75,11 @@ export const EducationSection: React.FC = () => {
                   href={verificationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider bg-white/[0.06] hover:bg-white/[0.12] text-[#f5f5f5] border border-white/[0.1] transition-colors"
+                  className="sheen-container inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider bg-white/[0.06] hover:bg-white/[0.12] text-[#f5f5f5] border border-white/[0.1] hover:border-emerald-500/40 hover:scale-105 transition-all shadow-sm group"
                 >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
                   <span>Verify Credential</span>
-                  <ExternalLink className="w-3 h-3 text-[#888888]" />
+                  <ExternalLink className="w-3 h-3 text-[#888888] group-hover:text-white transition-colors" />
                 </a>
               </div>
             </div>
@@ -87,19 +88,19 @@ export const EducationSection: React.FC = () => {
             <div className="space-y-4">
               <div 
                 onClick={() => setIsLightboxOpen(true)}
-                className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.1] bg-black/40 shadow-2xl transition-all duration-300 hover:border-white/[0.25]"
+                className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.1] bg-black/40 shadow-2xl transition-all duration-500 hover:border-rose-500/40 hover:shadow-[0_0_35px_rgba(225,29,72,0.18)]"
               >
                 <img
                   src={certImageSrc}
                   alt="Google Cybersecurity Professional Certificate - Anas Ahamed"
-                  className="w-full h-auto object-cover max-h-[520px] transition-transform duration-500 group-hover:scale-[1.01]"
+                  className="w-full h-auto object-cover max-h-[520px] transition-transform duration-700 group-hover:scale-[1.02]"
                   loading="lazy"
                 />
 
-                {/* Hover overlay hint */}
-                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md text-white text-xs font-mono tracking-wider border border-white/20 shadow-xl">
-                    <Maximize2 className="w-3.5 h-3.5" />
+                {/* Hover overlay hint with glowing glass pill */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/85 backdrop-blur-md text-white text-xs font-mono tracking-wider border border-white/20 shadow-2xl">
+                    <Maximize2 className="w-3.5 h-3.5 text-rose-400" />
                     <span>Click to view full certificate</span>
                   </div>
                 </div>

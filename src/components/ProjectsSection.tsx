@@ -36,8 +36,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
 
         {/* Large Studio-Style Featured Showcase: FOLAFOL */}
         {folafol && (
-          <div className="reveal-item mb-24">
-            <div className="group rounded-3xl bg-[#111111] border border-white/[0.08] overflow-hidden shadow-2xl transition-all duration-500 hover:border-white/[0.22] hover:shadow-[0_0_50px_rgba(255,255,255,0.04)]">
+          <div className="reveal-scale mb-24">
+            <div className="group rounded-3xl bg-[#111111] border border-white/[0.08] hover:border-rose-500/40 overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-[0_0_50px_rgba(225,29,72,0.15)] hover:-translate-y-1">
               
               {/* Massive Video-Based Mockup Showcase */}
               <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#000000] flex items-center justify-center">
@@ -49,7 +49,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                   muted
                   playsInline
                   controls
-                  className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700"
+                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/80 via-transparent to-transparent opacity-60 pointer-events-none" />
 
@@ -59,12 +59,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                     href={folafol.liveDemoUrl || 'https://folafol-web.vercel.app/'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/80 hover:bg-black backdrop-blur-md border border-white/15 hover:border-[#e5173f]/60 text-[10px] font-mono tracking-widest uppercase text-white/90 hover:text-white transition-all shadow-lg group cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/80 hover:bg-black backdrop-blur-md border border-white/15 hover:border-rose-500/60 text-[10px] font-mono tracking-widest uppercase text-white/90 hover:text-white transition-all shadow-lg group cursor-pointer hover:scale-105"
                     title="Open Live Website: https://folafol-web.vercel.app/"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     <span>APP PREVIEW &bull; VISIT LIVE</span>
-                    <ExternalLink className="w-3 h-3 text-[#e5173f] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <ExternalLink className="w-3 h-3 text-rose-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 </div>
               </div>
@@ -83,14 +83,14 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                         href={folafol.liveDemoUrl || 'https://folafol-web.vercel.app/'}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[11px] font-mono text-[#e5173f] hover:text-[#ff4d6d] hover:underline flex items-center gap-1 transition-colors"
+                        className="text-[11px] font-mono text-[#ff4d6d] hover:text-[#ff758f] hover:underline flex items-center gap-1 transition-colors"
                         title="Visit https://folafol-web.vercel.app/"
                       >
                         folafol-web.vercel.app
                         <ExternalLink className="w-2.5 h-2.5" />
                       </a>
                     </div>
-                    <h3 className="font-editorial text-3xl sm:text-5xl font-bold text-[#f5f5f5] mt-1">
+                    <h3 className="font-editorial text-3xl sm:text-5xl font-bold text-[#f5f5f5] mt-1 group-hover:text-white transition-colors">
                       {folafol.title}
                     </h3>
                   </div>
@@ -101,7 +101,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                       href={folafol.liveDemoUrl || 'https://folafol-web.vercel.app/'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn-minimal-white px-5 py-2.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-md hover:scale-105 transition-all group"
+                      className="btn-minimal-white sheen-container px-5 py-2.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-md hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all group"
                       title="Open Live Website: https://folafol-web.vercel.app/"
                     >
                       <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -110,7 +110,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
 
                     <button
                       onClick={() => setActiveModalProject(folafol)}
-                      className="btn-minimal-outline px-4 py-2.5 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer hover:bg-white/[0.06] transition-colors"
+                      className="btn-minimal-outline px-4 py-2.5 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer hover:bg-white/[0.08] hover:border-white/[0.3] transition-all"
                       title="View Details"
                     >
                       <Eye className="w-3.5 h-3.5" />
@@ -121,7 +121,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                       href={folafol.githubUrl || 'https://github.com/zerolap657-design'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-[#f5f5f5] border border-white/[0.08] transition-colors cursor-pointer"
+                      className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.1] text-[#888888] hover:text-[#f5f5f5] border border-white/[0.08] hover:scale-110 transition-all cursor-pointer"
                       title="GitHub"
                     >
                       <Github className="w-4 h-4" />
@@ -133,13 +133,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                   {folafol.description}
                 </p>
 
-                {/* Technologies List */}
+                {/* Technologies List with Hover Glow */}
                 <div className="pt-2 flex flex-wrap items-center gap-2">
                   <span className="text-xs font-mono text-[#555555] mr-2">Technologies:</span>
                   {folafol.technologies.map((t, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 rounded-full bg-white/[0.04] text-xs font-mono text-[#cccccc] border border-white/[0.06]"
+                      className="px-3 py-1 rounded-full bg-white/[0.04] text-xs font-mono text-[#cccccc] border border-white/[0.06] hover:border-rose-500/40 hover:bg-white/[0.08] hover:text-white transition-all cursor-default"
                     >
                       {t}
                     </span>
@@ -159,8 +159,8 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
             .map((project, pIdx) => (
               <div
                 key={project.id}
-                className="reveal-item group rounded-3xl bg-[#111111] border border-white/[0.08] overflow-hidden flex flex-col justify-between hover:border-white/[0.22] hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)] transition-all duration-400"
-                style={{ transitionDelay: `${pIdx * 100}ms` }}
+                className="reveal-item group rounded-3xl bg-[#111111] border border-white/[0.08] hover:border-rose-500/35 overflow-hidden flex flex-col justify-between hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(0,0,0,0.7),0_0_30px_rgba(225,29,72,0.1)] transition-all duration-400"
+                style={{ transitionDelay: `${pIdx * 90}ms` }}
               >
                 <div>
                   <div className="relative aspect-[16/10] overflow-hidden bg-[#000000]">
@@ -184,7 +184,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                         src={project.image}
                         alt={project.title}
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover filter grayscale contrast-[1.05] brightness-[0.88] group-hover:scale-[1.02] transition-transform duration-500"
+                        className="w-full h-full object-cover filter contrast-[1.05] brightness-[0.88] group-hover:scale-[1.04] group-hover:brightness-[0.98] transition-all duration-700"
                       />
                     )}
                     <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5">
@@ -193,7 +193,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                           href={project.embedUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 rounded-xl bg-[#050505]/80 hover:bg-[#050505] text-[#888888] hover:text-white border border-white/[0.08] backdrop-blur-md transition-colors"
+                          className="p-2 rounded-xl bg-[#050505]/80 hover:bg-[#050505] text-[#888888] hover:text-white border border-white/[0.08] backdrop-blur-md transition-all hover:scale-110"
                           title="Open Fullscreen Showreel"
                         >
                           <ArrowUpRight className="w-3.5 h-3.5" />
@@ -223,7 +223,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                         </>
                       )}
                     </div>
-                    <h4 className="font-editorial text-2xl font-bold text-[#f5f5f5]">
+                    <h4 className="font-editorial text-2xl font-bold text-[#f5f5f5] group-hover:text-white transition-colors">
                       {project.title}
                     </h4>
                     <p className="text-xs sm:text-sm text-[#888888] leading-relaxed">
@@ -237,7 +237,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                     {project.technologies.slice(0, 3).map((t, idx) => (
                       <span
                         key={idx}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.03] text-[#888888]"
+                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.03] text-[#888888] group-hover:text-[#cccccc] transition-colors"
                       >
                         {t}
                       </span>
@@ -250,10 +250,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                         href={project.liveDemoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-minimal-white px-3 py-1.5 rounded-full text-[11px] font-semibold flex items-center gap-1.5 cursor-pointer hover:scale-105 transition-all group"
+                        className="btn-minimal-white sheen-container px-3 py-1.5 rounded-full text-[11px] font-semibold flex items-center gap-1.5 cursor-pointer hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] transition-all group/btn"
                         title={`Open Live Website: ${project.liveDemoUrl}`}
                       >
-                        <ExternalLink className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        <ExternalLink className="w-3 h-3 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                         <span>Live Site</span>
                       </a>
                     )}
@@ -261,14 +261,14 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-white transition-colors"
+                      className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-white hover:scale-110 transition-all"
                       title="GitHub"
                     >
                       <Github className="w-4 h-4" />
                     </a>
                     <button
                       onClick={() => setActiveModalProject(project)}
-                      className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-white transition-colors cursor-pointer"
+                      className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-white hover:scale-110 transition-all cursor-pointer"
                       title="Details"
                     >
                       <ArrowUpRight className="w-4 h-4" />
