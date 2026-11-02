@@ -3,7 +3,7 @@ import { timelineMilestones } from '../data/portfolioData';
 
 export const JourneyTimeline: React.FC = () => {
   return (
-    <section id="journey" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[#050505]">
+    <section id="journey" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[var(--bg-pure)] transition-colors duration-500">
       <div className="max-w-4xl mx-auto text-left">
         
         {/* Section Heading */}
@@ -23,7 +23,12 @@ export const JourneyTimeline: React.FC = () => {
         <div className="relative border-l border-white/[0.08] pl-6 sm:pl-10 ml-2 space-y-12">
           
           {/* Animated Laser Pulse Traveling Down the Timeline */}
-          <div className="absolute left-[-1.5px] w-[3px] h-32 bg-gradient-to-b from-transparent via-rose-500/80 to-transparent animate-timeline-glow pointer-events-none" />
+          <div
+            className="absolute left-[-1.5px] w-[3px] h-32 animate-timeline-glow pointer-events-none"
+            style={{
+              background: 'linear-gradient(to bottom, transparent, var(--timeline-laser), transparent)',
+            }}
+          />
 
           {timelineMilestones.map((milestone, index) => (
             <div
@@ -36,21 +41,37 @@ export const JourneyTimeline: React.FC = () => {
               <div className="absolute -left-[31px] sm:-left-[47px] top-6 flex items-center justify-center">
                 {milestone.isCurrent ? (
                   <>
-                    <span className="absolute w-5 h-5 rounded-full bg-rose-500/30 animate-badge-ping" />
-                    <div className="w-3 h-3 rounded-full bg-rose-500 border-2 border-[#050505] shadow-[0_0_10px_#ef4444]" />
+                    <span
+                      className="absolute w-5 h-5 rounded-full animate-badge-ping"
+                      style={{ backgroundColor: 'var(--accent-glow)' }}
+                    />
+                    <div
+                      className="w-3 h-3 rounded-full border-2 border-[var(--bg-pure)]"
+                      style={{
+                        backgroundColor: 'var(--accent-primary)',
+                        boxShadow: '0 0 10px var(--accent-primary)',
+                      }}
+                    />
                   </>
                 ) : (
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#333333] border-2 border-[#050505] group-hover:bg-[#f5f5f5] group-hover:scale-125 transition-all shadow-sm" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#333333] border-2 border-[var(--bg-pure)] group-hover:bg-[#f5f5f5] group-hover:scale-125 transition-all shadow-sm" />
                 )}
               </div>
 
               {/* Year / Period */}
               <div className="flex items-center gap-2">
-                <span className="text-xs font-mono text-[#888888] tracking-widest uppercase block group-hover:text-rose-400/90 transition-colors">
+                <span className="text-xs font-mono text-[#888888] tracking-widest uppercase block group-hover:text-[var(--accent-primary)] transition-colors">
                   {milestone.period}
                 </span>
                 {milestone.isCurrent && (
-                  <span className="px-2 py-0.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-[9px] font-mono text-rose-300 uppercase tracking-wider">
+                  <span
+                    className="px-2 py-0.5 rounded-full text-[9px] font-mono uppercase tracking-wider border"
+                    style={{
+                      backgroundColor: 'var(--accent-badge-bg)',
+                      borderColor: 'var(--accent-badge-border)',
+                      color: 'var(--accent-badge-text)',
+                    }}
+                  >
                     CURRENT FOCUS
                   </span>
                 )}

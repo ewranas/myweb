@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface NavbarProps {
   onOpenContactModal: () => void;
@@ -40,7 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContactModal, activeSectio
     <>
       {/* Floating Center Navigation Pill (Desktop) */}
       <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-        <div className="pointer-events-auto nav-pill px-5 py-2.5 rounded-full flex items-center gap-6 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300">
+        <div className="pointer-events-auto nav-pill px-4 sm:px-5 py-2 rounded-full flex items-center gap-3 sm:gap-5 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all duration-300">
           
           {/* Logo Monogram */}
           <a
@@ -58,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContactModal, activeSectio
           </a>
 
           {/* Desktop Nav Items */}
-          <nav className="hidden sm:flex items-center gap-6 text-xs text-[#888888] font-normal tracking-wide">
+          <nav className="hidden sm:flex items-center gap-5 text-xs text-[#888888] font-normal tracking-wide">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
@@ -75,10 +76,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContactModal, activeSectio
             })}
           </nav>
 
+          {/* Theme Switcher Toggle (Compact) */}
+          <ThemeSwitcher variant="compact" />
+
           {/* Get in Touch Button (Triggers Centered Contact Modal) */}
           <button
             onClick={onOpenContactModal}
-            className="text-xs font-medium text-[#f5f5f5] bg-white/[0.08] hover:bg-white/[0.16] px-3.5 py-1.5 rounded-full border border-white/[0.1] transition-all cursor-pointer shadow-sm"
+            className="hidden sm:inline-flex text-xs font-medium text-[#f5f5f5] bg-white/[0.08] hover:bg-white/[0.16] px-3.5 py-1.5 rounded-full border border-white/[0.1] transition-all cursor-pointer shadow-sm"
           >
             Get in Touch
           </button>
@@ -108,6 +112,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenContactModal, activeSectio
                 {item.label}
               </button>
             ))}
+
+            {/* Mobile Theme Switcher */}
+            <div className="pt-2 border-t border-white/[0.08]">
+              <ThemeSwitcher variant="expanded" />
+            </div>
+
             <div className="pt-2 border-t border-white/[0.08]">
               <button
                 onClick={() => {

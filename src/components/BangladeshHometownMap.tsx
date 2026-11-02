@@ -404,9 +404,9 @@ export const BangladeshHometownMap: React.FC = () => {
             <circle cx="0" cy="0" r="16" fill="#0b1017" fillOpacity="0.8" stroke="#ffffff" strokeOpacity="0.15" strokeWidth="1" />
             <circle cx="0" cy="0" r="12" stroke="#ffffff" strokeOpacity="0.08" strokeWidth="0.8" strokeDasharray="2 2" fill="none" />
             {/* North pointer needle */}
-            <path d="M 0,-14 L 3,0 L -3,0 Z" fill="#f43f5e" />
+            <path d="M 0,-14 L 3,0 L -3,0 Z" fill="var(--accent-primary, #f43f5e)" />
             <path d="M 0,14 L 3,0 L -3,0 Z" fill="#64748b" opacity="0.6" />
-            <text x="0" y="-17" fill="#f43f5e" fontSize="7" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
+            <text x="0" y="-17" fill="var(--accent-primary, #f43f5e)" fontSize="7" fontFamily="monospace" fontWeight="bold" textAnchor="middle">
               N
             </text>
           </g>

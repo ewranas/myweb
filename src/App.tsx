@@ -15,6 +15,7 @@ import { EducationSection } from './components/EducationSection';
 import { Footer } from './components/Footer';
 import { ContactModal } from './components/ContactModal';
 import { AtmosphericLightning } from './components/AtmosphericLightning';
+import { ThemeProvider } from './context/ThemeContext';
 
 export default function App() {
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo>(() => {
@@ -167,64 +168,66 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-[#f5f5f5] flex flex-col selection:bg-white/20 selection:text-white">
-      
-      {/* Global Atmospheric Lightning Layer (Discharges throughout the entire website background) */}
-      <AtmosphericLightning />
-
-      {/* Ambient Interactive Cursor Spotlight */}
-      <div
-        className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300 opacity-70"
-        style={{
-          background:
-            cursorPos.x === -1000
-              ? 'radial-gradient(650px circle at 50% 35%, rgba(225, 29, 72, 0.05), rgba(255, 255, 255, 0.015) 45%, transparent 75%)'
-              : `radial-gradient(650px circle at ${cursorPos.x}px ${cursorPos.y}px, rgba(225, 29, 72, 0.045), rgba(255, 255, 255, 0.018) 45%, transparent 75%)`,
-        }}
-      />
-
-      {/* Floating Center Navigation Pill */}
-      <Navbar
-        onOpenContactModal={() => setContactModalOpen(true)}
-        activeSection={activeSection}
-      />
-
-      {/* Main Content */}
-      <main className="flex-1 relative z-10">
+    <ThemeProvider>
+      <div className="relative min-h-screen bg-[var(--bg-pure)] text-[#f5f5f5] flex flex-col selection:bg-white/20 selection:text-white transition-colors duration-500">
         
-        {/* 1. Cinematic Hero Section with 4-Slide Fullscreen Carousel */}
-        <Hero
-          personalInfo={personalInfo}
-          onOpenContactModal={() => setContactModalOpen(true)}
-          onExploreProjects={() => {
-            const el = document.getElementById('projects');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        {/* Global Atmospheric Lightning Layer (Discharges throughout the entire website background) */}
+        <AtmosphericLightning />
+
+        {/* Ambient Interactive Cursor Spotlight */}
+        <div
+          className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300 opacity-70"
+          style={{
+            background:
+              cursorPos.x === -1000
+                ? 'radial-gradient(650px circle at 50% 35%, var(--cursor-glow-color), rgba(255, 255, 255, 0.015) 45%, transparent 75%)'
+                : `radial-gradient(650px circle at ${cursorPos.x}px ${cursorPos.y}px, var(--cursor-glow-color), rgba(255, 255, 255, 0.018) 45%, transparent 75%)`,
           }}
         />
 
-        {/* 2. Editorial About Section */}
-        <AboutSection personalInfo={personalInfo} />
+        {/* Floating Center Navigation Pill */}
+        <Navbar
+          onOpenContactModal={() => setContactModalOpen(true)}
+          activeSection={activeSection}
+        />
 
-        {/* 3. Selected Projects (Featuring FOLAFOL Studio Presentation) */}
-        <ProjectsSection projects={projects} />
+        {/* Main Content */}
+        <main className="flex-1 relative z-10">
+          
+          {/* 1. Cinematic Hero Section with 4-Slide Fullscreen Carousel */}
+          <Hero
+            personalInfo={personalInfo}
+            onOpenContactModal={() => setContactModalOpen(true)}
+            onExploreProjects={() => {
+              const el = document.getElementById('projects');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
 
-        {/* 4. Developer Journey (Always Learning) */}
-        <JourneyTimeline />
+          {/* 2. Editorial About Section */}
+          <AboutSection personalInfo={personalInfo} />
 
-        {/* 5. Minimal Education Section */}
-        <EducationSection />
+          {/* 3. Selected Projects (Featuring FOLAFOL Studio Presentation) */}
+          <ProjectsSection projects={projects} />
 
-      </main>
+          {/* 4. Developer Journey (Always Learning) */}
+          <JourneyTimeline />
 
-      {/* Footer */}
-      <Footer socials={personalInfo.socials} />
+          {/* 5. Minimal Education Section */}
+          <EducationSection />
 
-      {/* Contact Modal (Centered, blurred background) */}
-      <ContactModal
-        isOpen={contactModalOpen}
-        onClose={() => setContactModalOpen(false)}
-        email={personalInfo.socials.email}
-      />
-    </div>
+        </main>
+
+        {/* Footer */}
+        <Footer socials={personalInfo.socials} />
+
+        {/* Contact Modal (Centered, blurred background) */}
+        <ContactModal
+          isOpen={contactModalOpen}
+          onClose={() => setContactModalOpen(false)}
+          email={personalInfo.socials.email}
+        />
+      </div>
+    </ThemeProvider>
   );
 }

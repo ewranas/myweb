@@ -7,7 +7,7 @@ export const EducationSection: React.FC = () => {
   const verificationUrl = 'https://coursera.org/verify/professional-cert/WWZ1YY2D4MY8G';
 
   return (
-    <section id="education" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[#050505] border-t border-white/[0.06]">
+    <section id="education" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[var(--bg-pure)] transition-colors duration-500 border-t border-white/[0.06]">
       <div className="max-w-4xl mx-auto text-left">
         
         {/* Section Heading */}

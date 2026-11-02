@@ -1,14 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PersonalInfo } from '../types/portfolio';
 import { BangladeshHometownMap } from './BangladeshHometownMap';
+import { Heart } from 'lucide-react';
 
 interface AboutSectionProps {
   personalInfo: PersonalInfo;
 }
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ personalInfo }) => {
+  const [likes, setLikes] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('anas_photo_likes');
+      if (saved) {
+        const parsed = parseInt(saved, 10);
+        if (!isNaN(parsed) && parsed >= 2000) return parsed;
+      }
+    } catch {
+      // ignore
+    }
+    return 2000;
+  });
+
+  const [hasLiked, setHasLiked] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('anas_photo_user_liked') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const [isBouncing, setIsBouncing] = useState(false);
+  const [floatingHearts, setFloatingHearts] = useState<{ id: number; x: number }[]>([]);
+
+  const handleLike = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLikes((prev) => {
+      const next = prev + 1;
+      try {
+        localStorage.setItem('anas_photo_likes', next.toString());
+        localStorage.setItem('anas_photo_user_liked', 'true');
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+    setHasLiked(true);
+    setIsBouncing(true);
+    setTimeout(() => setIsBouncing(false), 450);
+
+    const heartId = Date.now() + Math.random();
+    const randomX = (Math.random() - 0.5) * 26;
+    setFloatingHearts((prev) => [...prev, { id: heartId, x: randomX }]);
+    setTimeout(() => {
+      setFloatingHearts((prev) => prev.filter((h) => h.id !== heartId));
+    }, 1000);
+  };
+
   return (
-    <section id="about" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[#050505]">
+    <section id="about" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[var(--bg-pure)] transition-colors duration-500">
       <div className="max-w-6xl mx-auto">
         
         {/* Section Heading */}
@@ -29,7 +78,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ personalInfo }) => {
             <div className="relative group w-full max-w-sm">
               
               {/* Clean frame showcasing authentic color photo with hover glow */}
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#111111] border border-white/[0.14] group-hover:border-rose-500/40 shadow-2xl transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(225,29,72,0.18)]">
+              <div
+                className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#111111] border border-white/[0.14] shadow-2xl transition-all duration-500"
+                style={{
+                  boxShadow: '0 0 40px var(--shadow-accent-glow)',
+                }}
+              >
                 <img
                   src={personalInfo.photoUrl?.replace('/src/', '/') || '/assets/images/anas_profile_real.jpg'}
                   alt={personalInfo.name}
@@ -41,7 +95,47 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ personalInfo }) => {
                   }}
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/70 via-transparent to-transparent opacity-40 group-hover:opacity-20 transition-opacity pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-pure)]/70 via-transparent to-transparent opacity-40 group-hover:opacity-20 transition-opacity pointer-events-none" />
+
+                {/* Interactive Heart / Love Button on Photo */}
+                <div className="absolute top-3.5 right-3.5 z-20">
+                  <button
+                    type="button"
+                    onClick={handleLike}
+                    className={`group/like flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-md border text-xs font-mono font-medium transition-all duration-300 cursor-pointer shadow-lg select-none ${
+                      hasLiked
+                        ? 'bg-rose-950/80 border-rose-500/60 text-white shadow-[0_0_20px_rgba(225,29,72,0.4)]'
+                        : 'bg-black/65 hover:bg-black/85 border-white/15 hover:border-white/30 text-white/90 hover:text-white'
+                    } ${isBouncing ? 'scale-110' : 'hover:scale-105 active:scale-95'}`}
+                    title="Click to send love to Anas!"
+                    aria-label="Like Anas photo"
+                  >
+                    <Heart
+                      className={`w-3.5 h-3.5 transition-all duration-300 ${
+                        hasLiked
+                          ? 'fill-rose-500 text-rose-400 drop-shadow-[0_0_8px_#ff4d6d]'
+                          : 'text-white/80 group-hover/like:text-rose-400 group-hover/like:scale-110'
+                      }`}
+                    />
+                    <span className="font-semibold tracking-tight text-[11px]">
+                      {likes.toLocaleString()}
+                    </span>
+                  </button>
+
+                  {/* Floating +1 Heart Effect */}
+                  {floatingHearts.map((heart) => (
+                    <div
+                      key={heart.id}
+                      className="pointer-events-none absolute -top-1 left-1/2 flex items-center gap-0.5 text-xs text-rose-400 font-bold animate-float-heart"
+                      style={{
+                        marginLeft: `${heart.x}px`,
+                      }}
+                    >
+                      <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-400" />
+                      <span className="text-[10px] text-rose-300 font-mono">+1</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Minimal caption */}

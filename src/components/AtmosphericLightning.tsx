@@ -234,7 +234,7 @@ export const AtmosphericLightning: React.FC = () => {
         style={{
           opacity: cloudGlowOpacity,
           background: activeConfig
-            ? `radial-gradient(ellipse at ${activeConfig.cloudGlowCenter}, rgba(255, 235, 245, 0.45) 0%, rgba(225, 29, 72, 0.28) 40%, rgba(136, 19, 55, 0.12) 70%, transparent 90%)`
+            ? `radial-gradient(ellipse at ${activeConfig.cloudGlowCenter}, rgba(255, 255, 255, 0.45) 0%, var(--lightning-cloud-radial, rgba(225, 29, 72, 0.28)) 40%, var(--lightning-cloud-deep, rgba(136, 19, 55, 0.12)) 70%, transparent 90%)`
             : 'transparent',
           mixBlendMode: 'screen',
         }}
@@ -246,7 +246,7 @@ export const AtmosphericLightning: React.FC = () => {
         style={{
           opacity: cloudGlowOpacity * 0.45,
           background:
-            'linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(251, 113, 133, 0.22) 30%, rgba(225, 29, 72, 0.06) 70%, transparent 100%)',
+            'linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, var(--lightning-sky-mid, rgba(251, 113, 133, 0.22)) 30%, var(--lightning-sky-base, rgba(225, 29, 72, 0.06)) 70%, transparent 100%)',
           mixBlendMode: 'screen',
         }}
       />
@@ -260,7 +260,7 @@ export const AtmosphericLightning: React.FC = () => {
             opacity: currentBoltOpacity,
             transition: flashPhase === 'fade' ? 'opacity 0.22s ease-out' : 'opacity 0.03s linear',
             filter:
-              'drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 12px #ff2a6d) drop-shadow(0 0 28px #e11d48) drop-shadow(0 0 55px rgba(225,29,72,0.85))',
+              'drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 12px var(--lightning-spark, #ff2a6d)) drop-shadow(0 0 28px var(--lightning-outer, #e11d48)) drop-shadow(0 0 55px var(--accent-glow-strong, rgba(225,29,72,0.85)))',
           }}
         >
           <svg
@@ -269,7 +269,7 @@ export const AtmosphericLightning: React.FC = () => {
             fill="none"
           >
             <defs>
-              {/* Electric White-to-Crimson Glow Gradient */}
+              {/* Electric White-to-Accent Glow Gradient */}
               <linearGradient
                 id={`lightningCoreGrad-${activeConfig.id}`}
                 x1="0%"
@@ -279,8 +279,8 @@ export const AtmosphericLightning: React.FC = () => {
               >
                 <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
                 <stop offset="60%" stopColor="#ffffff" stopOpacity="0.95" />
-                <stop offset="85%" stopColor="#ffb3c1" stopOpacity="0.9" />
-                <stop offset="100%" stopColor="#ff4d6d" stopOpacity="0.75" />
+                <stop offset="85%" stopColor="var(--lightning-mid, #ffb3c1)" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="var(--lightning-spark, #ff4d6d)" stopOpacity="0.75" />
               </linearGradient>
 
               {/* Outer High-Voltage Corona Filter */}
@@ -293,20 +293,20 @@ export const AtmosphericLightning: React.FC = () => {
               </filter>
             </defs>
 
-            {/* A. Thick Outer Saturated Rose/Crimson Aura for Main Bolt */}
+            {/* A. Thick Outer Saturated Plasma Aura for Main Bolt */}
             <path
               d={activeConfig.mainBoltPath}
-              stroke="#e11d48"
+              stroke="var(--lightning-outer, #e11d48)"
               strokeWidth="6.5"
               strokeLinecap="round"
               strokeLinejoin="miter"
               strokeMiterlimit="3"
               opacity="0.85"
             />
-            {/* Intermediate Violet/Pink Plasma */}
+            {/* Intermediate Plasma Layer */}
             <path
               d={activeConfig.mainBoltPath}
-              stroke="#fb7185"
+              stroke="var(--lightning-mid, #fb7185)"
               strokeWidth="3.8"
               strokeLinecap="round"
               strokeLinejoin="miter"
@@ -330,7 +330,7 @@ export const AtmosphericLightning: React.FC = () => {
                 {/* Branch Glow */}
                 <path
                   d={branchPath}
-                  stroke="#e11d48"
+                  stroke="var(--lightning-outer, #e11d48)"
                   strokeWidth="3.2"
                   strokeLinecap="round"
                   strokeLinejoin="miter"
@@ -350,7 +350,14 @@ export const AtmosphericLightning: React.FC = () => {
             ))}
 
             {/* Terminal Spark Discharge */}
-            <circle cx="270" cy="490" r="4.5" fill="#ffffff" opacity="0.95" filter="drop-shadow(0 0 10px #ff2a6d)" />
+            <circle
+              cx="270"
+              cy="490"
+              r="4.5"
+              fill="#ffffff"
+              opacity="0.95"
+              style={{ filter: 'drop-shadow(0 0 10px var(--lightning-spark, #ff2a6d))' }}
+            />
           </svg>
         </div>
       )}
