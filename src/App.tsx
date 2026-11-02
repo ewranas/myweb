@@ -137,21 +137,20 @@ export default function App() {
     };
   }, []);
 
-  // Subtle interactive ambient cursor spotlight with touch support
+  // Subtle interactive ambient cursor spotlight (desktop) & tap lightning (mobile/desktop)
   const [cursorPos, setCursorPos] = useState({ x: -1000, y: -1000 });
   useEffect(() => {
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
     const onMouseMove = (e: MouseEvent) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
     };
-    const onTouchMove = (e: TouchEvent) => {
-      if (e.touches && e.touches[0]) {
-        setCursorPos({ x: e.touches[0].clientX, y: e.touches[0].clientY });
-      }
-    };
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: true });
 
-    // Global background click to discharge lightning
+    if (!isTouchDevice) {
+      window.addEventListener('mousemove', onMouseMove, { passive: true });
+    }
+
+    // Global background tap/click to discharge lightning
     const onGlobalClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target.closest('button, a, input, textarea, select, iframe, video')) {
@@ -161,8 +160,9 @@ export default function App() {
     window.addEventListener('click', onGlobalClick);
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('touchmove', onTouchMove);
+      if (!isTouchDevice) {
+        window.removeEventListener('mousemove', onMouseMove);
+      }
       window.removeEventListener('click', onGlobalClick);
     };
   }, []);

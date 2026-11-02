@@ -537,7 +537,7 @@ export const BangladeshHometownMap: React.FC = () => {
 
       {/* Bottom Interactive Location Inspector Bar */}
       <div className="relative z-10 mt-3 pt-3 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="font-semibold text-white">
             {activeSpotData.name} ({activeSpotData.bengaliName}):

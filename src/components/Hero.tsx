@@ -27,7 +27,9 @@ export const Hero: React.FC<HeroProps> = ({
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
+  const touchEndY = useRef<number | null>(null);
 
   const totalSlides = heroSlides.length;
   const currentSlide = heroSlides[currentSlideIndex];
@@ -53,30 +55,48 @@ export const Hero: React.FC<HeroProps> = ({
 
   // Touch swipe and parallax support for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.targetTouches[0].clientX;
+    if (e.targetTouches && e.targetTouches[0]) {
+      touchStartX.current = e.targetTouches[0].clientX;
+      touchStartY.current = e.targetTouches[0].clientY;
+      touchEndX.current = e.targetTouches[0].clientX;
+      touchEndY.current = e.targetTouches[0].clientY;
+    }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.targetTouches[0].clientX;
-    if (e.targetTouches[0]) {
-      const touch = e.targetTouches[0];
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = ((touch.clientX - rect.left) / rect.width - 0.5) * 1.5;
-      const y = ((touch.clientY - rect.top) / rect.height - 0.5) * 1.5;
-      setMouseOffset({ x, y });
+    if (e.targetTouches && e.targetTouches[0]) {
+      touchEndX.current = e.targetTouches[0].clientX;
+      touchEndY.current = e.targetTouches[0].clientY;
     }
   };
 
   const handleTouchEnd = () => {
-    if (!touchStartX.current || !touchEndX.current) return;
-    const distance = touchStartX.current - touchEndX.current;
-    if (distance > 50) {
-      handleNext();
-    } else if (distance < -50) {
-      handlePrev();
+    if (
+      touchStartX.current === null ||
+      touchEndX.current === null ||
+      touchStartY.current === null ||
+      touchEndY.current === null
+    ) {
+      return;
     }
+
+    const distanceX = touchStartX.current - touchEndX.current;
+    const distanceY = Math.abs(touchStartY.current - touchEndY.current);
+
+    // Only switch slide if swipe is predominantly horizontal and deliberate (> 50px)
+    // This guarantees that normal vertical page scrolling on phones is 100% smooth without accidental slides
+    if (Math.abs(distanceX) > 50 && Math.abs(distanceX) > distanceY * 1.5) {
+      if (distanceX > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+
     touchStartX.current = null;
+    touchStartY.current = null;
     touchEndX.current = null;
+    touchEndY.current = null;
     setMouseOffset({ x: 0, y: 0 });
   };
 
@@ -469,8 +489,8 @@ export const Hero: React.FC<HeroProps> = ({
 
       </div>
 
-      {/* Carousel Navigation Arrow Button (Right Side) */}
-      <div className="absolute right-4 sm:right-12 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-2.5 sm:gap-3">
+      {/* Carousel Navigation Arrow Button (Responsive Placement) */}
+      <div className="absolute right-4 sm:right-12 bottom-5 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-30 flex sm:flex-col flex-row-reverse items-center gap-2 sm:gap-3">
         <button
           onClick={handleNext}
           className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#111111]/80 hover:bg-[#222222] border border-white/[0.12] backdrop-blur-xl flex items-center justify-center text-[#f5f5f5] hover:scale-105 transition-all cursor-pointer shadow-2xl"

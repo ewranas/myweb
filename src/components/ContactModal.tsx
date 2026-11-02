@@ -93,7 +93,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-2xl animate-in fade-in duration-300">
       
       {/* Centered Modal Container */}
-      <div className="relative w-full max-w-xl rounded-3xl bg-[#111111] border border-white/[0.12] p-8 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.9)] text-left animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-xl max-h-[92dvh] overflow-y-auto rounded-3xl bg-[#111111] border border-white/[0.12] p-5 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.9)] text-left animate-in zoom-in-95 duration-200">
         
         {/* Close Button (Top-Right) */}
         <button
@@ -207,7 +207,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Tell me about your idea..."
-                className="w-full px-4 py-3 rounded-2xl bg-[#050505] border border-white/[0.1] text-xs sm:text-sm text-[#f5f5f5] placeholder-[#555555] focus:outline-none focus:border-white transition-all resize-none"
+                className="w-full px-4 py-3 rounded-2xl bg-[#050505] border border-white/[0.1] text-base sm:text-sm text-[#f5f5f5] placeholder-[#555555] focus:outline-none focus:border-white transition-all resize-none"
               />
             </div>
 
@@ -250,7 +250,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                 value={senderName}
                 onChange={(e) => setSenderName(e.target.value)}
                 placeholder="Your full name"
-                className="w-full px-4 py-3 rounded-2xl bg-[#050505] border border-white/[0.1] text-xs sm:text-sm text-[#f5f5f5] placeholder-[#555555] focus:outline-none focus:border-white transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#050505] border border-white/[0.1] text-base sm:text-sm text-[#f5f5f5] placeholder-[#555555] focus:outline-none focus:border-white transition-all"
               />
             </div>
 
@@ -264,7 +264,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                 value={senderEmail}
                 onChange={(e) => setSenderEmail(e.target.value)}
                 placeholder="you@domain.com"
-                className="w-full px-4 py-3 rounded-2xl bg-[#050505] border border-white/[0.1] text-xs sm:text-sm text-[#f5f5f5] placeholder-[#555555] focus:outline-none focus:border-white transition-all"
+                className="w-full px-4 py-3 rounded-2xl bg-[#050505] border border-white/[0.1] text-base sm:text-sm text-[#f5f5f5] placeholder-[#555555] focus:outline-none focus:border-white transition-all"
               />
             </div>
 
