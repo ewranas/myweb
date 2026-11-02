@@ -1,16 +1,11 @@
 import React from 'react';
-import { Camera } from 'lucide-react';
 import { PersonalInfo } from '../types/portfolio';
 
 interface AboutSectionProps {
   personalInfo: PersonalInfo;
-  onOpenCustomizer: () => void;
 }
 
-export const AboutSection: React.FC<AboutSectionProps> = ({
-  personalInfo,
-  onOpenCustomizer,
-}) => {
+export const AboutSection: React.FC<AboutSectionProps> = ({ personalInfo }) => {
   return (
     <section id="about" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[#050505]">
       <div className="max-w-6xl mx-auto">
@@ -46,16 +41,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/70 via-transparent to-transparent opacity-40 group-hover:opacity-20 transition-opacity pointer-events-none" />
-
-                {/* Change photo button */}
-                <button
-                  onClick={onOpenCustomizer}
-                  className="absolute bottom-3 right-3 p-2 rounded-xl bg-[#111111]/80 hover:bg-[#222222] text-[#888888] hover:text-[#f5f5f5] border border-white/[0.08] backdrop-blur-md transition-all hover:scale-105 cursor-pointer shadow-lg"
-                  title="Upload or change photo"
-                  aria-label="Upload photo"
-                >
-                  <Camera className="w-4 h-4" />
-                </button>
               </div>
 
               {/* Minimal caption */}

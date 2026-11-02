@@ -14,8 +14,6 @@ import { JourneyTimeline } from './components/JourneyTimeline';
 import { EducationSection } from './components/EducationSection';
 import { Footer } from './components/Footer';
 import { ContactModal } from './components/ContactModal';
-import { CustomizerModal } from './components/CustomizerModal';
-import { ProjectEditModal } from './components/ProjectEditModal';
 
 export default function App() {
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo>(() => {
@@ -66,6 +64,10 @@ export default function App() {
               embedUrl: '/assets/aistudio/ANAS_AHAMED___Portfolio_Showreel_1a936da6.html',
             };
           }
+          if (p.id === 'hsc-science-reference' || p.id === 'messboi') {
+            const messboiItem = initialProjects.find((item) => item.id === 'messboi');
+            return messboiItem || p;
+          }
           return p;
         });
 
@@ -73,6 +75,12 @@ export default function App() {
           const introItem = initialProjects.find((p) => p.id === 'my-introduction');
           if (introItem) {
             updatedList.splice(1, 0, introItem);
+          }
+        }
+        if (!updatedList.some((p) => p.id === 'messboi' || p.liveDemoUrl?.includes('messboi1.netlify.app'))) {
+          const messboiItem = initialProjects.find((p) => p.id === 'messboi');
+          if (messboiItem) {
+            updatedList.push(messboiItem);
           }
         }
         return updatedList;
@@ -84,9 +92,6 @@ export default function App() {
   });
 
   const [contactModalOpen, setContactModalOpen] = useState(false);
-  const [customizerOpen, setCustomizerOpen] = useState(false);
-  const [projectEditOpen, setProjectEditOpen] = useState(false);
-  const [currentEditProject, setCurrentEditProject] = useState<ProjectItem | null>(null);
   const [activeSection, setActiveSection] = useState('hero');
 
   // Track active section for navigation highlighting & observe scroll reveals
@@ -149,53 +154,6 @@ export default function App() {
     };
   }, []);
 
-  const handleUpdatePersonalInfo = (updated: PersonalInfo) => {
-    setPersonalInfo(updated);
-    try {
-      localStorage.setItem('anas_portfolio_info', JSON.stringify(updated));
-    } catch {
-      // ignore
-    }
-  };
-
-  const handleResetToDefaults = () => {
-    setPersonalInfo(initialPersonalInfo);
-    try {
-      localStorage.removeItem('anas_portfolio_info');
-    } catch {
-      // ignore
-    }
-  };
-
-  const handleSaveProject = (updatedProject: ProjectItem) => {
-    const existingIndex = projects.findIndex((p) => p.id === updatedProject.id);
-    let updatedList: ProjectItem[];
-
-    if (existingIndex >= 0) {
-      updatedList = [...projects];
-      updatedList[existingIndex] = updatedProject;
-    } else {
-      updatedList = [...projects, updatedProject];
-    }
-
-    setProjects(updatedList);
-    try {
-      localStorage.setItem('anas_portfolio_projects', JSON.stringify(updatedList));
-    } catch {
-      // ignore
-    }
-  };
-
-  const handleDeleteProject = (projectId: string) => {
-    const filtered = projects.filter((p) => p.id !== projectId);
-    setProjects(filtered);
-    try {
-      localStorage.setItem('anas_portfolio_projects', JSON.stringify(filtered));
-    } catch {
-      // ignore
-    }
-    setProjectEditOpen(false);
-  };
 
   return (
     <div className="relative min-h-screen bg-[#050505] text-[#f5f5f5] flex flex-col selection:bg-white/20 selection:text-white">
@@ -231,23 +189,10 @@ export default function App() {
         />
 
         {/* 2. Editorial About Section */}
-        <AboutSection
-          personalInfo={personalInfo}
-          onOpenCustomizer={() => setCustomizerOpen(true)}
-        />
+        <AboutSection personalInfo={personalInfo} />
 
         {/* 3. Selected Projects (Featuring FOLAFOL Studio Presentation) */}
-        <ProjectsSection
-          projects={projects}
-          onEditProject={(project) => {
-            setCurrentEditProject(project);
-            setProjectEditOpen(true);
-          }}
-          onAddNewProject={() => {
-            setCurrentEditProject(null);
-            setProjectEditOpen(true);
-          }}
-        />
+        <ProjectsSection projects={projects} />
 
         {/* 4. Developer Journey (Always Learning) */}
         <JourneyTimeline />
@@ -266,25 +211,6 @@ export default function App() {
         onClose={() => setContactModalOpen(false)}
         email={personalInfo.socials.email}
       />
-
-      {/* Customizer Modal for Photo & Socials */}
-      <CustomizerModal
-        isOpen={customizerOpen}
-        onClose={() => setCustomizerOpen(false)}
-        personalInfo={personalInfo}
-        onUpdatePersonalInfo={handleUpdatePersonalInfo}
-        onResetToDefaults={handleResetToDefaults}
-      />
-
-      {/* Project Add / Edit Modal */}
-      <ProjectEditModal
-        isOpen={projectEditOpen}
-        onClose={() => setProjectEditOpen(false)}
-        project={currentEditProject}
-        onSave={handleSaveProject}
-        onDelete={handleDeleteProject}
-      />
-
     </div>
   );
 }
