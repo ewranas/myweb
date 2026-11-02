@@ -13,8 +13,8 @@ const BOLT_CONFIGS: LightningBoltConfig[] = [
   {
     id: 'strike-moon-adjacent',
     viewBox: '0 0 500 500',
-    style: { top: '0%', right: '12%', width: '420px', height: '480px' },
-    cloudGlowCenter: '75% 25%',
+    style: { top: '0%', right: '10%', width: '440px', height: '520px' },
+    cloudGlowCenter: '78% 22%',
     // Dramatic zig-zag downward bolt with 4 branches
     mainBoltPath:
       'M 250,5 L 265,45 L 235,95 L 275,150 L 245,210 L 290,285 L 260,360 L 285,420 L 270,490',
@@ -30,10 +30,27 @@ const BOLT_CONFIGS: LightningBoltConfig[] = [
     ],
   },
   {
+    id: 'strike-upper-left',
+    viewBox: '0 0 500 520',
+    style: { top: '0%', left: '6%', width: '450px', height: '520px' },
+    cloudGlowCenter: '22% 20%',
+    // Powerful left-flank diagonal fork
+    mainBoltPath:
+      'M 240,10 L 225,55 L 260,110 L 215,175 L 250,240 L 205,310 L 235,380 L 195,450 L 210,505',
+    branchPaths: [
+      // Branch 1 shooting right
+      'M 260,110 L 320,150 L 305,200 L 350,245',
+      // Branch 2 shooting left
+      'M 215,175 L 150,215 L 165,270 L 120,320 L 105,370',
+      // Lower fork
+      'M 205,310 L 260,355 L 245,410',
+    ],
+  },
+  {
     id: 'strike-cloud-crawler-horizontal',
     viewBox: '0 0 600 350',
-    style: { top: '2%', right: '2%', width: '560px', height: '340px' },
-    cloudGlowCenter: '60% 20%',
+    style: { top: '1%', right: '4%', width: '580px', height: '360px' },
+    cloudGlowCenter: '62% 18%',
     // Jagged cloud-to-cloud crawler weaving across the upper clouds
     mainBoltPath:
       'M 580,20 L 490,45 L 430,25 L 370,75 L 310,50 L 250,110 L 190,85 L 130,140 L 80,120 L 20,175',
@@ -48,12 +65,12 @@ const BOLT_CONFIGS: LightningBoltConfig[] = [
   },
   {
     id: 'strike-sharp-center',
-    viewBox: '0 0 450 480',
-    style: { top: '1%', right: '28%', width: '380px', height: '440px' },
-    cloudGlowCenter: '50% 22%',
-    // High-voltage sharp zig-zag fork
+    viewBox: '0 0 450 500',
+    style: { top: '0%', left: '34%', width: '420px', height: '520px' },
+    cloudGlowCenter: '50% 20%',
+    // High-voltage sharp zig-zag fork down the middle
     mainBoltPath:
-      'M 220,10 L 240,65 L 210,115 L 265,175 L 225,235 L 270,305 L 235,375 L 255,445',
+      'M 220,10 L 240,65 L 210,115 L 265,175 L 225,235 L 270,305 L 235,375 L 255,445 L 240,495',
     branchPaths: [
       // Left sharp fork
       'M 210,115 L 155,160 L 170,210 L 120,255 L 105,305',
@@ -61,6 +78,20 @@ const BOLT_CONFIGS: LightningBoltConfig[] = [
       'M 265,175 L 315,225 L 300,280 L 335,335',
       // Deep downward needle
       'M 225,235 L 190,290 L 205,345 L 175,395',
+    ],
+  },
+  {
+    id: 'strike-mid-viewport-branch',
+    viewBox: '0 0 480 460',
+    style: { top: '15%', right: '18%', width: '420px', height: '480px' },
+    cloudGlowCenter: '70% 35%',
+    // Mid-level dramatic atmospheric lightning
+    mainBoltPath:
+      'M 200,10 L 220,60 L 185,120 L 230,180 L 195,245 L 240,315 L 210,380 L 225,440',
+    branchPaths: [
+      'M 185,120 L 130,165 L 145,220 L 100,265',
+      'M 230,180 L 285,225 L 270,280 L 310,335',
+      'M 195,245 L 160,300 L 175,355',
     ],
   },
 ];
@@ -118,7 +149,7 @@ export const AtmosphericLightning: React.FC = () => {
       setCloudGlowOpacity(0.25);
     }, 290);
 
-    // 7. Complete return to darkness (t=460ms)
+    // 7. Complete return to darkness (t=480ms)
     const t6 = setTimeout(() => {
       setFlashPhase('idle');
       setCloudGlowOpacity(0);
@@ -142,19 +173,18 @@ export const AtmosphericLightning: React.FC = () => {
     let timeoutId: NodeJS.Timeout;
 
     const scheduleNextStrike = () => {
-      // Random delay between 4500ms and 8000ms
-      const delay = Math.floor(Math.random() * 3500) + 4500;
+      const delay = Math.floor(Math.random() * 4000) + 4500;
       timeoutId = setTimeout(() => {
         dischargeLightning();
         scheduleNextStrike();
       }, delay);
     };
 
-    // Initial first strike after 2.2 seconds for immediate feedback
+    // Initial first strike after 1.8 seconds for instant atmospheric feedback
     const initialTimer = setTimeout(() => {
       dischargeLightning(0);
       scheduleNextStrike();
-    }, 2200);
+    }, 1800);
 
     return () => {
       clearTimeout(initialTimer);
@@ -162,7 +192,7 @@ export const AtmosphericLightning: React.FC = () => {
     };
   }, [dischargeLightning]);
 
-  // Support interactive click/tap trigger on the sky or clouds
+  // Support interactive click/tap trigger on the sky or background
   useEffect(() => {
     const handleTrigger = () => {
       dischargeLightning();
@@ -195,28 +225,28 @@ export const AtmosphericLightning: React.FC = () => {
 
   return (
     <div
-      className="absolute inset-0 pointer-events-none z-15 overflow-hidden"
+      className="fixed inset-0 pointer-events-none z-20 overflow-hidden"
       aria-hidden="true"
     >
-      {/* 1. Global Cloud & Sky Ambient Flash (illuminates cloud canopy and city horizon) */}
+      {/* 1. Global Ambient Electric Flash (illuminates the entire website viewport) */}
       <div
-        className="absolute inset-0 transition-opacity duration-75 pointer-events-none"
+        className="fixed inset-0 transition-opacity duration-75 pointer-events-none"
         style={{
           opacity: cloudGlowOpacity,
           background: activeConfig
-            ? `radial-gradient(ellipse at ${activeConfig.cloudGlowCenter}, rgba(255, 230, 240, 0.42) 0%, rgba(225, 29, 72, 0.28) 35%, rgba(147, 51, 234, 0.12) 65%, transparent 80%)`
+            ? `radial-gradient(ellipse at ${activeConfig.cloudGlowCenter}, rgba(255, 235, 245, 0.45) 0%, rgba(225, 29, 72, 0.28) 40%, rgba(136, 19, 55, 0.12) 70%, transparent 90%)`
             : 'transparent',
           mixBlendMode: 'screen',
         }}
       />
 
-      {/* 2. Secondary soft diffuse sky strobe (very fast) */}
+      {/* 2. Secondary soft diffuse sky strobe across the top horizon */}
       <div
-        className="absolute top-0 left-0 right-0 h-96 transition-opacity duration-100 pointer-events-none"
+        className="fixed top-0 left-0 right-0 h-96 transition-opacity duration-100 pointer-events-none"
         style={{
           opacity: cloudGlowOpacity * 0.45,
           background:
-            'linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(251, 113, 133, 0.25) 30%, rgba(225, 29, 72, 0.08) 70%, transparent 100%)',
+            'linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(251, 113, 133, 0.22) 30%, rgba(225, 29, 72, 0.06) 70%, transparent 100%)',
           mixBlendMode: 'screen',
         }}
       />
@@ -224,13 +254,13 @@ export const AtmosphericLightning: React.FC = () => {
       {/* 3. The Zig-Zag Lightning Bolt ("আঁকাবাঁকা বজ্রপাত") */}
       {activeConfig && (
         <div
-          className="absolute pointer-events-none"
+          className="fixed pointer-events-none"
           style={{
             ...activeConfig.style,
             opacity: currentBoltOpacity,
             transition: flashPhase === 'fade' ? 'opacity 0.22s ease-out' : 'opacity 0.03s linear',
             filter:
-              'drop-shadow(0 0 4px #ffffff) drop-shadow(0 0 10px #ff2a6d) drop-shadow(0 0 24px #e11d48) drop-shadow(0 0 45px rgba(225,29,72,0.8))',
+              'drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 12px #ff2a6d) drop-shadow(0 0 28px #e11d48) drop-shadow(0 0 55px rgba(225,29,72,0.85))',
           }}
         >
           <svg
@@ -255,7 +285,7 @@ export const AtmosphericLightning: React.FC = () => {
 
               {/* Outer High-Voltage Corona Filter */}
               <filter id={`electricGlow-${activeConfig.id}`} x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feGaussianBlur stdDeviation="3.5" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
@@ -267,17 +297,17 @@ export const AtmosphericLightning: React.FC = () => {
             <path
               d={activeConfig.mainBoltPath}
               stroke="#e11d48"
-              strokeWidth="6"
+              strokeWidth="6.5"
               strokeLinecap="round"
               strokeLinejoin="miter"
               strokeMiterlimit="3"
-              opacity="0.8"
+              opacity="0.85"
             />
             {/* Intermediate Violet/Pink Plasma */}
             <path
               d={activeConfig.mainBoltPath}
               stroke="#fb7185"
-              strokeWidth="3.5"
+              strokeWidth="3.8"
               strokeLinecap="round"
               strokeLinejoin="miter"
               strokeMiterlimit="3"
@@ -287,7 +317,7 @@ export const AtmosphericLightning: React.FC = () => {
             <path
               d={activeConfig.mainBoltPath}
               stroke={`url(#lightningCoreGrad-${activeConfig.id})`}
-              strokeWidth="2"
+              strokeWidth="2.2"
               strokeLinecap="round"
               strokeLinejoin="miter"
               strokeMiterlimit="3"
@@ -296,22 +326,22 @@ export const AtmosphericLightning: React.FC = () => {
 
             {/* B. Branching Jagged Forks ("আঁকাবাঁকা শাখা") */}
             {activeConfig.branchPaths.map((branchPath, bIdx) => (
-              <g key={bIdx} opacity={0.88}>
+              <g key={bIdx} opacity={0.9}>
                 {/* Branch Glow */}
                 <path
                   d={branchPath}
                   stroke="#e11d48"
-                  strokeWidth="3"
+                  strokeWidth="3.2"
                   strokeLinecap="round"
                   strokeLinejoin="miter"
                   strokeMiterlimit="2.5"
-                  opacity="0.7"
+                  opacity="0.75"
                 />
                 {/* Branch White Core */}
                 <path
                   d={branchPath}
                   stroke="#ffffff"
-                  strokeWidth="1.2"
+                  strokeWidth="1.3"
                   strokeLinecap="round"
                   strokeLinejoin="miter"
                   strokeMiterlimit="2.5"
@@ -319,8 +349,8 @@ export const AtmosphericLightning: React.FC = () => {
               </g>
             ))}
 
-            {/* Spark Discharges at Terminal Points */}
-            <circle cx="270" cy="490" r="4" fill="#ffffff" opacity="0.9" filter="drop-shadow(0 0 8px #ff2a6d)" />
+            {/* Terminal Spark Discharge */}
+            <circle cx="270" cy="490" r="4.5" fill="#ffffff" opacity="0.95" filter="drop-shadow(0 0 10px #ff2a6d)" />
           </svg>
         </div>
       )}

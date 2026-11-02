@@ -19,12 +19,8 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
         
         {/* Top Info & Quotes */}
         <div className="reveal-item flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-10 border-b border-white/[0.06]">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[10px] font-mono tracking-wider uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Available for projects & learning collaborations</span>
-            </div>
-            <h4 className="font-editorial text-lg sm:text-xl font-bold text-[#f5f5f5]">
+          <div className="space-y-1.5">
+            <h4 className="font-editorial text-lg font-bold text-[#f5f5f5]">
               Designed & Built by Anas Ahammed.
             </h4>
             <p className="text-xs text-[#888888] font-normal tracking-wide flex items-center gap-2">
@@ -48,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
                   href={soc.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/[0.03] hover:bg-white/[0.1] hover:text-[#f5f5f5] hover:scale-125 hover:-translate-y-1 transition-all duration-300 border border-white/[0.06] hover:border-rose-500/40 shadow-sm hover:shadow-[0_0_20px_rgba(225,29,72,0.25)]"
+                  className="p-2.5 rounded-full bg-white/[0.03] hover:bg-white/[0.1] hover:text-[#f5f5f5] hover:scale-110 hover:-translate-y-1 transition-all duration-300 border border-white/[0.05] hover:border-white/[0.2] shadow-sm hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
                   title={soc.title}
                   aria-label={soc.title}
                 >
@@ -59,22 +55,19 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
 
             <button
               onClick={scrollToTop}
-              className="p-3 rounded-full bg-white/[0.05] hover:bg-rose-500/20 text-[#888888] hover:text-[#f5f5f5] hover:scale-125 hover:-translate-y-1 transition-all duration-300 border border-white/[0.08] hover:border-rose-500/40 cursor-pointer ml-1 shadow-sm hover:shadow-[0_0_20px_rgba(225,29,72,0.3)] group"
+              className="p-2.5 rounded-full bg-white/[0.05] hover:bg-white/[0.12] text-[#888888] hover:text-[#f5f5f5] hover:scale-110 hover:-translate-y-1 transition-all duration-300 border border-white/[0.08] hover:border-white/[0.2] cursor-pointer ml-1 shadow-sm"
               title="Back to top"
               aria-label="Back to top"
             >
-              <ArrowUp className="w-4 h-4 transition-transform group-hover:-translate-y-0.5" />
+              <ArrowUp className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        {/* Bottom Year and Location */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#555555]">
+        {/* Bottom Copyright */}
+        <div className="text-center text-xs text-[#555555]">
           <p>
             Copyright © {currentYear} Anas Ahammed.
-          </p>
-          <p>
-            Shahid AHM Kamaruzzaman College · Natore, Bangladesh
           </p>
         </div>
 

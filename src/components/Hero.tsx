@@ -11,7 +11,6 @@ import {
 } from 'lucide-react';
 import { heroSlides } from '../data/portfolioData';
 import { PersonalInfo } from '../types/portfolio';
-import { AtmosphericLightning } from './AtmosphericLightning';
 
 interface HeroProps {
   personalInfo: PersonalInfo;
@@ -165,9 +164,6 @@ export const Hero: React.FC<HeroProps> = ({
             background: 'radial-gradient(circle at 75% 30%, rgba(225, 29, 72, 0.28) 0%, rgba(185, 28, 28, 0.16) 40%, rgba(153, 27, 27, 0.05) 70%, transparent 85%)'
           }}
         />
-
-        {/* Intermittent Realistic Zig-Zag Lightning Bolts ("আঁকাবাঁকা বজ্রপাত") */}
-        <AtmosphericLightning />
 
         {/* Cinematic Red Moon with 3D Mouse Parallax and Floating Animation */}
         <div 
@@ -343,19 +339,8 @@ export const Hero: React.FC<HeroProps> = ({
       <div className="relative z-20 h-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-end pb-16 sm:pb-20">
         
         {/* Main Content (Positioned Lower-Left) */}
-        <div key={currentSlide.id} className="max-w-2xl text-left space-y-4 animate-float-smooth">
+        <div className="max-w-2xl text-left space-y-4">
           
-          {/* Animated Status Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.1] backdrop-blur-md shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
-            </span>
-            <span className="text-[10px] font-mono tracking-widest text-[#cccccc] uppercase">
-              CLASS 11 STUDENT &bull; DEVELOPER
-            </span>
-          </div>
-
           {/* Subtle Tagline / Slide Indicator */}
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-mono tracking-[0.25em] text-[#888888] uppercase">
@@ -363,7 +348,7 @@ export const Hero: React.FC<HeroProps> = ({
             </span>
           </div>
 
-          {/* Large Editorial Heading with shimmer */}
+          {/* Large Editorial Heading */}
           <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#f5f5f5] leading-[1.05]">
             {currentSlide.title}
           </h1>
@@ -378,15 +363,15 @@ export const Hero: React.FC<HeroProps> = ({
             {currentSlide.description}
           </p>
 
-          {/* Slide CTA Button with Sheen & Micro-glow */}
+          {/* Slide CTA Button */}
           <div className="pt-2">
             {currentSlideIndex === 3 ? (
               <button
                 onClick={onOpenContactModal}
-                className="btn-minimal-white sheen-container px-6 py-3 rounded-full text-xs font-semibold inline-flex items-center gap-2 cursor-pointer shadow-xl hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] hover:scale-105 transition-all duration-300 group"
+                className="btn-minimal-white px-5 py-2.5 rounded-full text-xs font-semibold inline-flex items-center gap-2 cursor-pointer shadow-lg"
               >
                 <span>{currentSlide.actionText}</span>
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             ) : (
               <a
@@ -396,21 +381,21 @@ export const Hero: React.FC<HeroProps> = ({
                   const target = document.querySelector(currentSlide.actionTarget);
                   if (target) target.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="btn-minimal-white sheen-container px-6 py-3 rounded-full text-xs font-semibold inline-flex items-center gap-2 cursor-pointer shadow-xl hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] hover:scale-105 transition-all duration-300 group"
+                className="btn-minimal-white px-5 py-2.5 rounded-full text-xs font-semibold inline-flex items-center gap-2 cursor-pointer shadow-lg"
               >
                 <span>{currentSlide.actionText}</span>
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </a>
             )}
           </div>
 
-          {/* Minimal Social Icons with Hover Glow & Elevation */}
+          {/* Minimal Social Icons (Always Visible) */}
           <div className="pt-4 flex items-center gap-5 text-[#888888]">
             <a
               href={personalInfo.socials.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#f5f5f5] hover:scale-125 hover:-translate-y-0.5 transition-all duration-300 p-1"
+              className="hover:text-[#f5f5f5] transition-colors p-1"
               title="GitHub Profile"
               aria-label="GitHub Profile"
             >
@@ -421,7 +406,7 @@ export const Hero: React.FC<HeroProps> = ({
               href={personalInfo.socials.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#f5f5f5] hover:scale-125 hover:-translate-y-0.5 transition-all duration-300 p-1"
+              className="hover:text-[#f5f5f5] transition-colors p-1"
               title="Instagram Profile"
               aria-label="Instagram Profile"
             >
@@ -432,7 +417,7 @@ export const Hero: React.FC<HeroProps> = ({
               href={personalInfo.socials.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#f5f5f5] hover:scale-125 hover:-translate-y-0.5 transition-all duration-300 p-1"
+              className="hover:text-[#f5f5f5] transition-colors p-1"
               title="Facebook Profile"
               aria-label="Facebook Profile"
             >
@@ -441,7 +426,7 @@ export const Hero: React.FC<HeroProps> = ({
 
             <a
               href={`mailto:${personalInfo.socials.email}`}
-              className="hover:text-[#f5f5f5] hover:scale-125 hover:-translate-y-0.5 transition-all duration-300 p-1"
+              className="hover:text-[#f5f5f5] transition-colors p-1"
               title="Email Anas"
               aria-label="Email Anas"
             >
@@ -450,9 +435,8 @@ export const Hero: React.FC<HeroProps> = ({
 
             <span className="text-[#333333]">|</span>
 
-            <span className="text-[11px] font-mono text-[#888888] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Natore, Bangladesh</span>
+            <span className="text-[11px] font-mono text-[#666666]">
+              Natore, Bangladesh
             </span>
           </div>
 
@@ -460,11 +444,11 @@ export const Hero: React.FC<HeroProps> = ({
 
       </div>
 
-      {/* Carousel Navigation Arrow Button (Right Side) with Glow */}
+      {/* Carousel Navigation Arrow Button (Right Side) */}
       <div className="absolute right-4 sm:right-12 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-2.5 sm:gap-3">
         <button
           onClick={handleNext}
-          className="w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-[#111111]/85 hover:bg-[#222222] border border-white/[0.14] hover:border-white/[0.3] backdrop-blur-xl flex items-center justify-center text-[#f5f5f5] hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all cursor-pointer shadow-2xl"
+          className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#111111]/80 hover:bg-[#222222] border border-white/[0.12] backdrop-blur-xl flex items-center justify-center text-[#f5f5f5] hover:scale-105 transition-all cursor-pointer shadow-2xl"
           aria-label="Next slide"
         >
           <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6" />
@@ -473,7 +457,7 @@ export const Hero: React.FC<HeroProps> = ({
         {currentSlideIndex > 0 && (
           <button
             onClick={handlePrev}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#111111]/70 hover:bg-[#222222] border border-white/[0.1] hover:border-white/[0.25] backdrop-blur-xl flex items-center justify-center text-[#888888] hover:text-[#f5f5f5] hover:scale-110 transition-all cursor-pointer"
+            className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#111111]/60 hover:bg-[#222222] border border-white/[0.08] backdrop-blur-xl flex items-center justify-center text-[#888888] hover:text-[#f5f5f5] transition-all cursor-pointer"
             aria-label="Previous slide"
           >
             <ArrowLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
@@ -481,13 +465,12 @@ export const Hero: React.FC<HeroProps> = ({
         )}
       </div>
 
-      {/* Next Section Indicator (Bottom Right) with Animated Bouncing Pulse */}
-      <div 
-        className="hidden sm:flex absolute bottom-8 right-12 z-30 items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-black/40 border border-white/[0.08] backdrop-blur-md text-[11px] font-mono text-[#888888] hover:text-[#f5f5f5] hover:border-white/[0.2] transition-all cursor-pointer shadow-lg group"
+      {/* Next Section Indicator (Bottom Right) */}
+      <div className="hidden sm:flex absolute bottom-8 right-12 z-30 items-center gap-2 text-[11px] font-mono text-[#666666] hover:text-[#f5f5f5] transition-colors cursor-pointer"
         onClick={scrollToNextSection}
       >
-        <span className="tracking-wider">SCROLL DOWN</span>
-        <ChevronDown className="w-3.5 h-3.5 animate-bounce-subtle text-rose-400 group-hover:translate-y-0.5 transition-transform" />
+        <span>SCROLL DOWN</span>
+        <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
       </div>
 
     </section>

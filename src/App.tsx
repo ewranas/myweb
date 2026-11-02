@@ -14,6 +14,7 @@ import { JourneyTimeline } from './components/JourneyTimeline';
 import { EducationSection } from './components/EducationSection';
 import { Footer } from './components/Footer';
 import { ContactModal } from './components/ContactModal';
+import { AtmosphericLightning } from './components/AtmosphericLightning';
 
 export default function App() {
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo>(() => {
@@ -93,7 +94,6 @@ export default function App() {
 
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const [scrollProgress, setScrollProgress] = useState(0);
 
   // Track active section for navigation highlighting & observe scroll reveals
   useEffect(() => {
@@ -115,7 +115,7 @@ export default function App() {
       if (el) navObserver.observe(el);
     });
 
-    // Scroll reveal observer for .reveal-item, .reveal-left, .reveal-right, .reveal-scale
+    // Scroll reveal observer for .reveal-item
     const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -124,30 +124,15 @@ export default function App() {
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.12, rootMargin: '0px 0px -50px 0px' }
     );
 
-    const revealElements = document.querySelectorAll(
-      '.reveal-item, .reveal-left, .reveal-right, .reveal-scale'
-    );
+    const revealElements = document.querySelectorAll('.reveal-item');
     revealElements.forEach((el) => revealObserver.observe(el));
-
-    // Scroll progress handler
-    const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        const progress = (window.scrollY / totalHeight) * 100;
-        setScrollProgress(Math.min(100, Math.max(0, progress)));
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
 
     return () => {
       navObserver.disconnect();
       revealObserver.disconnect();
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -164,28 +149,28 @@ export default function App() {
     };
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('touchmove', onTouchMove, { passive: true });
+
+    // Global background click to discharge lightning
+    const onGlobalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('button, a, input, textarea, select, iframe, video')) {
+        window.dispatchEvent(new CustomEvent('trigger-lightning'));
+      }
+    };
+    window.addEventListener('click', onGlobalClick);
+
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('click', onGlobalClick);
     };
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-[#f5f5f5] flex flex-col selection:bg-rose-500/30 selection:text-white">
-      {/* Sleek Top Scroll Progress Indicator */}
-      <div className="fixed top-0 left-0 right-0 h-[2.5px] z-50 pointer-events-none bg-white/[0.04]">
-        <div
-          className="h-full bg-gradient-to-r from-rose-600 via-red-500 to-amber-300 transition-[width] duration-150 ease-out shadow-[0_0_12px_rgba(244,63,94,0.9)]"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
-
-      {/* Ambient Atmospheric Deep Background Glows */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-[25%] -left-[10%] w-[500px] h-[500px] rounded-full bg-rose-600/[0.025] blur-[140px] animate-pulse-glow" />
-        <div className="absolute top-[55%] -right-[10%] w-[550px] h-[550px] rounded-full bg-red-600/[0.022] blur-[160px] animate-float-smooth" />
-        <div className="absolute top-[80%] left-[20%] w-[450px] h-[450px] rounded-full bg-amber-600/[0.015] blur-[150px] animate-pulse-glow" />
-      </div>
+    <div className="relative min-h-screen bg-[#050505] text-[#f5f5f5] flex flex-col selection:bg-white/20 selection:text-white">
+      
+      {/* Global Atmospheric Lightning Layer (Discharges throughout the entire website background) */}
+      <AtmosphericLightning />
 
       {/* Ambient Interactive Cursor Spotlight */}
       <div
