@@ -59,7 +59,7 @@ export const SkillsSection: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col items-center text-center space-y-3 mb-16">
           <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#2997ff] font-mono">
-            Technologies & Skills
+            Technologies &amp; Skills
           </span>
           <h2 className="text-3xl sm:text-5xl font-semibold tracking-[-0.03em] text-[#f5f5f7]">
             Tools of the Craft.

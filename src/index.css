@@ -1,388 +1,106 @@
 @import "tailwindcss";
 
 @layer base {
-  :root {
+  :root,
+  [data-theme="dark-red"] {
     --bg-pure: #050505;
-    --bg-charcoal: #111111;
-    --bg-surface: #181818;
-    --text-white: #f5f5f5;
-    --text-gray: #888888;
-    --text-dark-gray: #555555;
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(255, 255, 255, 0.2);
-
-    /* Theme: Dark Red (Default) */
-    --accent-name: 'dark-red';
+    --bg-card: #111111;
+    --cursor-glow-color: rgba(225, 29, 72, 0.08);
     --accent-primary: #e11d48;
-    --accent-primary-hover: #f43f5e;
     --accent-secondary: #ff4d6d;
-    --accent-dark: #881337;
-    --accent-deep: #4c0519;
-    --accent-glow: rgba(225, 29, 72, 0.45);
-    --accent-glow-strong: rgba(239, 68, 68, 0.75);
-    --accent-glow-subtle: rgba(225, 29, 72, 0.12);
-    --accent-glow-ambient: rgba(185, 28, 28, 0.35);
-    --accent-glow-super: rgba(220, 38, 38, 0.55);
-    --accent-badge-bg: rgba(225, 29, 72, 0.15);
-    --accent-badge-border: rgba(225, 29, 72, 0.35);
-    --accent-badge-text: #fda4af;
-    --cursor-glow-color: rgba(225, 29, 72, 0.05);
-
-    /* Celestial Moon & Atmosphere */
-    --moon-grad-0: #ff4d6d;
-    --moon-grad-30: #e11d48;
-    --moon-grad-65: #be123c;
-    --moon-grad-90: #881337;
-    --moon-grad-100: #4c0519;
-
-    --crater-grad-0: #4c0519;
-    --crater-grad-70: #881337;
-    --crater-grad-100: #be123c;
-
-    --moon-crater-stroke: #ff758f;
-    --moon-rim-stroke: #ff758f;
-    --moon-shadow: #2a040d;
-    --moon-crater-dark: #3f0713;
-    --moon-glow-color: rgba(239, 68, 68, 0.5);
-    --moon-glow-ambient: rgba(185, 28, 28, 0.35);
-    --moon-glow-strong: rgba(239, 68, 68, 0.85);
-    --moon-glow-super: rgba(220, 38, 38, 0.55);
-    --moon-aura-bg: radial-gradient(circle at 75% 30%, rgba(225, 29, 72, 0.28) 0%, rgba(185, 28, 28, 0.16) 40%, rgba(153, 27, 27, 0.05) 70%, transparent 85%);
-    --moon-cloud-1: radial-gradient(ellipse at center, rgba(225, 29, 72, 0.26) 0%, rgba(190, 18, 60, 0.15) 45%, transparent 75%);
-    --moon-cloud-2: radial-gradient(ellipse at center, rgba(244, 63, 94, 0.22) 0%, rgba(159, 18, 57, 0.12) 50%, transparent 80%);
-    --moon-cloud-wisp: radial-gradient(ellipse at center, rgba(251, 113, 133, 0.3) 0%, rgba(225, 29, 72, 0.18) 40%, rgba(136, 19, 55, 0.07) 70%, transparent 85%);
-
-    /* Lightning Variables */
-    --lightning-outer: #e11d48;
-    --lightning-mid: #fb7185;
-    --lightning-spark: #ff2a6d;
-    --lightning-cloud-radial: rgba(225, 29, 72, 0.28);
-    --lightning-cloud-deep: rgba(136, 19, 55, 0.12);
-    --lightning-sky-mid: rgba(251, 113, 133, 0.22);
-    --lightning-sky-base: rgba(225, 29, 72, 0.06);
-
-    /* Ember particle colors */
-    --ember-color-1: #fb7185;
-    --ember-color-2: #ef4444;
-    --ember-color-3: #fda4af;
-    --ember-color-4: #dc2626;
-
-    /* Card and Timeline */
-    --timeline-laser: rgba(225, 29, 72, 0.85);
-    --border-accent-hover: rgba(225, 29, 72, 0.35);
-    --shadow-accent-glow: rgba(225, 29, 72, 0.18);
+    --accent-glow: rgba(225, 29, 72, 0.35);
+    --timeline-laser: #f43f5e;
+    --accent-badge-bg: rgba(225, 29, 72, 0.14);
+    --accent-badge-border: rgba(225, 29, 72, 0.38);
+    --accent-badge-text: #fb7185;
   }
 
-  [data-theme='midnight-blue'] {
+  [data-theme="midnight-blue"] {
     --bg-pure: #030712;
-    --bg-charcoal: #0b1120;
-    --bg-surface: #111827;
-
-    /* Theme: Midnight Blue */
-    --accent-name: 'midnight-blue';
+    --bg-card: #0b1120;
+    --cursor-glow-color: rgba(59, 130, 246, 0.11);
     --accent-primary: #3b82f6;
-    --accent-primary-hover: #60a5fa;
     --accent-secondary: #38bdf8;
-    --accent-dark: #1d4ed8;
-    --accent-deep: #0f172a;
-    --accent-glow: rgba(59, 130, 246, 0.45);
-    --accent-glow-strong: rgba(56, 189, 248, 0.75);
-    --accent-glow-subtle: rgba(59, 130, 246, 0.12);
-    --accent-glow-ambient: rgba(30, 64, 175, 0.35);
-    --accent-glow-super: rgba(37, 99, 235, 0.55);
-    --accent-badge-bg: rgba(59, 130, 246, 0.15);
-    --accent-badge-border: rgba(59, 130, 246, 0.35);
-    --accent-badge-text: #93c5fd;
-    --cursor-glow-color: rgba(59, 130, 246, 0.06);
-
-    /* Celestial Moon & Atmosphere (Midnight Sapphire Moon) */
-    --moon-grad-0: #60a5fa;
-    --moon-grad-30: #3b82f6;
-    --moon-grad-65: #2563eb;
-    --moon-grad-90: #1e40af;
-    --moon-grad-100: #0f172a;
-
-    --crater-grad-0: #0f172a;
-    --crater-grad-70: #1e3a8a;
-    --crater-grad-100: #2563eb;
-
-    --moon-crater-stroke: #93c5fd;
-    --moon-rim-stroke: #93c5fd;
-    --moon-shadow: #020617;
-    --moon-crater-dark: #091328;
-    --moon-glow-color: rgba(59, 130, 246, 0.5);
-    --moon-glow-ambient: rgba(30, 64, 175, 0.35);
-    --moon-glow-strong: rgba(56, 189, 248, 0.85);
-    --moon-glow-super: rgba(37, 99, 235, 0.55);
-    --moon-aura-bg: radial-gradient(circle at 75% 30%, rgba(59, 130, 246, 0.28) 0%, rgba(30, 64, 175, 0.16) 40%, rgba(15, 23, 42, 0.05) 70%, transparent 85%);
-    --moon-cloud-1: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.26) 0%, rgba(29, 78, 216, 0.15) 45%, transparent 75%);
-    --moon-cloud-2: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.22) 0%, rgba(30, 58, 138, 0.12) 50%, transparent 80%);
-    --moon-cloud-wisp: radial-gradient(ellipse at center, rgba(147, 197, 253, 0.3) 0%, rgba(59, 130, 246, 0.18) 40%, rgba(30, 64, 175, 0.07) 70%, transparent 85%);
-
-    /* Lightning Variables (Electric Midnight Blue / Cyan Storm) */
-    --lightning-outer: #2563eb;
-    --lightning-mid: #38bdf8;
-    --lightning-spark: #60a5fa;
-    --lightning-cloud-radial: rgba(59, 130, 246, 0.3);
-    --lightning-cloud-deep: rgba(30, 58, 138, 0.14);
-    --lightning-sky-mid: rgba(125, 211, 252, 0.22);
-    --lightning-sky-base: rgba(37, 99, 235, 0.06);
-
-    /* Ember particle colors */
-    --ember-color-1: #60a5fa;
-    --ember-color-2: #38bdf8;
-    --ember-color-3: #93c5fd;
-    --ember-color-4: #2563eb;
-
-    /* Card and Timeline */
-    --timeline-laser: rgba(59, 130, 246, 0.85);
-    --border-accent-hover: rgba(59, 130, 246, 0.35);
-    --shadow-accent-glow: rgba(59, 130, 246, 0.18);
+    --accent-glow: rgba(59, 130, 246, 0.35);
+    --timeline-laser: #38bdf8;
+    --accent-badge-bg: rgba(59, 130, 246, 0.14);
+    --accent-badge-border: rgba(59, 130, 246, 0.38);
+    --accent-badge-text: #60a5fa;
   }
 
   html {
     overflow-x: hidden;
     max-width: 100vw;
+    scroll-behavior: smooth;
   }
 
   body {
     background-color: var(--bg-pure);
-    color: var(--text-white);
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #f5f5f5;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -0.015em;
     overflow-x: hidden;
     max-width: 100vw;
     -webkit-tap-highlight-color: transparent;
-    transition: background-color 0.4s ease, color 0.4s ease;
-  }
-
-  h1, .font-editorial {
-    font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
-    letter-spacing: 0.02em;
   }
 
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
-    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
   }
 }
 
-/* Subtle Film Grain Effect */
-.bg-grain {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+.font-editorial {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.025em;
 }
 
-/* Minimal Monochrome Scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: #050505;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #222222;
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #444444;
-}
-
-/* Monochrome Frosted Pill Navigation */
-.nav-pill {
-  background: rgba(17, 17, 17, 0.75);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Monochrome Card Styling */
-.mono-card {
-  background: rgba(17, 17, 17, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.mono-card:hover {
-  background: rgba(24, 24, 24, 0.85);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* Minimalist Button Styles */
 .btn-minimal-white {
-  background: #f5f5f5;
+  background-color: #f5f5f7;
   color: #050505;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
 }
 
 .btn-minimal-white:hover {
-  background: #ffffff;
-  transform: translateY(-1px);
+  background-color: #ffffff;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.2);
 }
 
 .btn-minimal-outline {
-  background: transparent;
+  background-color: rgba(255, 255, 255, 0.04);
   color: #f5f5f5;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: all 0.2s ease;
 }
 
 .btn-minimal-outline:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.32);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
-@keyframes slideProgress {
-  from {
-    width: 0%;
-  }
-  to {
-    width: 100%;
-  }
+/* Scroll Reveal */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.animate-slide-progress {
-  animation: slideProgress 6s linear forwards;
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Celestial Moon & Atmosphere Dynamic Animations */
-@keyframes redMoonFloat {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-    filter: drop-shadow(0 0 35px var(--moon-glow-color, rgba(239, 68, 68, 0.5))) drop-shadow(0 0 85px var(--moon-glow-ambient, rgba(185, 28, 28, 0.35)));
-  }
-  50% {
-    transform: translateY(-14px) rotate(1deg);
-    filter: drop-shadow(0 0 65px var(--moon-glow-strong, rgba(239, 68, 68, 0.85))) drop-shadow(0 0 145px var(--moon-glow-super, rgba(220, 38, 38, 0.55)));
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg);
-    filter: drop-shadow(0 0 35px var(--moon-glow-color, rgba(239, 68, 68, 0.5))) drop-shadow(0 0 85px var(--moon-glow-ambient, rgba(185, 28, 28, 0.35)));
-  }
-}
-
-@keyframes cloudDriftFlow1 {
-  0% {
-    transform: translateX(-16%) translateY(0px) scale(1);
-  }
-  50% {
-    transform: translateX(14%) translateY(-10px) scale(1.04);
-  }
-  100% {
-    transform: translateX(-16%) translateY(0px) scale(1);
-  }
-}
-
-@keyframes cloudDriftFlow2 {
-  0% {
-    transform: translateX(15%) translateY(-6px) scale(1.02);
-  }
-  50% {
-    transform: translateX(-15%) translateY(8px) scale(0.98);
-  }
-  100% {
-    transform: translateX(15%) translateY(-6px) scale(1.02);
-  }
-}
-
-@keyframes cloudMoonWisp {
-  0% {
-    transform: translateX(-28%) translateY(0px) scaleX(0.9);
-    opacity: 0.35;
-  }
-  50% {
-    transform: translateX(22%) translateY(-4px) scaleX(1.1);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateX(-28%) translateY(0px) scaleX(0.9);
-    opacity: 0.35;
-  }
-}
-
-@keyframes emberRising {
-  0% {
-    transform: translateY(0px) translateX(0px) scale(0.6);
-    opacity: 0;
-  }
-  25% {
-    opacity: 0.9;
-  }
-  75% {
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateY(-130px) translateX(30px) scale(1.3);
-    opacity: 0;
-  }
-}
-
-@keyframes redAuraBreath {
-  0%, 100% {
-    opacity: 0.65;
-    transform: scale(0.96);
-  }
-  50% {
-    opacity: 0.95;
-    transform: scale(1.05);
-  }
-}
-
-.animate-red-moon-float {
-  animation: redMoonFloat 6s ease-in-out infinite;
-}
-
-.animate-cloud-flow-1 {
-  animation: cloudDriftFlow1 16s ease-in-out infinite;
-}
-
-.animate-cloud-flow-2 {
-  animation: cloudDriftFlow2 22s ease-in-out infinite;
-}
-
-.animate-cloud-wisp {
-  animation: cloudMoonWisp 12s ease-in-out infinite;
-}
-
-.animate-red-aura {
-  animation: redAuraBreath 7s ease-in-out infinite;
-}
-
-.animate-ember-1 {
-  animation: emberRising 5.2s ease-out infinite;
-}
-.animate-ember-2 {
-  animation: emberRising 6.8s ease-out 1.2s infinite;
-}
-.animate-ember-3 {
-  animation: emberRising 4.6s ease-out 2.5s infinite;
-}
-.animate-ember-4 {
-  animation: emberRising 7.4s ease-out 0.6s infinite;
-}
-.animate-ember-5 {
-  animation: emberRising 5.8s ease-out 3.1s infinite;
-}
-.animate-ember-6 {
-  animation: emberRising 6.2s ease-out 1.8s infinite;
-}
-
-/* Site-wide Premium Animations */
+/* Timeline Laser Glow */
 @keyframes timelineGlow {
   0% {
-    top: -30%;
+    top: -10%;
     opacity: 0;
   }
-  30% {
+  15% {
     opacity: 1;
   }
-  70% {
+  85% {
     opacity: 1;
   }
   100% {
@@ -391,62 +109,34 @@
   }
 }
 
-@keyframes cardShimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes badgePingSlow {
-  0% {
-    transform: scale(0.95);
-    opacity: 0.8;
-  }
-  50% {
-    transform: scale(1.6);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-}
-
 .animate-timeline-glow {
-  animation: timelineGlow 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: timelineGlow 4.5s ease-in-out infinite;
+}
+
+@keyframes badgePing {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
 }
 
 .animate-badge-ping {
-  animation: badgePingSlow 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  animation: badgePing 2s ease-in-out infinite;
 }
 
-/* Scroll reveal smooth effect */
-.reveal-item {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.reveal-item.revealed {
-  opacity: 1;
-  transform: translateY(0px);
-}
-
+/* Floating +1 Heart Animation */
 @keyframes floatUpHeart {
   0% {
     opacity: 1;
-    transform: translate(-50%, 0) scale(0.8);
+    transform: translate(-50%, 0) scale(0.85);
   }
   50% {
     opacity: 0.95;
-    transform: translate(-50%, -18px) scale(1.15);
+    transform: translate(-50%, -18px) scale(1.1);
   }
   100% {
     opacity: 0;
@@ -455,9 +145,75 @@
 }
 
 .animate-float-heart {
-  animation: floatUpHeart 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: floatUpHeart 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Custom Dark Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
 
+::-webkit-scrollbar-track {
+  background: var(--bg-pure);
+}
 
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
 
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Ambient Breathing Nebula Glow */
+@keyframes ambientBreathe {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(18px, -14px, 0) scale(1.08);
+  }
+}
+
+.animate-ambient-breathe {
+  animation: ambientBreathe 9s ease-in-out infinite;
+}
+
+/* Electric Tap Ripple */
+@keyframes electricRipple {
+  0% {
+    width: 10px;
+    height: 10px;
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    width: 110px;
+    height: 110px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.25);
+  }
+}
+
+.animate-electric-ripple {
+  animation: electricRipple 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-timeline-glow,
+  .animate-badge-ping,
+  .animate-float-heart,
+  .animate-ambient-breathe,
+  .animate-electric-ripple {
+    animation: none !important;
+  }
+}

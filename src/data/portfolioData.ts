@@ -7,36 +7,75 @@ import {
   InterestItem,
 } from '../types/portfolio';
 
+export interface HeroSlide {
+  id: number;
+  label: string;
+  headline: string;
+  subheadline: string;
+  image: string;
+}
+
+export const heroSlides: HeroSlide[] = [
+  {
+    id: 1,
+    label: '01 / ANAS.X',
+    headline: 'Anas.X',
+    subheadline:
+      'Portfolio of Anas Ahammed — 17-year-old software developer, web builder, and cyber security learner from Natore, Bangladesh.',
+    image: '/assets/images/hero_moon_skyscraper_1793472035293.jpg',
+  },
+  {
+    id: 2,
+    label: '02 / MISSION',
+    headline: 'Building With Purpose',
+    subheadline:
+      'Turning curious ideas into structured digital platforms, student tools, and fast modern web apps.',
+    image: '/assets/images/about_abstract_tech_1793472036686.jpg',
+  },
+  {
+    id: 3,
+    label: '03 / SELECTED WORK',
+    headline: 'FOLAFOL & MessBoi',
+    subheadline:
+      'Educational hubs and practical daily utilities engineered cleanly for real student workflows.',
+    image: '/assets/images/projects_arch_scene_1793472037437.jpg',
+  },
+  {
+    id: 4,
+    label: '04 / SECURITY & CRAFT',
+    headline: 'Always Learning',
+    subheadline:
+      'Google Cybersecurity Certified · Studying Class 11 Science at Shahid AHM Kamaruzzaman College.',
+    image: '/assets/images/contact_nocturne_scene_1793472038223.jpg',
+  },
+];
+
 export const initialPersonalInfo: PersonalInfo = {
-  name: 'ANAS AHAMMED',
-  tagline: 'DEVELOPER & DIGITAL CREATOR',
-  headline: 'Developer & Digital Creator.',
+  name: 'Anas Ahammed',
+  tagline: 'Aspiring Software Developer & Cyber Security Learner',
+  headline: 'Building thoughtful web experiences & practical student software.',
   subheading:
-    "I'm a young developer from Bangladesh, exploring technology and building meaningful digital experiences.",
+    'I am Anas Ahammed, a 17-year-old student and developer from Natore, Bangladesh — exploring programming, web architecture, and defensive cyber security.',
   age: 17,
   birthDate: '23 June 2009',
   education: 'Class 11, HSC Batch 2028',
   college: 'Shahid AHM Kamaruzzaman College',
   stream: 'Science Group',
   location: 'Natore, Bangladesh',
-  careerGoal: 'Software Developer',
+  careerGoal: 'Software Developer & Security Researcher',
   interests: [
-    'Programming',
-    'Software Development',
-    'Exploring Technology',
-    'Learning New Skills',
-    'Building Digital Products',
-    'Computers and the Internet',
+    'Cyber Security',
+    'Python & Scripting',
+    'Web Development',
+    'UI/UX Design',
+    'Technology & Research',
   ],
   bioParagraphs: [
-    "Hi, I'm Anas Ahammed.",
-    'I\'m a 17-year-old student currently studying in Class 11 at Shahid AHM Kamaruzzaman College in Bangladesh.',
-    'My curiosity about computers and the internet gradually developed into a passion for programming and software development.',
-    'I enjoy exploring new technologies, learning programming, and creating useful digital experiences.',
-    'My goal is to become a skilled software developer and build products that make a meaningful difference.',
+    'Born on June 23, 2009 in Natore, Bangladesh, I started with deep curiosity about how computers, operating systems, and the internet communicate behind the scenes.',
+    'Currently studying in Class 11 (Science Group, HSC Batch 2028) at Shahid AHM Kamaruzzaman College while designing and coding real-world platforms like FOLAFOL and MessBoi.',
   ],
   familyNote:
-    'Behind every dream is a family that inspires it.\n\nI am grateful to have a family of four — my father, mother, older sister, and me. Their support motivates me to keep learning, growing, and working toward my dreams.',
+    'Behind every dream is a family that inspires it. Grateful for the constant encouragement of my parents and older sister in Natore.',
   socials: {
     email: 'anasexp10@gmail.com',
     github: 'https://github.com/zerolap657-design',
@@ -47,72 +86,14 @@ export const initialPersonalInfo: PersonalInfo = {
   photoUrl: '/assets/images/anas_profile_real.jpg',
 };
 
-export interface HeroSlide {
-  id: number;
-  tagline: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  backgroundImage: string;
-  actionText: string;
-  actionTarget: string;
-}
-
-export const heroSlides: HeroSlide[] = [
-  {
-    id: 1,
-    tagline: '01 / ARCHITECTURAL VISION',
-    title: 'ANAS AHAMMED',
-    subtitle: 'Developer & Digital Creator.',
-    description:
-      "A young developer from Bangladesh exploring software craft, building modern web applications, and shaping digital experiences.",
-    backgroundImage: '/assets/images/hero_moon_skyscraper_1793472035293.jpg',
-    actionText: 'Explore My Work',
-    actionTarget: '#projects',
-  },
-  {
-    id: 2,
-    tagline: '02 / CORE ENGINEERING',
-    title: 'A Curious Mind.',
-    subtitle: 'Driven by Code & Exploration.',
-    description:
-      "Studying in Class 11 at Shahid AHM Kamaruzzaman College, passionate about foundational programming, clean architecture, and systems.",
-    backgroundImage: '/assets/images/about_abstract_tech_1793472036686.jpg',
-    actionText: 'Read My Story',
-    actionTarget: '#about',
-  },
-  {
-    id: 3,
-    tagline: '03 / MODERN AESTHETIC',
-    title: 'Selected Work.',
-    subtitle: 'FOLAFOL Educational Platform.',
-    description:
-      'Designing centralized academic technology and student resource hubs for learners across Bangladesh.',
-    backgroundImage: '/assets/images/projects_arch_scene_1793472037437.jpg',
-    actionText: 'View Projects',
-    actionTarget: '#projects',
-  },
-  {
-    id: 4,
-    tagline: '04 / FUTURE HORIZONS',
-    title: "Let's Connect.",
-    subtitle: 'Collaborate & Build.',
-    description:
-      "Have an inspiring idea, project, or opportunity? Let's discuss and build something meaningful together.",
-    backgroundImage: '/assets/images/contact_nocturne_scene_1793472038223.jpg',
-    actionText: 'Get in Touch',
-    actionTarget: '#contact-modal',
-  },
-];
-
 export const timelineMilestones: TimelineMilestone[] = [
   {
     id: 't1',
     period: '2022–2025',
     title: 'Curiosity',
-    phase: 'Exploring computers and technology.',
+    phase: 'Exploring computers, systems, and internet fundamentals.',
     description:
-      'Deep exploration into hardware, operating systems, internet protocols, and software fundamentals.',
+      'Deep curiosity into hardware, operating systems, how networks communicate, and how software works beneath the surface.',
     details:
       'Developing intuition for how digital applications communicate and serve users worldwide.',
     skillsAcquired: ['Computer Fundamentals', 'Internet Systems', 'Technical Curiosity'],
@@ -130,37 +111,24 @@ export const timelineMilestones: TimelineMilestone[] = [
   },
   {
     id: 't3',
-    period: 'Development',
-    title: 'Web & Software Engineering',
-    phase: 'Exploring software development and web technologies.',
+    period: 'Security',
+    title: 'Cyber Security & Defensive Research',
+    phase: 'Completed Google Cybersecurity Professional Certificate (Oct 2025).',
     description:
-      'Bridging computational thinking with intuitive user interfaces using modern web standards.',
-    details:
-      'HTML5 semantic markup, modern CSS styling systems, JavaScript, and modular web architecture.',
-    skillsAcquired: ['HTML5', 'CSS3', 'JavaScript', 'Responsive UI'],
+      'Studied defensive cyber security, Linux, SQL, threat detection with SIEM/IDS tools, and digital privacy fundamentals.',
+    details: 'Verified Coursera specialization across 9 foundational security courses.',
+    skillsAcquired: ['Defensive Security', 'Linux', 'SIEM & IDS', 'Digital Privacy'],
   },
   {
     id: 't4',
     period: 'Present',
-    title: 'Active Development',
-    phase: 'Studying in Class 11 and continuing my development journey.',
+    title: 'Active Building',
+    phase: 'Class 11 Science & building FOLAFOL, MessBoi, and experimental interfaces.',
     description:
-      'Balancing Science coursework at Shahid AHM Kamaruzzaman College with creating FOLAFOL.',
-    details:
-      'Class 11 Science (HSC Batch 2028). Engineering student-focused educational tools.',
-    skillsAcquired: ['Full-stack Foundations', 'App Prototyping', 'Product Design'],
+      'Balancing Science coursework at Shahid AHM Kamaruzzaman College with creating real digital products and web experiments.',
+    details: 'Class 11 Science (HSC Batch 2028). Engineering student-focused educational tools.',
+    skillsAcquired: ['Web Development', 'UI/UX', 'Product Building'],
     isCurrent: true,
-  },
-  {
-    id: 't5',
-    period: 'Future',
-    title: 'Horizon',
-    phase: 'Aspiring to become a professional software developer.',
-    description:
-      'Pursuing university Computer Science & Engineering and engineering impactful digital products.',
-    details:
-      'Targeting scalable system architecture, open-source innovations, and meaningful tech ventures.',
-    skillsAcquired: ['Software Engineering', 'System Architecture', 'Impactful Innovation'],
   },
 ];
 
@@ -169,11 +137,10 @@ export const skillItems: SkillItem[] = [
     id: 'python',
     name: 'Python',
     category: 'languages',
-    levelStatus: 'Core Language · Active Practice',
+    levelStatus: 'Core Language',
     proficiencyPct: 75,
-    description:
-      'Primary language for foundational algorithms, backend automation, scripts, and computational logic.',
-    keyTopics: ['Functions & Modules', 'Data Structures', 'File Handling', 'Logic Building'],
+    description: 'Primary language for scripting, algorithms, automation, and security tooling.',
+    keyTopics: ['Functions & Modules', 'Data Structures', 'Automation'],
     icon: 'Terminal',
     color: 'from-neutral-200 to-neutral-400',
   },
@@ -181,11 +148,10 @@ export const skillItems: SkillItem[] = [
     id: 'html',
     name: 'HTML',
     category: 'web',
-    levelStatus: 'Semantic Structure · Solid Foundations',
+    levelStatus: 'Semantic Markup',
     proficiencyPct: 88,
-    description:
-      'Crafting clean, accessible, and standards-compliant document structures for modern web applications.',
-    keyTopics: ['Semantic HTML5', 'Accessibility (a11y)', 'Forms & Media', 'Clean DOM Tree'],
+    description: 'Clean, accessible document architecture for modern web applications.',
+    keyTopics: ['Semantic HTML5', 'Accessibility', 'Clean DOM'],
     icon: 'FileCode2',
     color: 'from-neutral-300 to-neutral-500',
   },
@@ -193,11 +159,10 @@ export const skillItems: SkillItem[] = [
     id: 'css',
     name: 'CSS',
     category: 'web',
-    levelStatus: 'Modern Layouts · Precision Styling',
+    levelStatus: 'Modern Layouts',
     proficiencyPct: 82,
-    description:
-      'Building responsive, pixel-precise interfaces with Flexbox, CSS Grid, and fluid typography.',
-    keyTopics: ['Flexbox & Grid', 'Fluid Typography', 'Transitions & Blur', 'Responsive Design'],
+    description: 'Responsive systems with Grid, Flexbox, custom properties, and motion.',
+    keyTopics: ['Flexbox & Grid', 'Responsive UI', 'Tailwind CSS'],
     icon: 'Palette',
     color: 'from-neutral-200 to-neutral-400',
   },
@@ -205,60 +170,11 @@ export const skillItems: SkillItem[] = [
     id: 'javascript',
     name: 'JavaScript',
     category: 'web',
-    levelStatus: 'Client Logic · Learning & Exploring',
+    levelStatus: 'Client Logic',
     proficiencyPct: 65,
-    description:
-      'Exploring modern ECMAScript features, DOM event pipelines, asynchronous requests, and stateful UIs.',
-    keyTopics: ['ES6+ Syntax', 'DOM Manipulation', 'Async & Fetch', 'Interactive Components'],
+    description: 'Interactive web interfaces, asynchronous data fetching, and React UI.',
+    keyTopics: ['ES6+', 'React', 'TypeScript'],
     icon: 'Code2',
-    color: 'from-neutral-300 to-neutral-500',
-  },
-  {
-    id: 'web-dev',
-    name: 'Web Development',
-    category: 'fundamentals',
-    levelStatus: 'Holistic Web Building · Exploring',
-    proficiencyPct: 72,
-    description:
-      'Bringing together design, markup, and client logic into responsive web experiences with high performance.',
-    keyTopics: ['Component Design', 'Cross-Device UX', 'Performance', 'Developer Tools'],
-    icon: 'Globe',
-    color: 'from-neutral-200 to-neutral-400',
-  },
-  {
-    id: 'software-dev',
-    name: 'Software Development',
-    category: 'fundamentals',
-    levelStatus: 'Engineering Discipline · Learning',
-    proficiencyPct: 65,
-    description:
-      'Understanding clean code practices, modular decomposition, version control workflows, and maintainability.',
-    keyTopics: ['Modular Design', 'Git Version Control', 'Debugging', 'Requirement Analysis'],
-    icon: 'Cpu',
-    color: 'from-neutral-300 to-neutral-500',
-  },
-  {
-    id: 'problem-solving',
-    name: 'Problem Solving',
-    category: 'fundamentals',
-    levelStatus: 'Analytical Mindset · Daily Habit',
-    proficiencyPct: 78,
-    description:
-      'Deconstructing complex problems into discrete, verifiable logical steps with rigorous mathematical reasoning.',
-    keyTopics: ['Algorithmic Thinking', 'Edge Case Analysis', 'Analytical Math', 'Stepwise Logic'],
-    icon: 'Lightbulb',
-    color: 'from-neutral-200 to-neutral-400',
-  },
-  {
-    id: 'tech-exploration',
-    name: 'Technology Exploration',
-    category: 'exploration',
-    levelStatus: 'Insatiable Curiosity · Continuous',
-    proficiencyPct: 92,
-    description:
-      'Exploring emerging developer tooling, open-source innovations, artificial intelligence, and operating systems.',
-    keyTopics: ['Emerging Tech', 'Open Source', 'System Tools', 'Future Trends'],
-    icon: 'Compass',
     color: 'from-neutral-300 to-neutral-500',
   },
 ];
@@ -268,20 +184,40 @@ export const initialProjects: ProjectItem[] = [
     id: 'folafol',
     title: 'FOLAFOL',
     badge: 'Educational Technology',
-    category: 'Flagship Mobile & Web Application',
+    category: 'Flagship Web & Mobile Application',
     description:
       'An educational application designed to bring examination results, admission information, college resources, and student services together in one convenient platform.',
     technologies: ['Python', 'Modern Web UI', 'REST APIs', 'Education Data Hub'],
     githubUrl: 'https://github.com/zerolap657-design',
     liveDemoUrl: 'https://folafol-web.vercel.app/',
-    image: 'https://res.cloudinary.com/fcsclifx/image/upload/v1793473773/WhatsApp_Image_2026-10-31_at_12.04.26_PM.jpg',
-    videoUrl: 'https://res.cloudinary.com/fcsclifx/video/upload/v1793473651/WhatsApp_Video_2026-10-31_at_12.06.45_PM.mp4',
+    image: '/assets/images/folafol_project_mockup_1793470981810.jpg',
+    videoUrl:
+      'https://res.cloudinary.com/fcsclifx/video/upload/v1793473651/WhatsApp_Video_2026-10-31_at_12.06.45_PM.mp4',
     featured: true,
     highlights: [
       'Examination Results: Centralized examination lookup across educational boards.',
       'Admission Information: College admission timelines, criteria, and requirements.',
       'College Resources: Academic lecture notes, syllabi, and reference repositories.',
       'Student Services: One-stop educational inquiry and student verification services.',
+    ],
+    isEditablePlaceholder: false,
+  },
+  {
+    id: 'messboi',
+    title: 'MessBoi',
+    badge: 'Web Application',
+    category: 'Mess & Daily Expense Management',
+    description:
+      'A practical digital solution for shared mess and hostel meal management — automating daily meal toggles, bazaar entries, meal rates, and member balances without paper ledgers.',
+    technologies: ['React', 'Web App', 'Real-Time Sync', 'Automated Calculator'],
+    githubUrl: 'https://github.com/zerolap657-design',
+    liveDemoUrl: 'https://messboi1.netlify.app/',
+    image: '/assets/images/dev_workspace_code_1793470982568.jpg',
+    embedUrl: '/assets/aistudio/Messboi___Advertisement__16_9__d8a28287.html',
+    highlights: [
+      'One-tap daily lunch and dinner meal tracking with instant balance updates.',
+      'Transparent bazaar expense entries, deposits, and per-member logs.',
+      'Automatic monthly meal rate calculation accessible across mobile and desktop.',
     ],
     isEditablePlaceholder: false,
   },
@@ -295,32 +231,12 @@ export const initialProjects: ProjectItem[] = [
     technologies: ['Interactive Canvas', 'Audio Synthesis', 'CSS Keyframes', 'Showreel'],
     githubUrl: 'https://github.com/zerolap657-design',
     liveDemoUrl: '/assets/aistudio/ANAS_AHAMED___Portfolio_Showreel_1a936da6.html',
-    image: '/assets/images/dev_workspace_code_1793470982568.jpg',
+    image: '/assets/images/projects_arch_scene_1793472037437.jpg',
     embedUrl: '/assets/aistudio/ANAS_AHAMED___Portfolio_Showreel_1a936da6.html',
     highlights: [
-      'Cinematic interactive presentation with ambient sound & animated typography',
-      'Dynamic slides showcasing personal milestones, skill foundations, and vision',
-      'Engineered with high performance responsive CSS container queries and web audio',
-    ],
-    isEditablePlaceholder: false,
-  },
-  {
-    id: 'messboi',
-    title: 'MessBoi',
-    badge: 'Mess & Meal Management',
-    category: 'Hostel & Mess Daily Expense Web App',
-    description:
-      'MessBoi — মেসের মিল, বাজার ও খরচের অল-টাইম নিখুঁত হিসাব-নিকাশের আধুনিক ডিজিটাল সমাধান। খাতা-ক্যালকুলেটরের ঝামেলা ছাড়া ডেইলি মিল অন/অফ, বাজার এন্ট্রি, অটোমেটিক মিল রেট ও ব্যালেন্স সব এক নিমেষেই ম্যানেজ করুন।',
-    technologies: ['React', 'Web App', 'Real-Time Sync', 'Mess Calculator'],
-    githubUrl: 'https://github.com/zerolap657-design',
-    liveDemoUrl: 'https://messboi1.netlify.app/',
-    image: '/assets/images/dev_workspace_code_1793470982568.jpg',
-    embedUrl: '/assets/aistudio/Messboi___Advertisement__16_9__d8a28287.html',
-    highlights: [
-      'মেসের অল-টাইম মিল হিসাব: দুপুর ও রাতের মিল অন/অফ এক ট্যাপে খরচসহ',
-      'ডেইলি বাজার ও খরচ: মেম্বারদের বাজার এন্ট্রি, ডিপোজিট ও ব্যালেন্স ট্র্যাকিং',
-      'অটোমেটিক ক্যালকুলেশন: অটো মিল রেট নির্ধারণ ও মান্থলি সামারি শিট',
-      'লাইভ ওয়েব প্ল্যাটফর্ম: messboi1.netlify.app — যেকোনো মোবাইল ও পিসি থেকে ব্যবহারযোগ্য',
+      'Browser-native interactive presentation with ambient synthesized audio.',
+      'Dynamic typographic scenes showcasing personal milestones and digital craft.',
+      'Responsive viewport-aware layout with GPU-composited transitions.',
     ],
     isEditablePlaceholder: false,
   },
@@ -335,14 +251,13 @@ export const educationMilestones: EducationMilestone[] = [
     status: 'In Progress',
     stream: 'Science Group',
     description:
-      'Class 11 Science Group student located in Natore, Bangladesh. Focused on analytical rigor in mathematics and physical sciences.',
+      'Class 11 Science Group student in Bangladesh, focused on Mathematics, Physics, Chemistry, and Information & Communication Technology (ICT).',
     keyFocus: [
       'Higher Mathematics',
       'Physics',
       'Information & Communication Technology (ICT)',
       'Chemistry',
       'Biology',
-      'Bengali & English',
     ],
   },
 ];
@@ -350,50 +265,9 @@ export const educationMilestones: EducationMilestone[] = [
 export const personalInterests: InterestItem[] = [
   {
     id: 'programming',
-    title: 'Programming',
-    description:
-      'Translating logical problems into clean, executable code that runs reliably.',
+    title: 'Cyber Security',
+    description: 'Ethical security research, defensive systems, and digital privacy.',
     icon: 'Terminal',
-    tags: ['Python', 'Logic', 'Algorithms'],
-  },
-  {
-    id: 'software-dev',
-    title: 'Software Development',
-    description:
-      'Architecting intuitive, helpful tools that solve everyday problems for people.',
-    icon: 'Code2',
-    tags: ['Architecture', 'App Design', 'Engineering'],
-  },
-  {
-    id: 'exploring-tech',
-    title: 'Exploring Technology',
-    description:
-      'Fascinated by hardware advancements, operating systems, and developer ecosystems.',
-    icon: 'Compass',
-    tags: ['Hardware', 'Open Source', 'Ecosystems'],
-  },
-  {
-    id: 'learning-skills',
-    title: 'Learning New Skills',
-    description:
-      'Continuous daily exploration of programming documentation and computer science.',
-    icon: 'BookOpen',
-    tags: ['Daily Practice', 'Documentation', 'Curiosity'],
-  },
-  {
-    id: 'building-products',
-    title: 'Building Digital Products',
-    description:
-      'Translating creative thoughts into practical tools like FOLAFOL for students.',
-    icon: 'Rocket',
-    tags: ['FOLAFOL', 'Product Design', 'Impact'],
-  },
-  {
-    id: 'internet-computers',
-    title: 'Computers & The Internet',
-    description:
-      'Exploring the global networks, protocols, servers, and engines connecting humanity.',
-    icon: 'Globe',
-    tags: ['Networking', 'Internet Protocols', 'Systems'],
+    tags: ['Security Research', 'Privacy', 'Linux'],
   },
 ];

@@ -1,387 +1,226 @@
 import React, { useState } from 'react';
-import {
-  Github,
-  ArrowUpRight,
-  ExternalLink,
-  Eye,
-  X,
-  CheckCircle2,
-} from 'lucide-react';
+import { ArrowUpRight, Github } from 'lucide-react';
 import { ProjectItem } from '../types/portfolio';
 
 interface ProjectsSectionProps {
   projects: ProjectItem[];
 }
 
-export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
-  const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
+const getProjectSublabel = (project: ProjectItem): string => {
+  if (project.id === 'folafol') return 'Educational platform, 2025';
+  if (project.id === 'messboi') return 'Mess & meal web app, 2025';
+  if (project.id === 'my-introduction') return 'Interactive showreel, 2026';
+  return `${project.badge}, 2025`;
+};
 
-  const folafol = projects.find((p) => p.id === 'folafol');
+const CURVE_PATHS = [
+  'M 0.024,0.032 Q 0.5,-0.012 0.978,0.042 C 0.992,0.34 0.992,0.68 0.962,0.968 Q 0.5,0.942 0.014,0.985 C 0.032,0.66 0.032,0.34 0.024,0.032 Z',
+  'M 0.014,0.038 Q 0.5,0.004 0.986,0.024 C 0.972,0.34 0.968,0.68 0.986,0.962 Q 0.5,0.996 0.022,0.956 C 0.034,0.65 0.03,0.35 0.014,0.038 Z',
+  'M 0.022,0.026 Q 0.5,0.052 0.978,0.022 C 0.988,0.35 0.986,0.68 0.968,0.978 Q 0.5,0.95 0.018,0.974 C 0.03,0.66 0.032,0.34 0.022,0.026 Z',
+];
+
+interface ShowcaseCardProps {
+  project: ProjectItem;
+  index: number;
+}
+
+const ShowcaseRow: React.FC<ShowcaseCardProps> = ({ project, index }) => {
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const clipId = `showcase-curve-${index % CURVE_PATHS.length}`;
+  const liveHref =
+    project.liveDemoUrl && project.liveDemoUrl !== '#'
+      ? project.liveDemoUrl
+      : project.embedUrl || project.githubUrl || '#';
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({
+      rx: -ny * 5.5,
+      ry: nx * 7,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTilt({ rx: 0, ry: 0 });
+  };
+
+  const restTransform =
+    index % 2 === 0
+      ? 'perspective(1400px) rotateX(5.5deg) rotateY(-4.5deg) rotateZ(-0.4deg) scale(0.985)'
+      : 'perspective(1400px) rotateX(4.5deg) rotateY(4deg) rotateZ(0.35deg) scale(0.985)';
+
+  const hoverTransform = `perspective(1400px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) rotateZ(0deg) scale(1.015)`;
 
   return (
-    <section id="projects" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[var(--bg-pure)] transition-colors duration-500">
+    <div className="reveal-item grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
+      {/* Left Minimal Title Column (Zero paragraph/tag clutter) */}
+      <div className="lg:col-span-3 pt-1 lg:pt-4 space-y-1.5 text-left">
+        <a
+          href={liveHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/link inline-flex items-center gap-1.5 text-base sm:text-lg font-semibold text-[#f5f5f5] hover:text-white transition-colors"
+        >
+          <span>{project.title}</span>
+          <ArrowUpRight className="w-4 h-4 text-[#777777] group-hover/link:text-[var(--accent-secondary)] group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all" />
+        </a>
+
+        <p className="text-xs sm:text-sm text-[#787880] font-normal">
+          {getProjectSublabel(project)}
+        </p>
+
+        <div className="flex items-center gap-3 pt-2 opacity-75 lg:opacity-45 hover:opacity-100 transition-opacity">
+          {project.liveDemoUrl && project.liveDemoUrl !== '#' && (
+            <a
+              href={project.liveDemoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-mono text-[#999999] hover:text-white transition-colors"
+            >
+              Visit ↗
+            </a>
+          )}
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#777777] hover:text-white transition-colors"
+              aria-label={`${project.title} GitHub`}
+              title="GitHub"
+            >
+              <Github className="w-3.5 h-3.5" />
+            </a>
+          )}
+        </div>
+      </div>
+
+      {/* Right Sculptural Warped 3D Showcase */}
+      <div
+        className="lg:col-span-9 relative"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Subtle Theme Backlight Aura on Hover */}
+        <div
+          className="pointer-events-none absolute -inset-4 rounded-3xl blur-3xl transition-opacity duration-700"
+          style={{
+            opacity: isHovered ? 0.32 : 0.08,
+            background:
+              'radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 72%)',
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Warped Clip-Path Container */}
+        <div
+          className="relative w-full aspect-[16/10] sm:aspect-[16/9] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform"
+          style={{
+            transform: isHovered ? hoverTransform : restTransform,
+            filter: isHovered
+              ? 'drop-shadow(0 28px 55px rgba(0, 0, 0, 0.78))'
+              : 'drop-shadow(0 18px 36px rgba(0, 0, 0, 0.65))',
+          }}
+        >
+          <div
+            className="relative w-full h-full overflow-hidden bg-[#0a0a0c]"
+            style={{ clipPath: `url(#${clipId})` }}
+          >
+            {project.videoUrl ? (
+              <video
+                src={project.videoUrl}
+                poster={project.image}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover transition-transform duration-700"
+                style={{ transform: isHovered ? 'scale(1.02)' : 'scale(1)' }}
+              />
+            ) : project.embedUrl ? (
+              <iframe
+                src={project.embedUrl}
+                title={project.title}
+                className="w-full h-full border-0 select-none"
+                allow="autoplay; fullscreen"
+              />
+            ) : (
+              <img
+                src={project.image}
+                alt={project.title}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover transition-transform duration-700"
+                style={{ transform: isHovered ? 'scale(1.03)' : 'scale(1)' }}
+              />
+            )}
+
+            {/* Diagonal Glassy Specular Glaze (Fades Out Smoothly on Hover) */}
+            <div
+              className="pointer-events-none absolute inset-0 transition-opacity duration-500"
+              style={{
+                opacity: isHovered ? 0 : 0.42,
+                background:
+                  'linear-gradient(125deg, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.18) 46%, rgba(255,255,255,0.06) 50%, rgba(0,0,0,0.45) 100%)',
+              }}
+            />
+
+            {/* Clickable Launch Hit-Area for Video / Non-iframe Showcases */}
+            {!project.embedUrl && (
+              <a
+                href={liveHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${project.title}`}
+                className="absolute inset-0 z-10 cursor-pointer"
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
+  return (
+    <section
+      id="projects"
+      className="relative py-24 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[var(--bg-pure)] transition-colors duration-500 overflow-hidden"
+    >
+      {/* Hidden SVG ClipPaths for Sculptural 3D Banner Warping */}
+      <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+        <defs>
+          {CURVE_PATHS.map((d, i) => (
+            <clipPath key={i} id={`showcase-curve-${i}`} clipPathUnits="objectBoundingBox">
+              <path d={d} />
+            </clipPath>
+          ))}
+        </defs>
+      </svg>
+
       <div className="max-w-6xl mx-auto">
-        
-        {/* Section Header */}
-        <div className="reveal-item flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 sm:mb-20 text-left">
-          <div className="space-y-2">
-            <span className="text-[11px] font-mono tracking-[0.25em] text-[#888888] uppercase">
-              03 / SELECTED WORK
-            </span>
-            <h2 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#f5f5f5]">
-              Featured Projects.
-            </h2>
-          </div>
+        {/* Minimal Section Header */}
+        <div className="reveal-item mb-16 sm:mb-24 space-y-2 text-left">
+          <span className="text-[11px] font-mono tracking-[0.25em] text-[#888888] uppercase">
+            03 / SELECTED WORK
+          </span>
+          <h2 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#f5f5f5]">
+            Featured Projects.
+          </h2>
         </div>
 
-        {/* Large Studio-Style Featured Showcase: FOLAFOL */}
-        {folafol && (
-          <div className="reveal-item mb-24">
-            <div className="group rounded-3xl bg-[#111111] border border-white/[0.08] overflow-hidden shadow-2xl transition-all duration-500 hover:border-white/[0.22] hover:shadow-[0_0_50px_rgba(255,255,255,0.04)]">
-              
-              {/* Massive Video-Based Mockup Showcase */}
-              <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#000000] flex items-center justify-center">
-                <video
-                  src={folafol.videoUrl || 'https://res.cloudinary.com/fcsclifx/video/upload/v1793473651/WhatsApp_Video_2026-10-31_at_12.06.45_PM.mp4'}
-                  poster={folafol.image}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  controls
-                  className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/80 via-transparent to-transparent opacity-60 pointer-events-none" />
-
-                {/* Floating Video Badge & Live Link */}
-                <div className="absolute top-4 left-4 z-10">
-                  <a
-                    href={folafol.liveDemoUrl || 'https://folafol-web.vercel.app/'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/80 hover:bg-black backdrop-blur-md border border-white/15 hover:border-[#e5173f]/60 text-[10px] font-mono tracking-widest uppercase text-white/90 hover:text-white transition-all shadow-lg group cursor-pointer"
-                    title="Open Live Website: https://folafol-web.vercel.app/"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>APP PREVIEW &bull; VISIT LIVE</span>
-                    <ExternalLink className="w-3 h-3 text-[#e5173f] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Showcase Meta & Details */}
-              <div className="p-8 sm:p-12 text-left space-y-6">
-                
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#888888]">
-                        {folafol.badge}
-                      </span>
-                      <span className="text-white/20 text-[10px]">&bull;</span>
-                      <a
-                        href={folafol.liveDemoUrl || 'https://folafol-web.vercel.app/'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[11px] font-mono text-[#e5173f] hover:text-[#ff4d6d] hover:underline flex items-center gap-1 transition-colors"
-                        title="Visit https://folafol-web.vercel.app/"
-                      >
-                        folafol-web.vercel.app
-                        <ExternalLink className="w-2.5 h-2.5" />
-                      </a>
-                    </div>
-                    <h3 className="font-editorial text-3xl sm:text-5xl font-bold text-[#f5f5f5] mt-1">
-                      {folafol.title}
-                    </h3>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-                    <a
-                      href={folafol.liveDemoUrl || 'https://folafol-web.vercel.app/'}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-minimal-white px-5 py-2.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer shadow-md hover:scale-105 transition-all group"
-                      title="Open Live Website: https://folafol-web.vercel.app/"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                      <span>Live Website</span>
-                    </a>
-
-                    <button
-                      onClick={() => setActiveModalProject(folafol)}
-                      className="btn-minimal-outline px-4 py-2.5 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer hover:bg-white/[0.06] transition-colors"
-                      title="View Details"
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>Details</span>
-                    </button>
-
-                    <a
-                      href={folafol.githubUrl || 'https://github.com/zerolap657-design'}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-[#f5f5f5] border border-white/[0.08] transition-colors cursor-pointer"
-                      title="GitHub"
-                    >
-                      <Github className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-
-                <p className="text-base sm:text-lg text-[#888888] max-w-3xl leading-relaxed font-normal">
-                  {folafol.description}
-                </p>
-
-                {/* Technologies List */}
-                <div className="pt-2 flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-mono text-[#555555] mr-2">Technologies:</span>
-                  {folafol.technologies.map((t, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 rounded-full bg-white/[0.04] text-xs font-mono text-[#cccccc] border border-white/[0.06]"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-              </div>
-
-            </div>
-          </div>
-        )}
-
-        {/* Additional Studio Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-          {projects
-            .filter((p) => p.id !== 'folafol')
-            .map((project, pIdx) => (
-              <div
-                key={project.id}
-                className="reveal-item group rounded-3xl bg-[#111111] border border-white/[0.08] overflow-hidden flex flex-col justify-between hover:border-white/[0.22] hover:-translate-y-1.5 hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)] transition-all duration-400"
-                style={{ transitionDelay: `${pIdx * 100}ms` }}
-              >
-                <div>
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#000000]">
-                    {project.embedUrl ? (
-                      <div className="relative w-full h-full bg-[#080b1e]">
-                        <iframe
-                          src={project.embedUrl}
-                          title={project.title}
-                          className="w-full h-full border-0 select-none"
-                          allow="autoplay; fullscreen"
-                        />
-                        <div className="absolute top-3 left-3 z-10 pointer-events-none">
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-[9px] font-mono tracking-widest uppercase text-white/90 shadow-lg">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                            INTERACTIVE SHOWREEL
-                          </span>
-                        </div>
-                      </div>
-                    ) : (
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover filter grayscale contrast-[1.05] brightness-[0.88] group-hover:scale-[1.02] transition-transform duration-500"
-                      />
-                    )}
-                    <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5">
-                      {project.embedUrl && (
-                        <a
-                          href={project.embedUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 rounded-xl bg-[#050505]/80 hover:bg-[#050505] text-[#888888] hover:text-white border border-white/[0.08] backdrop-blur-md transition-colors"
-                          title="Open Fullscreen Showreel"
-                        >
-                          <ArrowUpRight className="w-3.5 h-3.5" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="p-6 sm:p-8 space-y-3">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-[#888888]">
-                        {project.badge}
-                      </span>
-                      {project.liveDemoUrl && project.liveDemoUrl !== '#' && (
-                        <>
-                          <span className="text-white/20 text-[10px]">&bull;</span>
-                          <a
-                            href={project.liveDemoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[10px] font-mono text-emerald-400 hover:text-emerald-300 hover:underline flex items-center gap-1 transition-colors"
-                            title={`Visit ${project.liveDemoUrl}`}
-                          >
-                            {project.liveDemoUrl.replace('https://', '').replace(/\/$/, '')}
-                            <ExternalLink className="w-2.5 h-2.5" />
-                          </a>
-                        </>
-                      )}
-                    </div>
-                    <h4 className="font-editorial text-2xl font-bold text-[#f5f5f5]">
-                      {project.title}
-                    </h4>
-                    <p className="text-xs sm:text-sm text-[#888888] leading-relaxed">
-                      {project.description}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-6 sm:p-8 pt-0 flex items-center justify-between border-t border-white/[0.06] mt-4">
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.slice(0, 3).map((t, idx) => (
-                      <span
-                        key={idx}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.03] text-[#888888]"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    {project.liveDemoUrl && project.liveDemoUrl !== '#' && (
-                      <a
-                        href={project.liveDemoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-minimal-white px-3 py-1.5 rounded-full text-[11px] font-semibold flex items-center gap-1.5 cursor-pointer hover:scale-105 transition-all group"
-                        title={`Open Live Website: ${project.liveDemoUrl}`}
-                      >
-                        <ExternalLink className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                        <span>Live Site</span>
-                      </a>
-                    )}
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-white transition-colors"
-                      title="GitHub"
-                    >
-                      <Github className="w-4 h-4" />
-                    </a>
-                    <button
-                      onClick={() => setActiveModalProject(project)}
-                      className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#888888] hover:text-white transition-colors cursor-pointer"
-                      title="Details"
-                    >
-                      <ArrowUpRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-            ))}
+        {/* Sculptural Warped Showcase Rows (Minimal Title Left + Curved 3D Preview Right) */}
+        <div className="space-y-20 sm:space-y-28">
+          {projects.map((project, idx) => (
+            <ShowcaseRow key={project.id} project={project} index={idx} />
+          ))}
         </div>
-
-        {/* Project Details Modal */}
-        {activeModalProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-in fade-in duration-200">
-            <div className="relative w-full max-w-2xl rounded-3xl bg-[#111111] border border-white/[0.12] p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto text-left">
-              <button
-                onClick={() => setActiveModalProject(null)}
-                className="absolute top-5 right-5 p-2 rounded-full bg-white/[0.06] text-[#888888] hover:text-white transition-colors cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="space-y-5">
-                <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#888888]">
-                  {activeModalProject.badge}
-                </span>
-
-                <h3 className="font-editorial text-3xl font-bold text-[#f5f5f5]">
-                  {activeModalProject.title}
-                </h3>
-
-                <div className="rounded-2xl overflow-hidden border border-white/[0.08] bg-black">
-                  {activeModalProject.embedUrl ? (
-                    <div className="relative aspect-[16/9] w-full bg-[#150205]">
-                      <iframe
-                        src={activeModalProject.embedUrl}
-                        title={activeModalProject.title}
-                        className="w-full h-full border-0"
-                        allow="autoplay; fullscreen"
-                      />
-                    </div>
-                  ) : activeModalProject.videoUrl ? (
-                    <video
-                      src={activeModalProject.videoUrl}
-                      controls
-                      autoPlay
-                      muted
-                      playsInline
-                      className="w-full max-h-[380px] object-contain mx-auto"
-                    />
-                  ) : (
-                    <img
-                      src={activeModalProject.image}
-                      alt={activeModalProject.title}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-64 sm:h-80 object-cover"
-                    />
-                  )}
-                </div>
-
-                <p className="text-sm text-[#888888] leading-relaxed">
-                  {activeModalProject.description}
-                </p>
-
-                <div className="space-y-2">
-                  <h5 className="text-xs font-mono uppercase text-[#f5f5f5] tracking-wider">
-                    Highlights
-                  </h5>
-                  <ul className="space-y-2 text-xs text-[#888888]">
-                    {activeModalProject.highlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-white shrink-0 mt-0.5" />
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3 pt-4 border-t border-white/[0.08]">
-                  <button
-                    onClick={() => setActiveModalProject(null)}
-                    className="px-4 py-2 rounded-full text-xs text-[#888888] hover:text-white cursor-pointer"
-                  >
-                    Close
-                  </button>
-                  {activeModalProject.githubUrl && (
-                    <a
-                      href={activeModalProject.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-minimal-outline px-4 py-2 rounded-full text-xs font-medium flex items-center gap-1.5 cursor-pointer"
-                    >
-                      <Github className="w-3.5 h-3.5" />
-                      <span>GitHub</span>
-                    </a>
-                  )}
-                  {activeModalProject.liveDemoUrl && activeModalProject.liveDemoUrl !== '#' && (
-                    <a
-                      href={activeModalProject.liveDemoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-minimal-white px-5 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5 cursor-pointer hover:scale-105 transition-transform"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      <span>Visit Live Site</span>
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
       </div>
     </section>
   );

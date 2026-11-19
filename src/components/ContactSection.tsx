@@ -60,7 +60,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     {
       key: 'email',
       name: 'Email',
-      value: personalInfo.socials.email, // anasexp10@gmail.com
+      value: personalInfo.socials.email,
       href: `mailto:${personalInfo.socials.email}`,
       icon: Mail,
       actionLabel: 'Send Email',
@@ -68,7 +68,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     {
       key: 'github',
       name: 'GitHub',
-      value: personalInfo.socials.github, // https://github.com/zerolap657-design
+      value: personalInfo.socials.github,
       href: personalInfo.socials.github,
       icon: Github,
       actionLabel: 'Open GitHub',
@@ -114,7 +114,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             className="inline-flex items-center gap-1.5 text-xs text-[#86868b] hover:text-[#2997ff] transition-colors pt-2 cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5 text-[#2997ff]" />
-            <span>Customize social links & profiles</span>
+            <span>Customize social links &amp; profiles</span>
           </button>
         </div>
 
@@ -189,7 +189,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             </div>
           </div>
 
-          {/* Right: Apple Contact Form (7 cols) */}
+          {/* Right: Contact Form (7 cols) */}
           <div className="lg:col-span-7 text-left">
             <div className="apple-glass-card p-8 sm:p-10 rounded-3xl border border-white/[0.08] shadow-2xl">
               

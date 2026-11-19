@@ -1,13 +1,49 @@
 import React, { useState } from 'react';
-import { ExternalLink, Award, CheckCircle2, Maximize2, X, ShieldCheck } from 'lucide-react';
+import { ExternalLink, Maximize2, X } from 'lucide-react';
 
 export const EducationSection: React.FC = () => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [certTilt, setCertTilt] = useState({ rx: 0, ry: 0 });
+  const [isCertHovered, setIsCertHovered] = useState(false);
   const certImageSrc = '/assets/aistudio/WhatsApp_Image_2026-10-31_at_12.01.30_PM_dedfa43c.jpeg';
   const verificationUrl = 'https://coursera.org/verify/professional-cert/WWZ1YY2D4MY8G';
 
+  const handleCertMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+    setCertTilt({
+      rx: -ny * 7,
+      ry: nx * 9,
+    });
+  };
+
+  const handleCertMouseLeave = () => {
+    setIsCertHovered(false);
+    setCertTilt({ rx: 0, ry: 0 });
+  };
+
   return (
     <section id="education" className="relative py-28 sm:py-36 px-6 sm:px-12 lg:px-16 bg-[var(--bg-pure)] transition-colors duration-500 border-t border-white/[0.06]">
+      <style>{`
+        @keyframes certGentleSway {
+          0%, 100% {
+            transform: perspective(1300px) translateY(0px) rotateX(2.5deg) rotateY(-3.5deg) rotateZ(-0.45deg);
+          }
+          50% {
+            transform: perspective(1300px) translateY(-8px) rotateX(-2deg) rotateY(3.5deg) rotateZ(0.45deg);
+          }
+        }
+        .cert-sway-loop {
+          animation: certGentleSway 6.5s ease-in-out infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .cert-sway-loop {
+            animation: none !important;
+          }
+        }
+      `}</style>
+
       <div className="max-w-4xl mx-auto text-left">
         
         {/* Section Heading */}
@@ -20,7 +56,7 @@ export const EducationSection: React.FC = () => {
           </h2>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-12">
           {/* Current College Card */}
           <div className="reveal-item p-8 sm:p-12 rounded-3xl bg-[#111111] border border-white/[0.08] hover:border-white/[0.18] transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl space-y-6">
             <div className="space-y-1">
@@ -51,76 +87,93 @@ export const EducationSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Professional Certificate Section Under College */}
-          <div className="reveal-item p-8 sm:p-12 rounded-3xl bg-[#111111] border border-white/[0.08] hover:border-white/[0.2] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_50px_rgba(255,255,255,0.03)] space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-[#f5f5f5]" />
-                  <span className="text-xs font-mono text-[#888888] tracking-widest uppercase">
-                    Professional Certification
-                  </span>
-                </div>
-                <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-[#f5f5f5]">
-                  Google Cybersecurity Professional Certificate
-                </h3>
-                <p className="text-sm text-[#888888] pt-0.5">
-                  Issued by <span className="text-[#f5f5f5] font-medium">Google</span> via Coursera · Oct 29, 2025
-                </p>
-              </div>
-
-              <div className="flex items-center gap-3">
+          {/* Minimal Floating 3D Certificate Showcase (Just Certificate + Gentle Motion) */}
+          <div className="reveal-item pt-4 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+            {/* Minimal Left Title & Verify Link */}
+            <div className="lg:col-span-4 space-y-1.5 pt-1 text-left">
+              <h3 className="text-base sm:text-lg font-semibold text-[#f5f5f5]">
+                Google Cybersecurity
+              </h3>
+              <p className="text-xs sm:text-sm text-[#787880]">
+                Professional Certificate, 2025
+              </p>
+              <div className="pt-1.5">
                 <a
                   href={verificationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider bg-white/[0.06] hover:bg-white/[0.12] text-[#f5f5f5] border border-white/[0.1] transition-colors"
+                  className="inline-flex items-center gap-1 text-[11px] font-mono text-[#888888] hover:text-white transition-colors"
                 >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Verify Credential</span>
-                  <ExternalLink className="w-3 h-3 text-[#888888]" />
+                  <span>Verify ↗</span>
                 </a>
               </div>
             </div>
 
-            {/* Certificate Image Frame */}
-            <div className="space-y-4">
-              <div 
-                onClick={() => setIsLightboxOpen(true)}
-                className="group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.1] bg-black/40 shadow-2xl transition-all duration-300 hover:border-white/[0.25]"
-              >
-                <img
-                  src={certImageSrc}
-                  alt="Google Cybersecurity Professional Certificate - Anas Ahamed"
-                  className="w-full h-auto object-cover max-h-[520px] transition-transform duration-500 group-hover:scale-[1.01]"
-                  loading="lazy"
-                />
+            {/* Right Gently Swaying / Interactive 3D Certificate */}
+            <div
+              className="lg:col-span-8 relative"
+              onMouseEnter={() => setIsCertHovered(true)}
+              onMouseMove={handleCertMouseMove}
+              onMouseLeave={handleCertMouseLeave}
+            >
+              {/* Soft Ambient Theme Backlight */}
+              <div
+                className="pointer-events-none absolute -inset-4 rounded-3xl blur-3xl transition-opacity duration-700"
+                style={{
+                  opacity: isCertHovered ? 0.34 : 0.14,
+                  background:
+                    'radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 72%)',
+                }}
+                aria-hidden="true"
+              />
 
-                {/* Hover overlay hint */}
-                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md text-white text-xs font-mono tracking-wider border border-white/20 shadow-xl">
-                    <Maximize2 className="w-3.5 h-3.5" />
-                    <span>Click to view full certificate</span>
-                  </div>
-                </div>
-              </div>
+              {/* Continuous Gentle Sway Wrapper */}
+              <div className="cert-sway-loop">
+                {/* Interactive Hover Tilt & Scale */}
+                <div
+                  onClick={() => setIsLightboxOpen(true)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setIsLightboxOpen(true);
+                    }
+                  }}
+                  aria-label="View Google Cybersecurity Professional Certificate"
+                  className="group relative cursor-pointer overflow-hidden rounded-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform"
+                  style={{
+                    transform: isCertHovered
+                      ? `perspective(1300px) rotateX(${certTilt.rx}deg) rotateY(${certTilt.ry}deg) scale(1.02)`
+                      : 'perspective(1300px) scale(0.99)',
+                    boxShadow: isCertHovered
+                      ? '0 28px 60px rgba(0, 0, 0, 0.85), 0 0 32px var(--accent-glow)'
+                      : '0 20px 44px rgba(0, 0, 0, 0.72)',
+                  }}
+                >
+                  <img
+                    src={certImageSrc}
+                    alt="Google Cybersecurity Professional Certificate - Anas Ahamed"
+                    className="w-full h-auto object-cover block transition-transform duration-700 group-hover:scale-[1.015]"
+                    loading="lazy"
+                  />
 
-              {/* Certificate meta summary */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/[0.06]">
-                <div className="flex items-start gap-3">
-                  <Award className="w-4 h-4 text-[#888888] mt-0.5 shrink-0" />
-                  <div>
-                    <span className="text-[10px] font-mono text-[#666666] uppercase block">Specialization</span>
-                    <span className="text-xs font-medium text-[#f5f5f5] mt-0.5 block">9 In-Depth Courses</span>
+                  {/* Subtle Diagonal Sheen */}
+                  <div
+                    className="pointer-events-none absolute inset-0 transition-opacity duration-500"
+                    style={{
+                      opacity: isCertHovered ? 0.12 : 0.28,
+                      background:
+                        'linear-gradient(125deg, rgba(0,0,0,0.28) 0%, transparent 48%, rgba(255,255,255,0.12) 52%, rgba(0,0,0,0.26) 100%)',
+                    }}
+                  />
+
+                  {/* Discreet Hover Expand Icon */}
+                  <div className="pointer-events-none absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="p-2 rounded-full bg-black/75 backdrop-blur-md text-white border border-white/20 shadow-lg">
+                      <Maximize2 className="w-3.5 h-3.5" />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <span className="text-[10px] font-mono text-[#666666] uppercase block">Core Competencies</span>
-                  <span className="text-xs font-medium text-[#f5f5f5] mt-0.5 block">Python, Linux, SQL, SIEM & IDS</span>
-                </div>
-                <div>
-                  <span className="text-[10px] font-mono text-[#666666] uppercase block">Credential ID</span>
-                  <span className="text-xs font-mono text-[#888888] mt-0.5 block truncate">WWZ1YY2D4MY8G</span>
                 </div>
               </div>
             </div>

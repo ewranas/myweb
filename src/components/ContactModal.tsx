@@ -48,7 +48,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     e.preventDefault();
     if (!senderName || !senderEmail) return;
 
-    // Trigger subtle monochrome/white confetti
     confetti({
       particleCount: 40,
       spread: 60,
@@ -58,13 +57,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
     setSubmitted(true);
 
-    // Prepare mailto link option
-    const subject = encodeURIComponent(`[Portfolio Inquiry] ${needOption} - ${helpOption}`);
-    const body = encodeURIComponent(
-      `Hello Anas,\n\nMy name is ${senderName} (${senderEmail}).\n\nInterest: ${needOption}\nCategory: ${helpOption}\n\nMessage:\n${message}\n\nBest regards,\n${senderName}`
-    );
-
-    // Save inquiry to localStorage for Anas
     try {
       const existing = JSON.parse(localStorage.getItem('anas_contact_inquiries') || '[]');
       existing.push({
@@ -122,7 +114,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
             <div className="space-y-2">
               <h4 className="text-xl font-bold text-[#f5f5f5]">
-                Inquiry Prepared & Saved
+                Inquiry Prepared &amp; Saved
               </h4>
               <p className="text-xs sm:text-sm text-[#888888] max-w-md mx-auto leading-relaxed">
                 Thank you, <strong>{senderName}</strong>. Your note has been logged directly for Anas Ahammed ({email}).

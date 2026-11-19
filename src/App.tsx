@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { initialPersonalInfo, initialProjects } from './data/portfolioData';
+import { initialPersonalInfo, heroSlides, initialProjects } from './data/portfolioData';
 import { PersonalInfo, ProjectItem } from './types/portfolio';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -15,10 +15,11 @@ import { EducationSection } from './components/EducationSection';
 import { Footer } from './components/Footer';
 import { ContactModal } from './components/ContactModal';
 import { AtmosphericLightning } from './components/AtmosphericLightning';
+import { AtmosphericEffects } from './components/AtmosphericEffects';
 import { ThemeProvider } from './context/ThemeContext';
 
 export default function App() {
-  const [personalInfo, setPersonalInfo] = useState<PersonalInfo>(() => {
+  const [personalInfo] = useState<PersonalInfo>(() => {
     try {
       const saved = localStorage.getItem('anas_portfolio_info');
       if (saved) {
@@ -34,7 +35,7 @@ export default function App() {
     return initialPersonalInfo;
   });
 
-  const [projects, setProjects] = useState<ProjectItem[]>(() => {
+  const [projects] = useState<ProjectItem[]>(() => {
     try {
       const saved = localStorage.getItem('anas_portfolio_projects');
       if (saved) {
@@ -150,11 +151,15 @@ export default function App() {
       window.addEventListener('mousemove', onMouseMove, { passive: true });
     }
 
-    // Global background tap/click to discharge lightning
+    // Global background tap/click to discharge lightning + electric ripple
     const onGlobalClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target.closest('button, a, input, textarea, select, iframe, video')) {
-        window.dispatchEvent(new CustomEvent('trigger-lightning'));
+        window.dispatchEvent(
+          new CustomEvent('trigger-lightning', {
+            detail: { x: e.clientX, y: e.clientY },
+          })
+        );
       }
     };
     window.addEventListener('click', onGlobalClick);
@@ -171,13 +176,17 @@ export default function App() {
     <ThemeProvider>
       <div className="relative min-h-screen bg-[var(--bg-pure)] text-[#f5f5f5] flex flex-col selection:bg-white/20 selection:text-white transition-colors duration-500">
         
-        {/* Global Atmospheric Lightning Layer (Discharges throughout the entire website background) */}
+        {/* Global Atmospheric Lightning Layer (Visibly discharges across entire viewport) */}
         <AtmosphericLightning />
+
+        {/* Additional Atmospheric Effects (Scroll Hairline, Floating Embers, Ambient Glows, Tap Ripples) */}
+        <AtmosphericEffects />
 
         {/* Ambient Interactive Cursor Spotlight */}
         <div
-          className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300 opacity-70"
+          className="pointer-events-none fixed inset-0 z-[13] transition-opacity duration-300 opacity-80"
           style={{
+            mixBlendMode: 'screen',
             background:
               cursorPos.x === -1000
                 ? 'radial-gradient(650px circle at 50% 35%, var(--cursor-glow-color), rgba(255, 255, 255, 0.015) 45%, transparent 75%)'
@@ -196,6 +205,7 @@ export default function App() {
           
           {/* 1. Cinematic Hero Section with 4-Slide Fullscreen Carousel */}
           <Hero
+            slides={heroSlides}
             personalInfo={personalInfo}
             onOpenContactModal={() => setContactModalOpen(true)}
             onExploreProjects={() => {

@@ -21,21 +21,20 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
         <div className="reveal-item flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-10 border-b border-white/[0.06]">
           <div className="space-y-1.5">
             <h4 className="font-editorial text-lg font-bold text-[#f5f5f5]">
-              Designed & Built by Anas Ahammed.
+              Anas<span style={{ color: 'var(--accent-secondary)' }}>.X</span> · Designed &amp; Built by Anas Ahammed.
             </h4>
-            <p className="text-xs text-[#888888] font-normal tracking-wide flex items-center gap-2">
-              <span>Always Learning. Always Building.</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+            <p className="text-xs text-[#888888] font-normal tracking-wide">
+              Always Learning. Always Building.
             </p>
           </div>
 
           {/* Social Links with Hover Elevation and Subtle Halo */}
           <div className="flex items-center gap-3 sm:gap-4 text-[#888888]">
             {[
-              { href: 'https://github.com/zerolap657-design', icon: Github, title: 'GitHub' },
-              { href: 'https://www.instagram.com/_mr_solstice?rpxt=MTJqMnNqcnd1cXF2dQ==', icon: Instagram, title: 'Instagram' },
-              { href: 'https://www.facebook.com/share/1KPsNUo1Rz/', icon: Facebook, title: 'Facebook' },
-              { href: 'mailto:anasexp10@gmail.com', icon: Mail, title: 'Email' },
+              { href: socials.github || 'https://github.com/zerolap657-design', icon: Github, title: 'GitHub' },
+              { href: socials.instagram || 'https://www.instagram.com/_mr_solstice?rpxt=MTJqMnNqcnd1cXF2dQ==', icon: Instagram, title: 'Instagram' },
+              { href: socials.facebook || 'https://www.facebook.com/share/1KPsNUo1Rz/', icon: Facebook, title: 'Facebook' },
+              { href: `mailto:${socials.email || 'anasexp10@gmail.com'}`, icon: Mail, title: 'Email' },
             ].map((soc, idx) => {
               const Icon = soc.icon;
               return (
@@ -67,7 +66,7 @@ export const Footer: React.FC<FooterProps> = ({ socials }) => {
         {/* Bottom Copyright */}
         <div className="text-center text-xs text-[#555555]">
           <p>
-            Copyright © {currentYear} Anas Ahammed.
+            Copyright © {currentYear} Anas.X — Anas Ahammed.
           </p>
         </div>
 

@@ -1,523 +1,276 @@
-import React, { useState, useRef, useEffect } from 'react';
-import {
-  ArrowRight,
-  ArrowLeft,
-  ChevronDown,
-  Github,
-  Instagram,
-  Facebook,
-  Mail,
-  ArrowUpRight,
-} from 'lucide-react';
-import { heroSlides } from '../data/portfolioData';
+import React, { useState, useEffect } from 'react';
+import { ArrowDown, ArrowUpRight, ChevronLeft, ChevronRight, Mail } from 'lucide-react';
 import { PersonalInfo } from '../types/portfolio';
+import { HeroSlide } from '../data/portfolioData';
+import { useTheme } from '../context/ThemeContext';
 
 interface HeroProps {
+  slides: HeroSlide[];
   personalInfo: PersonalInfo;
   onOpenContactModal: () => void;
   onExploreProjects: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
+  slides,
   personalInfo,
   onOpenContactModal,
   onExploreProjects,
 }) => {
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
-  const touchStartX = useRef<number | null>(null);
-  const touchStartY = useRef<number | null>(null);
-  const touchEndX = useRef<number | null>(null);
-  const touchEndY = useRef<number | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const { theme } = useTheme();
+  const [moonOverride, setMoonOverride] = useState<'red' | 'blue' | null>(null);
+  const [moonPulseKey, setMoonPulseKey] = useState(0);
 
-  const totalSlides = heroSlides.length;
-  const currentSlide = heroSlides[currentSlideIndex];
-
-  // Automatic slide rotation every 5.5 seconds
+  // Sync/reset moon override whenever global Navbar theme changes
   useEffect(() => {
-    if (!isAutoPlay || isHovered) return;
+    setMoonOverride(null);
+  }, [theme]);
 
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion || slides.length <= 1) return;
     const timer = setInterval(() => {
-      setCurrentSlideIndex((prev) => (prev + 1) % totalSlides);
-    }, 5500);
-
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 6500);
     return () => clearInterval(timer);
-  }, [isAutoPlay, isHovered, totalSlides, currentSlideIndex]);
+  }, [slides.length]);
 
-  const handleNext = () => {
-    setCurrentSlideIndex((prev) => (prev + 1) % totalSlides);
-  };
+  const isBlueMoon = moonOverride ? moonOverride === 'blue' : theme === 'midnight-blue';
 
-  const handlePrev = () => {
-    setCurrentSlideIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
-  };
+  const handleMoonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    const nextIsBlue = !isBlueMoon;
+    setMoonOverride(nextIsBlue ? 'blue' : 'red');
+    setMoonPulseKey((prev) => prev + 1);
 
-  // Touch swipe and parallax support for mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.targetTouches && e.targetTouches[0]) {
-      touchStartX.current = e.targetTouches[0].clientX;
-      touchStartY.current = e.targetTouches[0].clientY;
-      touchEndX.current = e.targetTouches[0].clientX;
-      touchEndY.current = e.targetTouches[0].clientY;
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.targetTouches && e.targetTouches[0]) {
-      touchEndX.current = e.targetTouches[0].clientX;
-      touchEndY.current = e.targetTouches[0].clientY;
-    }
-  };
-
-  const handleTouchEnd = () => {
-    if (
-      touchStartX.current === null ||
-      touchEndX.current === null ||
-      touchStartY.current === null ||
-      touchEndY.current === null
-    ) {
-      return;
-    }
-
-    const distanceX = touchStartX.current - touchEndX.current;
-    const distanceY = Math.abs(touchStartY.current - touchEndY.current);
-
-    // Only switch slide if swipe is predominantly horizontal and deliberate (> 50px)
-    // This guarantees that normal vertical page scrolling on phones is 100% smooth without accidental slides
-    if (Math.abs(distanceX) > 50 && Math.abs(distanceX) > distanceY * 1.5) {
-      if (distanceX > 0) {
-        handleNext();
-      } else {
-        handlePrev();
-      }
-    }
-
-    touchStartX.current = null;
-    touchStartY.current = null;
-    touchEndX.current = null;
-    touchEndY.current = null;
-    setMouseOffset({ x: 0, y: 0 });
-  };
-
-  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    setMouseOffset({ x, y });
+    window.dispatchEvent(
+      new CustomEvent('trigger-lightning', {
+        detail: {
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+          colorOverride: nextIsBlue ? 'blue' : 'red',
+        },
+      })
+    );
   };
 
-  const scrollToNextSection = () => {
-    const el = document.getElementById('about');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const currentSlide = slides[currentIndex] || slides[0];
 
   return (
     <section
       id="hero"
-      className="relative w-full h-[100dvh] min-h-[640px] sm:min-h-[680px] overflow-hidden select-none bg-[#050505] bg-grain"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setMouseOffset({ x: 0, y: 0 });
-      }}
-      onMouseMove={handleMouseMove}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      onClick={(e) => {
-        const target = e.target as HTMLElement;
-        if (!target.closest('button, a, input')) {
-          window.dispatchEvent(new CustomEvent('trigger-lightning'));
-        }
-      }}
+      className="relative min-h-[100dvh] w-full flex flex-col justify-end pb-14 sm:pb-20 pt-28 px-6 sm:px-12 lg:px-16 overflow-hidden bg-[var(--bg-pure)] transition-colors duration-500"
     >
-      {/* Background Slides with smooth fade */}
-      {heroSlides.map((slide, index) => {
-        const isActive = index === currentSlideIndex;
-        const imgSrc = slide.backgroundImage?.startsWith('/src/')
-          ? slide.backgroundImage.replace('/src/', '/')
-          : (slide.backgroundImage || '/assets/images/hero_moon_skyscraper_1793472035293.jpg');
-
-        return (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out pointer-events-none ${
-              isActive ? 'opacity-100' : 'opacity-0'
+      {/* Background Slides Carousel */}
+      {slides.map((slide, idx) => (
+        <div
+          key={slide.id}
+          className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none ${
+            idx === currentIndex ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <img
+            src={slide.image}
+            alt={slide.headline}
+            referrerPolicy="no-referrer"
+            className={`w-full h-full object-cover object-center transition-all duration-1000 ${
+              isBlueMoon
+                ? 'hue-rotate-[215deg] brightness-[0.55] contrast-[1.15]'
+                : 'brightness-[0.55] contrast-[1.15]'
             }`}
-          >
-            {/* Architectural Cityscape Artwork */}
-            <img
-              src={imgSrc}
-              alt={slide.title}
-              loading={index === 0 ? 'eager' : 'lazy'}
-              decoding="async"
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover object-center filter grayscale contrast-[1.08] brightness-[0.82]"
-              onError={(e) => {
-                const target = e.currentTarget as HTMLImageElement;
-                if (!target.src.includes('hero_moon_skyscraper_1793472035293.jpg')) {
-                  target.src = '/assets/images/hero_moon_skyscraper_1793472035293.jpg';
-                }
-              }}
-            />
-
-            {/* Cinematic Gradient Overlays to preserve legibility and atmospheric fog */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/85 via-[#050505]/30 to-transparent" />
-            <div className="absolute top-0 left-0 right-0 h-44 bg-gradient-to-b from-[#050505]/80 to-transparent" />
-          </div>
-        );
-      })}
-
-      {/* Atmospheric Celestial Layer: Dynamic Moon & Tinted Drifting Clouds */}
-      <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-        
-        {/* Ambient Sky Glow with Breathing Aura */}
-        <div 
-          className="absolute top-0 right-0 w-[85vw] max-w-[1000px] h-[580px] blur-3xl animate-red-aura"
-          style={{
-            background: 'var(--moon-aura-bg)'
-          }}
-        />
-
-        {/* Cinematic Celestial Moon with 3D Mouse Parallax and Floating Animation */}
-        <div 
-          className="absolute top-12 sm:top-14 right-[6%] sm:right-[14%] lg:right-[18%]"
-          style={{
-            transform: `translate3d(${mouseOffset.x * -18}px, ${mouseOffset.y * -14}px, 0)`,
-            transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
-        >
-          <div className="relative w-28 h-28 sm:w-44 sm:h-44 lg:w-56 lg:h-56 animate-red-moon-float">
-            
-            {/* Outer Lunar Aura Glow */}
-            <div
-              className="absolute inset-[-25%] rounded-full blur-2xl animate-red-aura"
-              style={{ backgroundColor: 'var(--accent-glow)' }}
-            />
-            <div
-              className="absolute inset-[-12%] rounded-full blur-xl"
-              style={{ backgroundColor: 'var(--accent-glow-subtle)' }}
-            />
-
-            {/* Detailed Celestial Moon Sphere */}
-            <svg
-              viewBox="0 0 200 200"
-              className="w-full h-full rounded-full"
-              style={{ filter: 'drop-shadow(0 0 45px var(--moon-glow-color))' }}
-            >
-              <defs>
-                {/* Radial gradient for the moon body */}
-                <radialGradient id="redMoonGrad" cx="35%" cy="35%" r="65%">
-                  <stop offset="0%" stopColor="var(--moon-grad-0)" />
-                  <stop offset="30%" stopColor="var(--moon-grad-30)" />
-                  <stop offset="65%" stopColor="var(--moon-grad-65)" />
-                  <stop offset="90%" stopColor="var(--moon-grad-90)" />
-                  <stop offset="100%" stopColor="var(--moon-grad-100)" />
-                </radialGradient>
-
-                {/* Crater gradient */}
-                <radialGradient id="craterGrad" cx="40%" cy="40%" r="60%">
-                  <stop offset="0%" stopColor="var(--crater-grad-0)" stopOpacity="0.85" />
-                  <stop offset="70%" stopColor="var(--crater-grad-70)" stopOpacity="0.65" />
-                  <stop offset="100%" stopColor="var(--crater-grad-100)" stopOpacity="0" />
-                </radialGradient>
-              </defs>
-
-              {/* Base Moon Sphere */}
-              <circle cx="100" cy="100" r="98" fill="url(#redMoonGrad)" />
-
-              {/* Surface Maria / Dark Lunar Basins */}
-              <path
-                d="M45,65 Q70,45 110,55 Q135,70 125,100 Q105,120 75,115 Q45,105 45,65 Z"
-                fill="url(#craterGrad)"
-                opacity="0.65"
-              />
-              <path
-                d="M100,105 Q140,95 160,120 Q170,145 145,160 Q115,165 95,145 Q85,125 100,105 Z"
-                fill="url(#craterGrad)"
-                opacity="0.6"
-              />
-              <path
-                d="M60,125 Q85,120 95,140 Q90,165 70,170 Q50,165 45,145 Q45,130 60,125 Z"
-                fill="url(#craterGrad)"
-                opacity="0.55"
-              />
-
-              {/* Distinctive Craters */}
-              <circle cx="68" cy="82" r="14" fill="var(--moon-crater-dark)" opacity="0.45" />
-              <circle cx="67" cy="81" r="13" stroke="var(--moon-crater-stroke)" strokeWidth="1" fill="none" opacity="0.3" />
-              
-              <circle cx="132" cy="74" r="18" fill="var(--moon-crater-dark)" opacity="0.5" />
-              <circle cx="130" cy="73" r="17" stroke="var(--moon-crater-stroke)" strokeWidth="1" fill="none" opacity="0.25" />
-
-              <circle cx="118" cy="138" r="22" fill="var(--moon-crater-dark)" opacity="0.55" />
-              <circle cx="116" cy="136" r="20" stroke="var(--moon-crater-stroke)" strokeWidth="1.2" fill="none" opacity="0.3" />
-
-              <circle cx="152" cy="115" r="9" fill="var(--moon-crater-dark)" opacity="0.4" />
-              <circle cx="78" cy="148" r="11" fill="var(--moon-crater-dark)" opacity="0.45" />
-
-              {/* Tycho-like ray crater at bottom */}
-              <circle cx="102" cy="168" r="7" fill="var(--moon-grad-0)" opacity="0.75" />
-              <circle cx="102" cy="168" r="5" fill="#ffffff" opacity="0.4" />
-
-              {/* 3D Sphere Edge Crescent Shadow (Gives Depth) */}
-              <path
-                d="M100,2 A98,98 0 0,0 100,198 A98,98 0 0,1 100,2 Z"
-                fill="var(--moon-shadow)"
-                opacity="0.25"
-              />
-
-              {/* Outer Rim Glow */}
-              <circle cx="100" cy="100" r="97" stroke="var(--moon-rim-stroke)" strokeWidth="1.5" fill="none" opacity="0.4" />
-            </svg>
-
-            {/* Rising Lunar Embers (Floating Stardust Particles) */}
-            <div className="absolute inset-0 overflow-visible pointer-events-none">
-              <span
-                className="absolute bottom-4 left-6 w-1.5 h-1.5 rounded-full animate-ember-1"
-                style={{ backgroundColor: 'var(--ember-color-1)', boxShadow: '0 0 8px var(--ember-color-1)' }}
-              />
-              <span
-                className="absolute bottom-8 right-8 w-2 h-2 rounded-full animate-ember-2"
-                style={{ backgroundColor: 'var(--ember-color-2)', boxShadow: '0 0 10px var(--ember-color-2)' }}
-              />
-              <span
-                className="absolute bottom-2 left-1/2 w-1 h-1 rounded-full animate-ember-3"
-                style={{ backgroundColor: 'var(--ember-color-3)', boxShadow: '0 0 6px var(--ember-color-3)' }}
-              />
-              <span
-                className="absolute bottom-10 left-10 w-2 h-2 rounded-full animate-ember-4"
-                style={{ backgroundColor: 'var(--ember-color-4)', boxShadow: '0 0 10px var(--ember-color-4)' }}
-              />
-              <span
-                className="absolute bottom-6 right-1/4 w-1.5 h-1.5 rounded-full animate-ember-5"
-                style={{ backgroundColor: 'var(--ember-color-1)', boxShadow: '0 0 8px var(--ember-color-1)' }}
-              />
-              <span
-                className="absolute bottom-12 right-12 w-1 h-1 rounded-full animate-ember-6"
-                style={{ backgroundColor: 'var(--ember-color-3)', boxShadow: '0 0 6px var(--ember-color-3)' }}
-              />
-            </div>
-
-          </div>
-        </div>
-
-        {/* Tinted Clouds Layer 1 (Drifting Flow 1 Across Sky) */}
-        <div 
-          className="absolute top-2 sm:top-6 -left-[15%] w-[130%] h-64 sm:h-80 opacity-85 mix-blend-screen"
-          style={{
-            transform: `translate3d(${mouseOffset.x * 14}px, ${mouseOffset.y * 10}px, 0)`,
-            transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
-        >
-          <div className="w-full h-full animate-cloud-flow-1">
-            {/* Cloud Formation Alpha */}
-            <div 
-              className="absolute top-6 right-[24%] w-[480px] sm:w-[720px] h-32 sm:h-44 rounded-full blur-3xl"
-              style={{
-                background: 'var(--moon-cloud-1)'
-              }}
-            />
-            {/* Cloud Formation Beta */}
-            <div 
-              className="absolute top-0 right-[6%] w-[400px] sm:w-[580px] h-28 sm:h-36 rounded-full blur-2xl"
-              style={{
-                background: 'var(--moon-cloud-2)'
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Tinted Clouds Layer 2 (Counter-Flow Drifting Across Sky) */}
-        <div 
-          className="absolute top-6 sm:top-14 -right-[10%] w-[125%] h-72 opacity-80 mix-blend-screen"
-          style={{
-            transform: `translate3d(${mouseOffset.x * -12}px, ${mouseOffset.y * -8}px, 0)`,
-            transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
-        >
-          <div className="w-full h-full animate-cloud-flow-2">
-            {/* Cloud Wisps that pass over the Moon */}
-            <div 
-              className="absolute top-12 right-[10%] sm:right-[15%] w-[300px] sm:w-[440px] h-20 sm:h-28 rounded-full blur-2xl"
-              style={{
-                background: 'var(--moon-cloud-wisp)'
-              }}
-            />
-            {/* Wider Atmospheric Cloud Mist */}
-            <div 
-              className="absolute top-24 right-[1%] sm:right-[4%] w-[460px] sm:w-[640px] h-24 sm:h-32 rounded-full blur-3xl"
-              style={{
-                background: 'var(--moon-cloud-1)'
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Wispy Cloud Directly Passing Over the Moon */}
-        <div className="absolute top-16 sm:top-20 right-[5%] sm:right-[12%] lg:right-[16%] w-72 sm:w-96 h-28 pointer-events-none mix-blend-screen opacity-75">
-          <div 
-            className="w-full h-full rounded-full blur-xl animate-cloud-wisp"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-pure)] via-black/45 to-black/55" />
+          <div
+            className="absolute inset-0 transition-all duration-700"
             style={{
-              background: 'var(--moon-cloud-wisp)'
+              background: isBlueMoon
+                ? 'radial-gradient(circle at 75% 25%, rgba(59, 130, 246, 0.28), transparent 60%)'
+                : 'radial-gradient(circle at 75% 25%, rgba(225, 29, 72, 0.26), transparent 60%)',
             }}
           />
         </div>
+      ))}
 
-        {/* Atmospheric Horizon Mist at very top */}
-        <div 
-          className="absolute top-0 left-0 right-0 h-32 sm:h-40 opacity-70"
+      {/* Interactive Glowing / Burning Moon ("Jolonto Moon") — Click to Shift Color */}
+      <div
+        className="pointer-events-none select-none absolute top-20 right-5 sm:top-24 sm:right-10 lg:top-20 lg:right-16 z-[12] w-36 h-36 sm:w-56 sm:h-56 lg:w-72 lg:h-72 flex items-center justify-center"
+      >
+        {/* Outer Fiery Corona Aura */}
+        <div
+          className="absolute -inset-12 sm:-inset-16 rounded-full blur-3xl opacity-80 animate-[pulse_4.5s_ease-in-out_infinite] transition-all duration-700"
           style={{
-            background: 'linear-gradient(180deg, var(--accent-deep, rgba(136, 19, 55, 0.22)) 0%, transparent 100%)'
+            background: isBlueMoon
+              ? 'radial-gradient(circle, rgba(125, 211, 252, 0.55) 0%, rgba(59, 130, 246, 0.4) 45%, rgba(30, 58, 138, 0.14) 72%, transparent 100%)'
+              : 'radial-gradient(circle, rgba(255, 115, 55, 0.55) 0%, rgba(225, 29, 72, 0.4) 45%, rgba(136, 19, 55, 0.14) 72%, transparent 100%)',
           }}
         />
+
+        {/* Rotating Heat-Shimmer Flare Ring */}
+        <div
+          className="absolute -inset-3 sm:-inset-5 rounded-full blur-xl opacity-70 animate-[spin_36s_linear_infinite] transition-all duration-700"
+          style={{
+            background: isBlueMoon
+              ? 'conic-gradient(from 0deg, rgba(56, 189, 248, 0.6), rgba(59, 130, 246, 0.22), rgba(224, 242, 254, 0.55), rgba(37, 99, 235, 0.18), rgba(56, 189, 248, 0.6))'
+              : 'conic-gradient(from 0deg, rgba(251, 146, 60, 0.6), rgba(225, 29, 72, 0.22), rgba(255, 237, 213, 0.55), rgba(225, 29, 72, 0.18), rgba(251, 146, 60, 0.6))',
+          }}
+        />
+
+        {/* Oblique Plasma Orbit Arc */}
+        <div
+          className="absolute -inset-5 sm:-inset-7 rounded-full border opacity-30 transition-colors duration-700 animate-[spin_28s_linear_infinite_reverse]"
+          style={{
+            borderLeftColor: isBlueMoon ? 'rgba(125, 211, 252, 0.5)' : 'rgba(253, 186, 116, 0.45)',
+            borderRightColor: isBlueMoon ? 'rgba(125, 211, 252, 0.5)' : 'rgba(253, 186, 116, 0.45)',
+            borderTopColor: 'transparent',
+            borderBottomColor: 'transparent',
+            transform: 'rotate(-24deg) scaleY(0.76)',
+          }}
+        />
+
+        {/* Shockwave Ring Burst on Moon Click */}
+        {moonPulseKey > 0 && (
+          <span
+            key={moonPulseKey}
+            className="absolute inset-0 rounded-full animate-[ping_0.75s_cubic-bezier(0,0,0.2,1)_1] opacity-0"
+            style={{
+              border: `2px solid ${isBlueMoon ? '#7dd3fc' : '#fb923c'}`,
+              boxShadow: isBlueMoon
+                ? '0 0 30px rgba(56, 189, 248, 0.7)'
+                : '0 0 30px rgba(251, 146, 60, 0.7)',
+            }}
+          />
+        )}
+
+        {/* Clickable Lunar Sphere Button */}
+        <button
+          type="button"
+          onClick={handleMoonClick}
+          title={isBlueMoon ? 'Click moon to ignite Crimson Fire' : 'Click moon to shift Electric Blue'}
+          aria-label="Toggle moon color"
+          className="pointer-events-auto cursor-pointer group/moon relative w-full h-full rounded-full overflow-hidden transition-all duration-700 hover:scale-[1.035] active:scale-[0.97] focus:outline-none"
+          style={{
+            background: isBlueMoon
+              ? 'radial-gradient(circle at 36% 32%, #f0f9ff 0%, #bae6fd 26%, #38bdf8 60%, #1d4ed8 88%, #0f172a 100%)'
+              : 'radial-gradient(circle at 36% 32%, #fff7ed 0%, #fdba74 26%, #ef4444 62%, #9f1239 88%, #4c0519 100%)',
+            boxShadow: isBlueMoon
+              ? '0 0 40px rgba(125, 211, 252, 0.7), 0 0 90px rgba(59, 130, 246, 0.6), inset -16px -18px 38px rgba(15, 23, 42, 0.68)'
+              : '0 0 40px rgba(251, 146, 60, 0.7), 0 0 90px rgba(225, 29, 72, 0.6), inset -16px -18px 38px rgba(69, 10, 10, 0.68)',
+          }}
+        >
+          {/* SVG Lunar Maria & Glowing Crater Relief */}
+          <svg
+            viewBox="0 0 200 200"
+            className="w-full h-full opacity-45 mix-blend-multiply transition-transform duration-700 group-hover/moon:scale-105"
+            fill="none"
+          >
+            <circle cx="64" cy="58" r="18" fill="rgba(0,0,0,0.34)" />
+            <circle cx="118" cy="48" r="11" fill="rgba(0,0,0,0.28)" />
+            <circle cx="136" cy="94" r="24" fill="rgba(0,0,0,0.32)" />
+            <circle cx="82" cy="116" r="28" fill="rgba(0,0,0,0.28)" />
+            <circle cx="48" cy="108" r="9" fill="rgba(0,0,0,0.26)" />
+            <circle cx="122" cy="148" r="15" fill="rgba(0,0,0,0.3)" />
+            <circle cx="72" cy="158" r="8" fill="rgba(0,0,0,0.24)" />
+            <ellipse cx="102" cy="78" rx="16" ry="11" fill="rgba(0,0,0,0.22)" />
+          </svg>
+
+          {/* Molten Rim Highlight */}
+          <div
+            className="absolute inset-0 rounded-full transition-all duration-700"
+            style={{
+              boxShadow: isBlueMoon
+                ? 'inset 4px 4px 20px rgba(240, 249, 255, 0.85), inset -4px -4px 18px rgba(125, 211, 252, 0.7)'
+                : 'inset 4px 4px 20px rgba(255, 247, 237, 0.85), inset -4px -4px 18px rgba(251, 113, 133, 0.7)',
+            }}
+          />
+        </button>
       </div>
 
-
-      {/* Hero Content Container */}
-      <div className="relative z-20 h-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 flex flex-col justify-end pb-16 sm:pb-20">
-        
-        {/* Main Content (Positioned Lower-Left) */}
-        <div className="max-w-2xl text-left space-y-4">
-          
-          {/* Subtle Tagline / Slide Indicator */}
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono tracking-[0.25em] text-[#888888] uppercase">
-              {currentSlide.tagline}
-            </span>
+      {/* Content */}
+      <div className="relative z-10 max-w-6xl w-full mx-auto space-y-8 text-left">
+        <div className="space-y-4">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-mono tracking-[0.2em] uppercase text-[#aaaaaa]">
+            <span style={{ color: 'var(--accent-secondary)' }}>{currentSlide?.label}</span>
+            <span>·</span>
+            <span>{personalInfo.location}</span>
           </div>
 
-          {/* Large Editorial Heading */}
-          <h1 className="font-editorial text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#f5f5f5] leading-[1.05]">
-            {currentSlide.title}
+          <h1 className="font-editorial text-4xl sm:text-6xl lg:text-8xl font-bold tracking-tight text-[#f5f5f7] leading-[1.02]">
+            {currentSlide?.headline}
           </h1>
 
-          {/* Headline */}
-          <h2 className="text-xl sm:text-2xl font-light tracking-tight text-[#cccccc]">
-            {currentSlide.subtitle}
-          </h2>
-
-          {/* Description (2-3 short lines max) */}
-          <p className="text-xs sm:text-sm text-[#888888] leading-relaxed max-w-lg font-normal">
-            {currentSlide.description}
+          <p className="text-base sm:text-xl text-[#cccccc] max-w-2xl leading-relaxed font-normal">
+            {currentSlide?.subheadline}
           </p>
-
-          {/* Slide CTA Button */}
-          <div className="pt-2">
-            {currentSlideIndex === 3 ? (
-              <button
-                onClick={onOpenContactModal}
-                className="btn-minimal-white px-5 py-2.5 rounded-full text-xs font-semibold inline-flex items-center gap-2 cursor-pointer shadow-lg"
-              >
-                <span>{currentSlide.actionText}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            ) : (
-              <a
-                href={currentSlide.actionTarget}
-                onClick={(e) => {
-                  e.preventDefault();
-                  const target = document.querySelector(currentSlide.actionTarget);
-                  if (target) target.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="btn-minimal-white px-5 py-2.5 rounded-full text-xs font-semibold inline-flex items-center gap-2 cursor-pointer shadow-lg"
-              >
-                <span>{currentSlide.actionText}</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-            )}
-          </div>
-
-          {/* Minimal Social Icons (Always Visible) */}
-          <div className="pt-4 flex items-center gap-5 text-[#888888]">
-            <a
-              href={personalInfo.socials.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#f5f5f5] transition-colors p-1"
-              title="GitHub Profile"
-              aria-label="GitHub Profile"
-            >
-              <Github className="w-4 h-4" />
-            </a>
-
-            <a
-              href={personalInfo.socials.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#f5f5f5] transition-colors p-1"
-              title="Instagram Profile"
-              aria-label="Instagram Profile"
-            >
-              <Instagram className="w-4 h-4" />
-            </a>
-
-            <a
-              href={personalInfo.socials.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#f5f5f5] transition-colors p-1"
-              title="Facebook Profile"
-              aria-label="Facebook Profile"
-            >
-              <Facebook className="w-4 h-4" />
-            </a>
-
-            <a
-              href={`mailto:${personalInfo.socials.email}`}
-              className="hover:text-[#f5f5f5] transition-colors p-1"
-              title="Email Anas"
-              aria-label="Email Anas"
-            >
-              <Mail className="w-4 h-4" />
-            </a>
-
-            <span className="text-[#333333]">|</span>
-
-            <span className="text-[11px] font-mono text-[#666666]">
-              Natore, Bangladesh
-            </span>
-          </div>
-
         </div>
 
+        {/* Actions + Slide Controls */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-4 border-t border-white/[0.1]">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={onExploreProjects}
+              className="btn-minimal-white px-6 py-3 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2 cursor-pointer shadow-lg"
+            >
+              <span>Explore Projects</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </button>
+
+            <button
+              type="button"
+              onClick={onOpenContactModal}
+              className="btn-minimal-outline px-6 py-3 rounded-full text-xs sm:text-sm font-medium flex items-center gap-2 cursor-pointer backdrop-blur-md"
+            >
+              <Mail className="w-4 h-4" />
+              <span>Get in Touch</span>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              {slides.map((s, idx) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setCurrentIndex(idx)}
+                  aria-label={`Slide ${idx + 1}`}
+                  className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                    idx === currentIndex ? 'w-7 bg-white' : 'w-2 bg-white/30 hover:bg-white/60'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <div className="flex items-center gap-1.5 ml-2">
+              <button
+                type="button"
+                onClick={() => setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length)}
+                className="w-9 h-9 rounded-full bg-white/[0.06] hover:bg-white/[0.15] border border-white/[0.12] flex items-center justify-center text-white cursor-pointer"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setCurrentIndex((prev) => (prev + 1) % slides.length)}
+                className="w-9 h-9 rounded-full bg-white/[0.06] hover:bg-white/[0.15] border border-white/[0.12] flex items-center justify-center text-white cursor-pointer"
+                aria-label="Next slide"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            <a
+              href="#about"
+              className="hidden md:inline-flex items-center gap-1.5 text-xs font-mono text-[#aaaaaa] hover:text-white ml-3"
+            >
+              <span>Scroll</span>
+              <ArrowDown className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
       </div>
-
-      {/* Carousel Navigation Arrow Button (Responsive Placement) */}
-      <div className="absolute right-4 sm:right-12 bottom-5 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 z-30 flex sm:flex-col flex-row-reverse items-center gap-2 sm:gap-3">
-        <button
-          onClick={handleNext}
-          className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-[#111111]/80 hover:bg-[#222222] border border-white/[0.12] backdrop-blur-xl flex items-center justify-center text-[#f5f5f5] hover:scale-105 transition-all cursor-pointer shadow-2xl"
-          aria-label="Next slide"
-        >
-          <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6" />
-        </button>
-
-        {currentSlideIndex > 0 && (
-          <button
-            onClick={handlePrev}
-            className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#111111]/60 hover:bg-[#222222] border border-white/[0.08] backdrop-blur-xl flex items-center justify-center text-[#888888] hover:text-[#f5f5f5] transition-all cursor-pointer"
-            aria-label="Previous slide"
-          >
-            <ArrowLeft className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
-          </button>
-        )}
-      </div>
-
-      {/* Next Section Indicator (Bottom Right) */}
-      <div className="hidden sm:flex absolute bottom-8 right-12 z-30 items-center gap-2 text-[11px] font-mono text-[#666666] hover:text-[#f5f5f5] transition-colors cursor-pointer"
-        onClick={scrollToNextSection}
-      >
-        <span>SCROLL DOWN</span>
-        <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
-      </div>
-
     </section>
   );
 };

@@ -91,54 +91,34 @@ export const BangladeshHometownMap: React.FC = () => {
   const activeSpotData = locations.find((l) => l.id === activeSpot) || locations[0];
 
   return (
-    <div className="w-full my-6 rounded-3xl bg-gradient-to-b from-[#0b0e13] via-[#07090d] to-[#040507] border border-white/[0.12] p-4 sm:p-6 shadow-[0_15px_45px_rgba(0,0,0,0.8)] relative overflow-hidden text-left group/card transition-all duration-300">
-      
-      {/* Ambient background glows */}
-      <div className="absolute -top-20 -left-20 w-80 h-80 bg-emerald-500/[0.07] rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-rose-500/[0.05] rounded-full blur-3xl pointer-events-none" />
-      
-      {/* Decorative fine map grid overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: 'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
-
+    <div className="w-full rounded-2xl bg-[#0b0b0e] border border-white/[0.1] p-4 sm:p-6 relative overflow-hidden text-left">
       {/* Header Bar */}
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-3.5 mb-4">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-            <MapPin className="w-4 h-4 animate-bounce-subtle" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#e11d48]/10 border border-[#e11d48]/30 text-[#e11d48]">
+            <MapPin className="w-4 h-4" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-emerald-400 font-bold">
-                Hometown · জন্মভূমি
-              </span>
-              <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                Live Coordinates
-              </span>
-            </div>
-            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2 mt-0.5">
-              <span>Natore, Rajshahi, Bangladesh</span>
+            <span className="text-[11px] font-mono text-[#e11d48] block">
+              Hometown · Natore, Rajshahi
+            </span>
+            <h3 className="text-sm sm:text-base font-bold text-[#f5f5f7] tracking-tight">
+              Bangladesh Coordinate View
             </h3>
           </div>
         </div>
 
         {/* Minimal GPS HUD readout */}
-        <div className="flex items-center gap-2 text-[11px] font-mono text-[#888888] px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md">
-          <Navigation className="w-3.5 h-3.5 text-rose-400 animate-pulse" />
-          <span className="text-white font-medium">24°24&apos;N</span>
-          <span className="text-white/30">&bull;</span>
-          <span className="text-white font-medium">88°59&apos;E</span>
+        <div className="flex items-center gap-2 text-xs font-mono text-[#a1a1aa] tabular-nums">
+          <Navigation className="w-3.5 h-3.5 text-[#e11d48]" />
+          <span className="text-[#f5f5f7]">24°24&apos;N</span>
+          <span className="text-white/25">·</span>
+          <span className="text-[#f5f5f7]">88°59&apos;E</span>
         </div>
       </div>
 
       {/* Centered Map Canvas */}
-      <div className="relative w-full max-w-[460px] mx-auto aspect-[500/580] bg-[#05070a]/90 border border-white/[0.08] rounded-2xl p-2 sm:p-4 flex items-center justify-center overflow-hidden shadow-2xl">
+      <div className="relative w-full max-w-[440px] mx-auto aspect-[500/580] bg-[#050505] border border-white/[0.08] rounded-xl p-2 sm:p-4 flex items-center justify-center overflow-hidden">
         
         {/* Radar ambient light centered on Natore */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_37%_40%,rgba(16,185,129,0.18),transparent_55%)] pointer-events-none" />
@@ -538,26 +518,27 @@ export const BangladeshHometownMap: React.FC = () => {
       {/* Bottom Interactive Location Inspector Bar */}
       <div className="relative z-10 mt-3 pt-3 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="font-mono text-[#e11d48] uppercase text-[10px]">LOC</span>
           <span className="font-semibold text-white">
             {activeSpotData.name} ({activeSpotData.bengaliName}):
           </span>
-          <span className="text-[#aaaaaa] text-xs">
+          <span className="text-[#a1a1aa] text-xs">
             {activeSpotData.detail || activeSpotData.subtext}
           </span>
         </div>
 
-        {/* Quick Location Pills */}
+        {/* Quick Location Switcher */}
         <div className="flex items-center gap-1.5 font-mono text-[10px]">
           <span className="text-white/40 uppercase hidden sm:inline-block">View:</span>
           {locations.slice(0, 3).map((loc) => (
             <button
               key={loc.id}
+              type="button"
               onClick={() => setActiveSpot(loc.id)}
-              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+              className={`px-2.5 py-1 rounded-md transition-colors cursor-pointer ${
                 activeSpot === loc.id
-                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold shadow-sm'
-                  : 'bg-white/[0.04] text-[#888888] hover:text-white hover:bg-white/[0.08] border border-white/[0.06]'
+                  ? 'bg-[#e11d48]/20 text-[#ff2a4b] border border-[#e11d48]/50 font-bold'
+                  : 'bg-white/[0.04] text-[#a1a1aa] hover:text-white hover:bg-white/[0.08] border border-white/[0.06]'
               }`}
             >
               {loc.name}
