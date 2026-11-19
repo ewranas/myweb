@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowUpRight, Github } from 'lucide-react';
 import { ProjectItem } from '../types/portfolio';
 
@@ -27,6 +27,26 @@ interface ShowcaseCardProps {
 const ShowcaseRow: React.FC<ShowcaseCardProps> = ({ project, index }) => {
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isNearViewport, setIsNearViewport] = useState(false);
+  const rowRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = rowRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setIsNearViewport(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '350px 0px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const clipId = `showcase-curve-${index % CURVE_PATHS.length}`;
   const liveHref =
@@ -57,7 +77,7 @@ const ShowcaseRow: React.FC<ShowcaseCardProps> = ({ project, index }) => {
   const hoverTransform = `perspective(1400px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) rotateZ(0deg) scale(1.015)`;
 
   return (
-    <div className="reveal-item grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
+    <div ref={rowRef} className="reveal-item grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
       {/* Left Minimal Title Column (Zero paragraph/tag clutter) */}
       <div className="lg:col-span-3 pt-1 lg:pt-4 space-y-1.5 text-left">
         <a
@@ -132,7 +152,9 @@ const ShowcaseRow: React.FC<ShowcaseCardProps> = ({ project, index }) => {
             className="relative w-full h-full overflow-hidden bg-[#0a0a0c]"
             style={{ clipPath: `url(#${clipId})` }}
           >
-            {project.videoUrl ? (
+            {!isNearViewport ? (
+              <div className="w-full h-full bg-[#0a0a0d] animate-pulse" />
+            ) : project.videoUrl ? (
               <video
                 src={project.videoUrl}
                 poster={project.image}
@@ -140,6 +162,7 @@ const ShowcaseRow: React.FC<ShowcaseCardProps> = ({ project, index }) => {
                 loop
                 muted
                 playsInline
+                preload="metadata"
                 className="w-full h-full object-cover transition-transform duration-700"
                 style={{ transform: isHovered ? 'scale(1.02)' : 'scale(1)' }}
               />
@@ -147,6 +170,7 @@ const ShowcaseRow: React.FC<ShowcaseCardProps> = ({ project, index }) => {
               <iframe
                 src={project.embedUrl}
                 title={project.title}
+                loading="lazy"
                 className="w-full h-full border-0 select-none"
                 allow="autoplay; fullscreen"
               />
@@ -155,6 +179,8 @@ const ShowcaseRow: React.FC<ShowcaseCardProps> = ({ project, index }) => {
                 src={project.image}
                 alt={project.title}
                 referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-transform duration-700"
                 style={{ transform: isHovered ? 'scale(1.03)' : 'scale(1)' }}
               />

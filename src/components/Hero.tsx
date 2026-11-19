@@ -21,11 +21,18 @@ export const Hero: React.FC<HeroProps> = ({
   const { theme } = useTheme();
   const [moonOverride, setMoonOverride] = useState<'red' | 'blue' | null>(null);
   const [moonPulseKey, setMoonPulseKey] = useState(0);
+  const [preloadedAll, setPreloadedAll] = useState(false);
 
   // Sync/reset moon override whenever global Navbar theme changes
   useEffect(() => {
     setMoonOverride(null);
   }, [theme]);
+
+  // Defer preloading secondary slides until after initial paint
+  useEffect(() => {
+    const timer = setTimeout(() => setPreloadedAll(true), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -63,35 +70,84 @@ export const Hero: React.FC<HeroProps> = ({
       id="hero"
       className="relative min-h-[100dvh] w-full flex flex-col justify-end pb-14 sm:pb-20 pt-28 px-6 sm:px-12 lg:px-16 overflow-hidden bg-[var(--bg-pure)] transition-colors duration-500"
     >
-      {/* Background Slides Carousel */}
-      {slides.map((slide, idx) => (
-        <div
-          key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none ${
-            idx === currentIndex ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <img
-            src={slide.image}
-            alt={slide.headline}
-            referrerPolicy="no-referrer"
-            className={`w-full h-full object-cover object-center transition-all duration-1000 ${
-              isBlueMoon
-                ? 'hue-rotate-[215deg] brightness-[0.55] contrast-[1.15]'
-                : 'brightness-[0.55] contrast-[1.15]'
-            }`}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-pure)] via-black/45 to-black/55" />
+      <style>{`
+        @keyframes heroCosmicDrift {
+          0%, 100% {
+            transform: scale(1.03) translate3d(0px, 0px, 0px);
+          }
+          33% {
+            transform: scale(1.09) translate3d(-14px, -6px, 0px);
+          }
+          66% {
+            transform: scale(1.06) translate3d(10px, -10px, 0px);
+          }
+        }
+        @keyframes heroAuroraSweep {
+          0%, 100% {
+            opacity: 0.28;
+            transform: translate3d(-6%, 2%, 0) scale(1);
+          }
+          50% {
+            opacity: 0.55;
+            transform: translate3d(6%, -4%, 0) scale(1.08);
+          }
+        }
+        .hero-bg-drift {
+          animation: heroCosmicDrift 16s ease-in-out infinite;
+        }
+        .hero-aurora-sweep {
+          animation: heroAuroraSweep 9s ease-in-out infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-bg-drift,
+          .hero-aurora-sweep {
+            animation: none !important;
+          }
+        }
+      `}</style>
+
+      {/* Background Slides Carousel — Load Slide 0 Immediately, Defer Secondary Slides */}
+      {slides.map((slide, idx) => {
+        const isActive = idx === currentIndex;
+        const shouldMount = idx === 0 || isActive || preloadedAll;
+        if (!shouldMount) return null;
+
+        return (
           <div
-            className="absolute inset-0 transition-all duration-700"
-            style={{
-              background: isBlueMoon
-                ? 'radial-gradient(circle at 75% 25%, rgba(59, 130, 246, 0.28), transparent 60%)'
-                : 'radial-gradient(circle at 75% 25%, rgba(225, 29, 72, 0.26), transparent 60%)',
-            }}
-          />
-        </div>
-      ))}
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none ${
+              isActive ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <img
+              src={slide.image}
+              alt={slide.headline}
+              referrerPolicy="no-referrer"
+              loading={idx === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              fetchPriority={idx === 0 ? 'high' : 'low'}
+              className={`w-full h-full object-cover object-center transition-all duration-1000 ${
+                isActive ? 'hero-bg-drift will-change-transform' : ''
+              } ${
+                isBlueMoon
+                  ? 'hue-rotate-[215deg] brightness-[0.7] contrast-[1.12]'
+                  : 'brightness-[0.7] contrast-[1.12]'
+              }`}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-pure)] via-black/40 to-black/50" />
+            <div
+              className={`absolute inset-0 transition-all duration-700 ${
+                isActive ? 'hero-aurora-sweep' : ''
+              }`}
+              style={{
+                background: isBlueMoon
+                  ? 'radial-gradient(ellipse at 70% 30%, rgba(56, 189, 248, 0.3), rgba(59, 130, 246, 0.12) 45%, transparent 72%)'
+                  : 'radial-gradient(ellipse at 70% 30%, rgba(225, 29, 72, 0.28), rgba(251, 146, 60, 0.1) 45%, transparent 72%)',
+              }}
+            />
+          </div>
+        );
+      })}
 
       {/* Interactive Glowing / Burning Moon ("Jolonto Moon") — Click to Shift Color */}
       <div

@@ -123,18 +123,30 @@ export default function App() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.04, rootMargin: '0px 0px -10px 0px' }
     );
 
     const revealElements = document.querySelectorAll('.reveal-item');
     revealElements.forEach((el) => revealObserver.observe(el));
 
+    // Safety net: ensure any elements already near/above fold reveal promptly
+    const safetyTimer = setTimeout(() => {
+      revealElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 1.15) {
+          el.classList.add('revealed');
+        }
+      });
+    }, 350);
+
     return () => {
       navObserver.disconnect();
       revealObserver.disconnect();
+      clearTimeout(safetyTimer);
     };
   }, []);
 

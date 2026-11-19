@@ -6,6 +6,10 @@ import {
   EducationMilestone,
   InterestItem,
 } from '../types/portfolio';
+import heroAnimatedGalaxyImg from '../assets/images/hero_slide_1.webp';
+import heroCrimsonMonolithImg from '../assets/images/hero_slide_2.webp';
+import heroCyberVaultImg from '../assets/images/hero_slide_3.webp';
+import heroNocturneCliffImg from '../assets/images/hero_slide_4.webp';
 
 export interface HeroSlide {
   id: number;
@@ -22,7 +26,7 @@ export const heroSlides: HeroSlide[] = [
     headline: 'Anas.X',
     subheadline:
       'Portfolio of Anas Ahammed — 17-year-old software developer, web builder, and cyber security learner from Natore, Bangladesh.',
-    image: '/assets/images/hero_moon_skyscraper_1793472035293.jpg',
+    image: heroAnimatedGalaxyImg,
   },
   {
     id: 2,
@@ -30,7 +34,7 @@ export const heroSlides: HeroSlide[] = [
     headline: 'Building With Purpose',
     subheadline:
       'Turning curious ideas into structured digital platforms, student tools, and fast modern web apps.',
-    image: '/assets/images/about_abstract_tech_1793472036686.jpg',
+    image: heroCrimsonMonolithImg,
   },
   {
     id: 3,
@@ -38,7 +42,7 @@ export const heroSlides: HeroSlide[] = [
     headline: 'FOLAFOL & MessBoi',
     subheadline:
       'Educational hubs and practical daily utilities engineered cleanly for real student workflows.',
-    image: '/assets/images/projects_arch_scene_1793472037437.jpg',
+    image: heroCyberVaultImg,
   },
   {
     id: 4,
@@ -46,7 +50,7 @@ export const heroSlides: HeroSlide[] = [
     headline: 'Always Learning',
     subheadline:
       'Google Cybersecurity Certified · Studying Class 11 Science at Shahid AHM Kamaruzzaman College.',
-    image: '/assets/images/contact_nocturne_scene_1793472038223.jpg',
+    image: heroNocturneCliffImg,
   },
 ];
 
@@ -190,7 +194,7 @@ export const initialProjects: ProjectItem[] = [
     technologies: ['Python', 'Modern Web UI', 'REST APIs', 'Education Data Hub'],
     githubUrl: 'https://github.com/zerolap657-design',
     liveDemoUrl: 'https://folafol-web.vercel.app/',
-    image: '/assets/images/folafol_project_mockup_1793470981810.jpg',
+    image: '/assets/images/folafol_poster.webp',
     videoUrl:
       'https://res.cloudinary.com/fcsclifx/video/upload/v1793473651/WhatsApp_Video_2026-10-31_at_12.06.45_PM.mp4',
     featured: true,

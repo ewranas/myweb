@@ -83,6 +83,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ personalInfo }) => {
                   src={personalInfo.photoUrl || '/assets/images/anas_profile_real.jpg'}
                   alt={personalInfo.name}
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700"
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).src =
