@@ -86,6 +86,12 @@ export default function App() {
             updatedList.push(messboiItem);
           }
         }
+        if (!updatedList.some((p) => p.id === 'proshnobiddho' || p.liveDemoUrl?.includes('61596736563293'))) {
+          const docItem = initialProjects.find((p) => p.id === 'proshnobiddho');
+          if (docItem) {
+            updatedList.push(docItem);
+          }
+        }
         return updatedList;
       }
     } catch {

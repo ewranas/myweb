@@ -10,6 +10,7 @@ const getProjectSublabel = (project: ProjectItem): string => {
   if (project.id === 'folafol') return 'Educational platform, 2025';
   if (project.id === 'messboi') return 'Mess & meal web app, 2025';
   if (project.id === 'my-introduction') return 'Interactive showreel, 2026';
+  if (project.id === 'proshnobiddho') return 'Documentary · Facebook Reels, 2026';
   return `${project.badge}, 2025`;
 };
 
@@ -181,7 +182,11 @@ const ShowcaseRow: React.FC<ShowcaseCardProps> = ({ project, index }) => {
                 referrerPolicy="no-referrer"
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover transition-transform duration-700"
+                className={`w-full h-full transition-transform duration-700 ${
+                  project.id === 'proshnobiddho'
+                    ? 'object-contain bg-[#121216] p-5 sm:p-10'
+                    : 'object-cover'
+                }`}
                 style={{ transform: isHovered ? 'scale(1.03)' : 'scale(1)' }}
               />
             )}

@@ -244,6 +244,23 @@ export const initialProjects: ProjectItem[] = [
     ],
     isEditablePlaceholder: false,
   },
+  {
+    id: 'proshnobiddho',
+    title: 'প্রশ্নবিদ্ধ (Documentary)',
+    badge: 'Documentary Series',
+    category: 'Documentary · Facebook Reels',
+    description:
+      'Investigative and curiosity-driven documentary reels exploring intriguing questions, real stories, and hidden perspectives.',
+    technologies: ['Documentary', 'Storytelling', 'Facebook Reels'],
+    githubUrl: '',
+    liveDemoUrl: 'https://www.facebook.com/profile.php?id=61596736563293&sk=reels_tab',
+    image: '/assets/aistudio/WhatsApp_Image_2026-11-21_at_1.35.25_AM_bfc70c38.jpeg',
+    highlights: [
+      'Short-form visual documentary storytelling on Facebook Reels.',
+      'Curiosity-driven topics exploring real mysteries and social questions.',
+    ],
+    isEditablePlaceholder: false,
+  },
 ];
 
 export const educationMilestones: EducationMilestone[] = [
